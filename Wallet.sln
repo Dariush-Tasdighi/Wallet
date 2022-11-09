@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{9A227D1A-05B3-41A8-85A2-6CDA4D16EDE1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{7A992F5B-B37E-44C8-97F9-17356AD18FFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{03D55AE7-4FA7-44A0-ABAE-695D6B61F9A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{ED763DD2-05A2-42F1-BA66-EDA9845CFCB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dtat.Wallet.Abstractions", "Dtat.Wallet.Abstractions\Dtat.Wallet.Abstractions.csproj", "{6D3C4655-6F9F-49BB-BDC8-E178677E3A6B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6D3C4655-6F9F-49BB-BDC8-E178677E3A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3C4655-6F9F-49BB-BDC8-E178677E3A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3C4655-6F9F-49BB-BDC8-E178677E3A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3C4655-6F9F-49BB-BDC8-E178677E3A6B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6D3C4655-6F9F-49BB-BDC8-E178677E3A6B} = {03D55AE7-4FA7-44A0-ABAE-695D6B61F9A4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE875A73-FA77-405C-9C7C-278201376671}
+	EndGlobalSection
+EndGlobal
