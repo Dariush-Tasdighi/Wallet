@@ -5,21 +5,21 @@
 		/// <summary>
 		/// پرداخت از طریق کیف پول برای خرید
 		/// </summary>
-		Payment,
+		Payment = 0,
 
 		/// <summary>
 		/// واریز به کیف پول از حساب بانکی
 		/// </summary>
-		Deposite,
+		Deposite = 1,
 
 		/// <summary>
 		/// برداشت از کیف پول و واریز به حساب بانکی
 		/// </summary>
-		Withdraw,
+		Withdraw = 2,
 
 		/// <summary>
 		/// انتقال به غیر
 		/// </summary>
-		Transfer,
+		Transfer = 3,
 	}
 }

@@ -1,33 +1,31 @@
 ﻿namespace Dtat.Wallet.Abstractions
 {
-	public interface ITransaction<T, P>
+	public interface ITransaction<T> : IBaseEntity<T>
 	{
-		T Id { get; set; }
+		T UserId { get; }
 
-		P UserId { get; set; }
+		decimal Amount { get; }
 
-		decimal Amount { get; set; }
-
-		System.DateTime Timestamp { get; set; }
+		System.DateTime Timestamp { get; }
 
 
 
-		string? PaymentReferenceCode { get; set; }
+		string? PaymentReferenceCode { get; }
 
-		string? TransfererApplicationUserId { get; set; }
+		string? TransfererApplicationUserId { get; }
 
-		string? DepositeOrWithdrawProviderName { get; set; }
+		string? DepositeOrWithdrawProviderName { get; }
 
-		string? DepositeOrWithdrawReferenceCode { get; set; }
-
-
-
-		string? UserDescription { get; set; }
-
-		string? SystemicDescription { get; set; }
+		string? DepositeOrWithdrawReferenceCode { get; }
 
 
 
-		string Hash { get; set; }
+		string? UserDescription { get; }
+
+		string? SystemicDescription { get; }
+
+
+
+		string Hash { get; }
 	}
 }

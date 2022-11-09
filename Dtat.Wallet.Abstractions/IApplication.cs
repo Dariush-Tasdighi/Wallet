@@ -1,23 +1,25 @@
 ﻿namespace Dtat.Wallet.Abstractions
 {
-	public interface IApplication<T>
+	public interface IApplication<T> : IBaseEntity<T>
 	{
-		T Id { get; set; }
+		string Name { get; }
 
-		string Name { get; set; }
+		string ValidIPs { get; }
 
-		string Token { get; set; }
-
-		string ValidIPs { get; set; }
+		System.Guid Token { get; }
 
 
 
-		bool PaymentFeatureIsEnabled { get; set; }
+		bool PaymentFeatureIsEnabled { get; }
 
-		bool DepositeFeatureIsEnabled { get; set; }
+		bool DepositeFeatureIsEnabled { get; }
 
-		bool WithdrawFeatureIsEnabled { get; set; }
+		bool WithdrawFeatureIsEnabled { get; }
 
-		bool TransferFeatureIsEnabled { get; set; }
+		bool TransferFeatureIsEnabled { get; }
+
+
+
+		System.Collections.Generic.IReadOnlyList<IUser<T>> Users { get; }
 	}
 }
