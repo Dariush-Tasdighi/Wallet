@@ -1,32 +1,23 @@
 ﻿namespace Dtat.Wallet.Abstractions
 {
+	/// <summary>
+	/// شخص حقیقی / حقوقی
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public interface IUser<T> : IBaseEntity<T>
 	{
-		decimal Balance { get; }
-
-		string ApplicationUserId { get; }
-
-
-
 		string? Username { get; }
 
-		string? LastName { get; }
-
-		string? FirstName { get; }
+		string? DisplayName { get; }
 
 		string? EmailAddress { get; }
 
-		string? CellPhoneNumber { get; }
+		string? NationalCode { get; }
 
-
-
-		bool PaymentFeatureIsEnabled { get; }
-
-		bool DepositeFeatureIsEnabled { get; }
-
-		bool WithdrawFeatureIsEnabled { get; }
-
-		bool TransferFeatureIsEnabled { get; }
+		/// <summary>
+		/// این فیلد الزامی است
+		/// </summary>
+		string CellPhoneNumber { get; }
 
 
 
@@ -38,6 +29,8 @@
 
 
 
-		System.Collections.Generic.IReadOnlyList<ITransaction<T>> Transactions { get; }
+		System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
+
+		System.Collections.Generic.IList<ICompanyWalletUser<T>> CompanyWalletUsers { get; }
 	}
 }

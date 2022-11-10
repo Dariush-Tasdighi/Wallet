@@ -4,15 +4,17 @@
 	{
 		T UserId { get; }
 
-		decimal Amount { get; }
+		T CompanyWalletId { get; }
 
-		System.DateTime Timestamp { get; }
+
+
+		decimal Amount { get; }
 
 
 
 		string? PaymentReferenceCode { get; }
 
-		string? TransfererApplicationUserId { get; }
+		string? TransfererCompanyUserIdentity { get; }
 
 		string? DepositeOrWithdrawProviderName { get; }
 

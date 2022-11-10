@@ -1,8 +1,10 @@
 ﻿namespace Dtat.Wallet.Abstractions
 {
-	public interface IApplication<T> : IBaseEntity<T>
+	public interface ICompanyWallet<T> : IBaseEntity<T>
 	{
 		string Name { get; }
+
+		bool IsActive { get; }
 
 		string ValidIPs { get; }
 
@@ -20,6 +22,8 @@
 
 
 
-		System.Collections.Generic.IReadOnlyList<IUser<T>> Users { get; }
+		System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
+
+		System.Collections.Generic.IList<ICompanyWalletUser<T>> CompanyWalletUsers { get; }
 	}
 }

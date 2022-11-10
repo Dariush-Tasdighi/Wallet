@@ -3,5 +3,7 @@
 	public interface IBaseEntity<T>
 	{
 		T Id { get; }
+
+		System.DateTime InsertDateTime { get; }
 	}
 }
