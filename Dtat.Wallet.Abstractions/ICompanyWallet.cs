@@ -2,6 +2,10 @@
 {
 	public interface ICompanyWallet<T> : IBaseEntity<T>
 	{
+		T CompanyId { get; }
+
+
+
 		string Name { get; }
 
 		bool IsActive { get; }
