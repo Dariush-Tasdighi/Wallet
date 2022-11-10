@@ -1,0 +1,29 @@
+﻿namespace Domain.Seedwork
+{
+	public abstract class Entity : object,
+		Dtat.Wallet.Abstractions.IBaseEntity<long>
+	{
+		#region Constructor
+		public Entity() : base()
+		{
+			InsertDateTime = Utility.Now;
+		}
+		#endregion /Constructor
+
+		#region Properties
+
+		#region Id Property
+		[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated
+			(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+		public long Id { get; private set; }
+		#endregion /Id Property
+
+		#region InsertDateTime Property
+		[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated
+			(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
+		public System.DateTime InsertDateTime { get; private set; }
+		#endregion /InsertDateTime Property
+
+		#endregion /Properties
+	}
+}

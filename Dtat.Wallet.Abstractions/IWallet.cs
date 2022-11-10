@@ -21,7 +21,7 @@
 
 		bool IsActive { get; }
 
-		string ValidIPs { get; }
+		string? ValidIPs { get; }
 
 		System.Guid Token { get; }
 
@@ -39,8 +39,8 @@
 
 
 
-		System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }
+		//System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }
 
-		System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
+		//System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
 	}
 }

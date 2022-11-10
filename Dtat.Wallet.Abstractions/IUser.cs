@@ -7,11 +7,16 @@
 	{
 		string? Username { get; }
 
-		string? DisplayName { get; }
-
 		string? EmailAddress { get; }
 
 		string? NationalCode { get; }
+
+
+
+		/// <summary>
+		/// این فیلد الزامی است
+		/// </summary>
+		string DisplayName { get; }
 
 		/// <summary>
 		/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
@@ -22,7 +27,7 @@
 
 
 
-		string Hash { get; }
+		string? Hash { get; }
 
 
 
@@ -30,8 +35,8 @@
 
 
 
-		System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }
+		//System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }
 
-		System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
+		//System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
 	}
 }
