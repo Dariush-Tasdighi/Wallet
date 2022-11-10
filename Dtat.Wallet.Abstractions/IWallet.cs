@@ -1,12 +1,23 @@
 ﻿namespace Dtat.Wallet.Abstractions
 {
-	public interface ICompanyWallet<T> : IBaseEntity<T>
+	public interface IWallet<T> : IBaseEntity<T>
 	{
 		T CompanyId { get; }
 
 
 
+		/// <summary>
+		/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
+		/// این فیلد باید به صورت کاملا انگلیسی و بدون فاصله نوشته شود
+		/// </summary>
 		string Name { get; }
+
+		/// <summary>
+		/// این فیلد الزامی است
+		/// </summary>
+		string DisplayName { get; }
+
+
 
 		bool IsActive { get; }
 

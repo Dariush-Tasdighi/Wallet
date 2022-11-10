@@ -16,6 +16,6 @@
 
 
 
-		System.Collections.Generic.IList<ICompanyWallet<T>> Wallets { get; }
+		System.Collections.Generic.IList<IWallet<T>> Wallets { get; }
 	}
 }

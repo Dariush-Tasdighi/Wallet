@@ -14,7 +14,7 @@
 		string? NationalCode { get; }
 
 		/// <summary>
-		/// این فیلد الزامی است
+		/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
 		/// </summary>
 		string CellPhoneNumber { get; }
 
