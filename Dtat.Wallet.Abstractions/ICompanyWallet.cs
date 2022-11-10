@@ -10,6 +10,8 @@
 
 		System.Guid Token { get; }
 
+		System.DateTime UpdateDateTime { get; }
+
 
 
 		bool PaymentFeatureIsEnabled { get; }
@@ -22,8 +24,8 @@
 
 
 
-		System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
+		System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }
 
-		System.Collections.Generic.IList<ICompanyWalletUser<T>> CompanyWalletUsers { get; }
+		System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
 	}
 }

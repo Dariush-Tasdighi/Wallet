@@ -4,7 +4,7 @@
 	{
 		T UserId { get; }
 
-		T CompanyWalletId { get; }
+		T WalletId { get; }
 
 
 

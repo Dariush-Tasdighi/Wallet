@@ -3,7 +3,6 @@
 	/// <summary>
 	/// شخص حقیقی / حقوقی
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
 	public interface IUser<T> : IBaseEntity<T>
 	{
 		string? Username { get; }
@@ -19,6 +18,8 @@
 		/// </summary>
 		string CellPhoneNumber { get; }
 
+		System.DateTime UpdateDateTime { get; }
+
 
 
 		string Hash { get; }
@@ -29,8 +30,8 @@
 
 
 
-		System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
+		System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }
 
-		System.Collections.Generic.IList<ICompanyWalletUser<T>> CompanyWalletUsers { get; }
+		System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
 	}
 }

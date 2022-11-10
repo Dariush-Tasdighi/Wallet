@@ -1,10 +1,18 @@
 ﻿namespace Dtat.Wallet.Abstractions
 {
-	public interface ICompanyWalletUser<T> : IBaseEntity<T>
+	public interface IUserWallet<T> : IBaseEntity<T>
 	{
+		T UserId { get; }
+
+		T CompanyId { get; }
+
+
+
 		bool IsActive { get; }
 
 		decimal Balance { get; }
+
+		System.DateTime UpdateDateTime { get; }
 
 		/// <summary>
 		/// فیلد مربوط به شناسه‌کاربر در سازمان مربوطه
@@ -20,9 +28,5 @@
 		bool WithdrawFeatureIsEnabled { get; }
 
 		bool TransferFeatureIsEnabled { get; }
-
-
-
-		System.Collections.Generic.IList<IUser<T>> Users { get; }
 	}
 }
