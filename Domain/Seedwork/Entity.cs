@@ -13,9 +13,13 @@
 		#region Properties
 
 		#region Id Property
+		/// <summary>
+		/// For Seed Data
+		/// </summary>
 		[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated
 			(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
-		public long Id { get; private set; }
+		//public long Id { get; private set; }
+		public long Id { get; set; }
 		#endregion /Id Property
 
 		#region InsertDateTime Property

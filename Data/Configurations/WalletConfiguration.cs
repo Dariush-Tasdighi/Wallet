@@ -1,49 +1,37 @@
 ﻿namespace Data.Configurations;
 
-internal class UserConfiguration : object,
-	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.User>
+internal class WalletConfiguration : object,
+	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.Wallet>
 {
-	public UserConfiguration() : base()
+	public WalletConfiguration() : base()
 	{
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.User> builder)
+		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.Wallet> builder)
 	{
 		// **************************************************
 		// **************************************************
 		// **************************************************
 		builder
-			.Property(current => current.EmailAddress)
+			.Property(current => current.Name)
 			.IsUnicode(unicode: false)
 			;
 
 		builder
-			.HasIndex(current => new { current.EmailAddress })
+			.HasIndex(current => new { current.Name })
 			.IsUnique(unique: true)
 			;
 		// **************************************************
 
 		// **************************************************
 		builder
-			.Property(current => current.NationalCode)
-			.IsUnicode(unicode: false)
+			.Property(current => current.DisplayName)
+			.IsUnicode(unicode: true)
 			;
 
 		builder
-			.HasIndex(current => new { current.NationalCode })
-			.IsUnique(unique: true)
-			;
-		// **************************************************
-
-		// **************************************************
-		builder
-			.Property(current => current.CellPhoneNumber)
-			.IsUnicode(unicode: false)
-			;
-
-		builder
-			.HasIndex(current => new { current.CellPhoneNumber })
+			.HasIndex(current => new { current.DisplayName })
 			.IsUnique(unique: true)
 			;
 		// **************************************************
@@ -55,9 +43,9 @@ internal class UserConfiguration : object,
 		// **************************************************
 		builder
 			.HasMany(current => current.UserWallets)
-			.WithOne(other => other.User)
+			.WithOne(other => other.Wallet)
 			.IsRequired(required: true)
-			.HasForeignKey(other => other.UserId)
+			.HasForeignKey(other => other.WalletId)
 			.OnDelete(deleteBehavior:
 				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
 			;
@@ -66,9 +54,9 @@ internal class UserConfiguration : object,
 		// **************************************************
 		builder
 			.HasMany(current => current.Transactions)
-			.WithOne(other => other.User)
+			.WithOne(other => other.Wallet)
 			.IsRequired(required: true)
-			.HasForeignKey(other => other.UserId)
+			.HasForeignKey(other => other.WalletId)
 			.OnDelete(deleteBehavior:
 				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
 			;
@@ -79,45 +67,29 @@ internal class UserConfiguration : object,
 		// **************************************************
 		// **************************************************
 		// **************************************************
-		var user =
-			new Domain.User(cellPhoneNumber: "09121087461", displayName: "داریوش تصدیقی")
+		var wallet =
+			new Domain.Wallet(companyId: Constant.CompanyId, name: "SEMATEC", displayName: "کیف پول سماتک")
 			{
-				//UserWallets
+				//Id
+				//Name
+				//Token
+				//Company
+				//CompanyId
 				//DisplayName
+				//UserWallets
 				//Transactions
 				//InsertDateTime
 				//UpdateDateTime
-				//CellPhoneNumber
 
-				Hash = null,
-				Description = null,
-				Id = Constant.UserId1,
-				NationalCode = "1234567890",
-				EmailAddress = "dariusht@gmail.com",
+				ValidIPs = null,
+				IsActive = true,
+				PaymentFeatureIsEnabled = true,
+				TransferFeatureIsEnabled = true,
+				DepositeFeatureIsEnabled = true,
+				WithdrawFeatureIsEnabled = true,
 			};
 
-		builder.HasData(data: user);
-		// **************************************************
-
-		// **************************************************
-		user =
-			new Domain.User(cellPhoneNumber: "09121087462", displayName: "علی رضا علوی")
-			{
-				//UserWallets
-				//DisplayName
-				//Transactions
-				//InsertDateTime
-				//UpdateDateTime
-				//CellPhoneNumber
-
-				Hash = null,
-				Description = null,
-				Id = Constant.UserId2,
-				NationalCode = "1234567891",
-				EmailAddress = "alirezaalavi@gmail.com",
-			};
-
-		builder.HasData(data: user);
+		builder.HasData(data: wallet);
 		// **************************************************
 		// **************************************************
 		// **************************************************

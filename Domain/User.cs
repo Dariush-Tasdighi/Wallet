@@ -21,19 +21,25 @@
 
 		public bool IsActive { get; set; }
 
-		public string? EmailAddress { get; set; }
+		public System.DateTime UpdateDateTime { get; private set; }
 
-		public string? NationalCode { get; set; }
+
 
 		public string DisplayName { get; set; }
 
 		public string CellPhoneNumber { get; set; }
 
-		public System.DateTime UpdateDateTime { get; private set; }
 
-		public string? Hash { get; private set; }
+
+		public string? Hash { get; set; }
 
 		public string? Description { get; set; }
+
+		public string? EmailAddress { get; set; }
+
+		public string? NationalCode { get; set; }
+
+
 
 		public virtual System.Collections.Generic.IList<UserWallet> UserWallets { get; private set; }
 

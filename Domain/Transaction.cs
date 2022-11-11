@@ -17,11 +17,17 @@
 
 		public virtual User? User { get; private set; }
 
+
+
 		public long WalletId { get; private set; }
 
 		public virtual Wallet? Wallet { get; private set; }
 
+
+
 		public decimal Amount { get; private set; }
+
+
 
 		public string? PaymentReferenceCode { get; set; }
 
@@ -31,11 +37,13 @@
 
 		public string? DepositeOrWithdrawReferenceCode { get; set; }
 
+
+
+		public string? Hash { get; set; }
+
 		public string? UserDescription { get; set; }
 
 		public string? SystemicDescription { get; set; }
-
-		public string? Hash { get; set; }
 
 		#endregion /Properties
 	}

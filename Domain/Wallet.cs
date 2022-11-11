@@ -3,9 +3,10 @@
 	public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 	{
 		#region Constructor
-		public Wallet(string name, string displayName)
+		public Wallet(long companyId, string name, string displayName)
 		{
 			Name = name;
+			CompanyId = companyId;
 			DisplayName = displayName;
 			Token = System.Guid.NewGuid();
 
@@ -26,6 +27,14 @@
 		public string Name { get; set; }
 
 		public string DisplayName { get; set; }
+
+
+
+		public string? Hash { get; set; }
+
+		public string? Description { get; set; }
+
+
 
 		public bool IsActive { get; set; }
 

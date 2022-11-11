@@ -19,15 +19,23 @@
 
 		public virtual User? User { get; private set; }
 
+
+
 		public long WalletId { get; private set; }
 
 		public virtual Wallet? Wallet { get; private set; }
 
+
+
 		public bool IsActive { get; set; }
+
+		public System.DateTime UpdateDateTime { get; private set; }
+
+
 
 		public decimal Balance { get; set; }
 
-		public System.DateTime UpdateDateTime { get; private set; }
+
 
 		public string CompanyUserIdentity { get; set; }
 
@@ -38,6 +46,12 @@
 		public bool WithdrawFeatureIsEnabled { get; set; }
 
 		public bool TransferFeatureIsEnabled { get; set; }
+
+
+
+		public string? Hash { get; set; }
+
+		public string? Description { get; set; }
 
 		#endregion /Properties
 	}

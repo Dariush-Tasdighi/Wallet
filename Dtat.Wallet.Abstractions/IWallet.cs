@@ -13,9 +13,15 @@
 		string Name { get; }
 
 		/// <summary>
-		/// این فیلد الزامی است
+		/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
 		/// </summary>
 		string DisplayName { get; }
+
+
+
+		string? Hash { get; }
+
+		string? Description { get; }
 
 
 

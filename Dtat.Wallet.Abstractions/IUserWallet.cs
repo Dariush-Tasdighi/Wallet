@@ -22,6 +22,12 @@
 
 
 
+		string? Hash { get; }
+
+		string? Description { get; }
+
+
+
 		bool PaymentFeatureIsEnabled { get; }
 
 		bool DepositeFeatureIsEnabled { get; }
