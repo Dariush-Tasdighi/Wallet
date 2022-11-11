@@ -70,7 +70,6 @@ internal class WalletConfiguration : object,
 		var wallet =
 			new Domain.Wallet(companyId: Constant.CompanyId, name: "SEMATEC", displayName: "کیف پول سماتک")
 			{
-				//Id
 				//Name
 				//Token
 				//Company
@@ -83,6 +82,7 @@ internal class WalletConfiguration : object,
 
 				ValidIPs = null,
 				IsActive = true,
+				Id = Constant.WalletId,
 				PaymentFeatureIsEnabled = true,
 				TransferFeatureIsEnabled = true,
 				DepositeFeatureIsEnabled = true,
