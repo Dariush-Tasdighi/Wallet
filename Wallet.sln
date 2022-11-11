@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dtat.Wallet.Abstractions", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{1E5434D6-F7ED-427A-82BC-BB71A97D1A93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{60484D31-3630-40B6-B016-3A393658314C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{1E5434D6-F7ED-427A-82BC-BB71A97D1A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E5434D6-F7ED-427A-82BC-BB71A97D1A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E5434D6-F7ED-427A-82BC-BB71A97D1A93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60484D31-3630-40B6-B016-3A393658314C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60484D31-3630-40B6-B016-3A393658314C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60484D31-3630-40B6-B016-3A393658314C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60484D31-3630-40B6-B016-3A393658314C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6D3C4655-6F9F-49BB-BDC8-E178677E3A6B} = {03D55AE7-4FA7-44A0-ABAE-695D6B61F9A4}
 		{1E5434D6-F7ED-427A-82BC-BB71A97D1A93} = {9A227D1A-05B3-41A8-85A2-6CDA4D16EDE1}
+		{60484D31-3630-40B6-B016-3A393658314C} = {7A992F5B-B37E-44C8-97F9-17356AD18FFA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE875A73-FA77-405C-9C7C-278201376671}

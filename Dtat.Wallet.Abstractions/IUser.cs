@@ -5,7 +5,7 @@
 	/// </summary>
 	public interface IUser<T> : IBaseEntity<T>
 	{
-		string? Username { get; }
+		bool IsActive { get; }
 
 		string? EmailAddress { get; }
 
