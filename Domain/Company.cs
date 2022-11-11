@@ -28,7 +28,7 @@
 
 		public string? Description { get; set; }
 
-		public System.Collections.Generic.IList<Wallet> Wallets { get; private set; }
+		public virtual System.Collections.Generic.IList<Wallet> Wallets { get; private set; }
 
 		#endregion /Properties
 	}

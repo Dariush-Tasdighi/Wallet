@@ -35,9 +35,9 @@
 
 		public string? Description { get; set; }
 
-		public System.Collections.Generic.IList<UserWallet> UserWallets { get; private set; }
+		public virtual System.Collections.Generic.IList<UserWallet> UserWallets { get; private set; }
 
-		public System.Collections.Generic.IList<Transaction> Transactions { get; private set; }
+		public virtual System.Collections.Generic.IList<Transaction> Transactions { get; private set; }
 
 		#endregion /Properties
 	}

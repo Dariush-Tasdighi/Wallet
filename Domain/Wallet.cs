@@ -19,7 +19,9 @@
 
 		#region Properties
 
-		public long CompanyId { get; set; }
+		public long CompanyId { get; private set; }
+
+		public virtual Company? Company { get; private set; }
 
 		public string Name { get; set; }
 
@@ -41,9 +43,9 @@
 
 		public bool TransferFeatureIsEnabled { get; set; }
 
-		public System.Collections.Generic.IList<UserWallet> UserWallets { get; private set; }
+		public virtual System.Collections.Generic.IList<UserWallet> UserWallets { get; private set; }
 
-		public System.Collections.Generic.IList<Transaction> Transactions { get; private set; }
+		public virtual System.Collections.Generic.IList<Transaction> Transactions { get; private set; }
 
 		#endregion /Properties
 	}

@@ -15,7 +15,11 @@
 
 		public long UserId { get; private set; }
 
+		public virtual User? User { get; private set; }
+
 		public long WalletId { get; private set; }
+
+		public virtual Wallet? Wallet { get; private set; }
 
 		public decimal Amount { get; private set; }
 
