@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{60484D31-3630-40B6-B016-3A393658314C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletService", "WalletService\WalletService.csproj", "{E7541E87-0734-4F3D-83E3-37909E980175}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "WalletService\Server.csproj", "{E7541E87-0734-4F3D-83E3-37909E980175}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

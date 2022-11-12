@@ -41,8 +41,10 @@
 
 
 
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual System.Collections.Generic.IList<UserWallet> UserWallets { get; private set; }
 
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual System.Collections.Generic.IList<Transaction> Transactions { get; private set; }
 
 		#endregion /Properties

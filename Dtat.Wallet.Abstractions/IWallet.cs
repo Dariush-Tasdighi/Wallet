@@ -44,9 +44,10 @@
 		bool TransferFeatureIsEnabled { get; }
 
 
-
+		// صرفا در جهت اطلاع
 		//System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }
 
+		// صرفا در جهت اطلاع
 		//System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
 	}
 }

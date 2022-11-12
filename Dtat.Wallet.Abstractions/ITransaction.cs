@@ -32,12 +32,10 @@
 
 
 
+		string? Hash { get; }
+
 		string? UserDescription { get; }
 
 		string? SystemicDescription { get; }
-
-
-
-		string? Hash { get; }
 	}
 }

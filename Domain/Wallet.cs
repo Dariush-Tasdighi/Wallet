@@ -22,6 +22,7 @@
 
 		public long CompanyId { get; private set; }
 
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual Company? Company { get; private set; }
 
 		public string Name { get; set; }
@@ -52,8 +53,10 @@
 
 		public bool TransferFeatureIsEnabled { get; set; }
 
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual System.Collections.Generic.IList<UserWallet> UserWallets { get; private set; }
 
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual System.Collections.Generic.IList<Transaction> Transactions { get; private set; }
 
 		#endregion /Properties

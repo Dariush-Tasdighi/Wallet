@@ -28,6 +28,7 @@
 
 		public string? Description { get; set; }
 
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual System.Collections.Generic.IList<Wallet> Wallets { get; private set; }
 
 		#endregion /Properties

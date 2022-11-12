@@ -17,12 +17,14 @@
 
 		public long UserId { get; private set; }
 
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual User? User { get; private set; }
 
 
 
 		public long WalletId { get; private set; }
 
+		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual Wallet? Wallet { get; private set; }
 
 

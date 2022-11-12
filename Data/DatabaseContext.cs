@@ -4,20 +4,8 @@ namespace Data;
 
 public class DatabaseContext : Microsoft.EntityFrameworkCore.DbContext
 {
-	//#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-	//	public DatabaseContext
-	//#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-	//		(Microsoft.EntityFrameworkCore.DbContextOptions<DatabaseContext> options) : base(options: options)
-	//	{
-	//		// **************************************************
-	//		// TODO: Should Delete Later!
-	//		// **************************************************
-	//		Database.EnsureCreated();
-	//		// **************************************************
-	//	}
-
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-	public DatabaseContext() : base()
+	public DatabaseContext(Microsoft.EntityFrameworkCore.DbContextOptions<DatabaseContext> options) : base(options: options)
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	{
 		// **************************************************
@@ -41,17 +29,6 @@ public class DatabaseContext : Microsoft.EntityFrameworkCore.DbContext
 		(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
 	{
 		base.OnConfiguring(optionsBuilder: optionsBuilder);
-
-		// **************************************************
-		// TODO: Should Delete Later!
-		// **************************************************
-		var connectionString =
-			"Server=.;Database=DTAT_WALLET;MultipleActiveResultSets=true;User ID=sa;Password=1234512345;";
-
-		// UseSqlServer() -> using Microsoft.EntityFrameworkCore;
-		optionsBuilder.UseSqlServer
-			(connectionString: connectionString);
-		// **************************************************
 	}
 
 	protected override void OnModelCreating
