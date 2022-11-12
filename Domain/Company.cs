@@ -3,7 +3,7 @@
 	public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 	{
 		#region Constructor
-		public Company(string name)
+		public Company(string name) : base()
 		{
 			Name = name;
 			Token = System.Guid.NewGuid();

@@ -6,5 +6,9 @@ public static class Constant : object
 	{
 	}
 
-	public const string DefaultRoute = "[controller]";
+	//public const string DefaultRoute = "[controller]";
+
+	public const string DefaultRoute = "api/[controller]";
+
+	public const string ErrorMessage = "Error: {Message}";
 }

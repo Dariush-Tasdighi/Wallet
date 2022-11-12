@@ -45,9 +45,9 @@ var connectionString =
 builder.Services.AddDbContext<Data.DatabaseContext>
 	(optionsAction: options =>
 	{
-		options
-			// using Microsoft.EntityFrameworkCore;
-			.UseLazyLoadingProxies();
+		//options
+		//	// using Microsoft.EntityFrameworkCore;
+		//	.UseLazyLoadingProxies();
 
 		options
 			// using Microsoft.EntityFrameworkCore;

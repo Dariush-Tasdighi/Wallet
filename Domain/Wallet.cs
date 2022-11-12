@@ -3,7 +3,7 @@
 	public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 	{
 		#region Constructor
-		public Wallet(long companyId, string name, string displayName)
+		public Wallet(long companyId, string name, string displayName) : base()
 		{
 			Name = name;
 			CompanyId = companyId;

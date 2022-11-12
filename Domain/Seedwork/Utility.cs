@@ -1,20 +1,19 @@
-﻿namespace Domain.Seedwork
+﻿namespace Domain.Seedwork;
+
+public static class Utility : object
 {
-	public static class Utility : object
+	static Utility()
 	{
-		static Utility()
-		{
-		}
+	}
 
-		public static System.DateTime Now
+	public static System.DateTime Now
+	{
+		get
 		{
-			get
-			{
-				var result =
-					System.DateTime.Now;
+			var result =
+				System.DateTime.Now;
 
-				return result;
-			}
+			return result;
 		}
 	}
 }
