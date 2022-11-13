@@ -15,10 +15,19 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 
 	private Microsoft.Extensions.Logging.ILogger<CompaniesController> Logger { get; }
 
+	#region GetAllCompaniesAsync()
 	[Microsoft.AspNetCore.Mvc.HttpGet]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(System.Collections.Generic.IEnumerable<Domain.Company>),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(string),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
 	public async System.Threading.Tasks.Task
 		<Microsoft.AspNetCore.Mvc.ActionResult
-		<System.Collections.Generic.IEnumerable<Domain.Company>>> Get()
+		<System.Collections.Generic.IEnumerable<Domain.Company>>> GetAllCompaniesAsync()
 	{
 		try
 		{
@@ -33,16 +42,36 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 		}
 		catch (System.Exception ex)
 		{
-			Logger.LogError
-				(message: Infrastructure.Constant.ErrorMessage, ex.Message);
+			var applicationError =
+				new Infrastructure.ApplicationError
+				(code: Infrastructure.Constant.ErrorCode.CompaniesController_GetCompanyByIdAsync,
+				message: ex.Message, innerException: ex);
 
-			return BadRequest(error: ex.Message);
+			Logger.LogError
+				(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
+
+			return StatusCode(statusCode: Microsoft.AspNetCore
+				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
 		}
 	}
+	#endregion /GetAllCompaniesAsync()
 
+	#region GetCompanyByIdAsync
 	[Microsoft.AspNetCore.Mvc.HttpGet(template: "{id}")]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(Domain.Company),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(string),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(string),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
 	public async System.Threading.Tasks.Task
-		<Microsoft.AspNetCore.Mvc.ActionResult<Domain.Company>> Get(long id)
+		<Microsoft.AspNetCore.Mvc.ActionResult<Domain.Company>> GetCompanyByIdAsync(long id)
 	{
 		try
 		{
@@ -55,17 +84,24 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 
 			if (item == null)
 			{
-				return NotFound();
+				return NotFound(value: Infrastructure.Constant.Message.NotFound);
 			}
 
 			return Ok(value: item);
 		}
 		catch (System.Exception ex)
 		{
-			Logger.LogError
-				(message: Infrastructure.Constant.ErrorMessage, ex.Message);
+			var applicationError =
+				new Infrastructure.ApplicationError
+				(code: Infrastructure.Constant.ErrorCode.CompaniesController_GetCompanyByIdAsync,
+				message: ex.Message, innerException: ex);
 
-			return BadRequest(error: ex.Message);
+			Logger.LogError
+				(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
+
+			return StatusCode(statusCode: Microsoft.AspNetCore
+				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
 		}
 	}
+	#endregion /GetCompanyByIdAsync
 }
