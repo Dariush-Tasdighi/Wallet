@@ -6,14 +6,18 @@ namespace Server.Controllers;
 
 public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseContext
 {
+	#region Constructor
 	public CompaniesController
 		(Microsoft.Extensions.Logging.ILogger<CompaniesController> logger,
 		Data.DatabaseContext databaseContext) : base(databaseContext: databaseContext)
 	{
 		Logger = logger;
 	}
+	#endregion /Constructor
 
+	#region Properties
 	private Microsoft.Extensions.Logging.ILogger<CompaniesController> Logger { get; }
+	#endregion /Properties
 
 	#region GetAllCompaniesAsync()
 	[Microsoft.AspNetCore.Mvc.HttpGet]
@@ -56,7 +60,7 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 	}
 	#endregion /GetAllCompaniesAsync()
 
-	#region GetCompanyByIdAsync
+	#region GetCompanyByIdAsync()
 	[Microsoft.AspNetCore.Mvc.HttpGet(template: "{id}")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
@@ -103,5 +107,5 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
 		}
 	}
-	#endregion /GetCompanyByIdAsync
+	#endregion /GetCompanyByIdAsync()
 }

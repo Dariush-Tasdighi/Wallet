@@ -1,4 +1,4 @@
-// **************************************************
+﻿// **************************************************
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +45,7 @@ var connectionString =
 builder.Services.AddDbContext<Data.DatabaseContext>
 	(optionsAction: options =>
 	{
+		// از دستور ذیل استفاده نمی‌کنیم
 		//options
 		//	// using Microsoft.EntityFrameworkCore;
 		//	.UseLazyLoadingProxies();
