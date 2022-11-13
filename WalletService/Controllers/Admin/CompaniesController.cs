@@ -2,13 +2,14 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
-namespace Server.Controllers;
+namespace Server.Controllers.Admin;
 
+[Microsoft.AspNetCore.Mvc.Route(template: Infrastructure.Constant.DefaultAdminRoute)]
 public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseContext
 {
 	#region Constructor
 	public CompaniesController
-		(Microsoft.Extensions.Logging.ILogger<CompaniesController> logger,
+		(ILogger<CompaniesController> logger,
 		Data.DatabaseContext databaseContext) : base(databaseContext: databaseContext)
 	{
 		Logger = logger;
@@ -16,7 +17,7 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 	#endregion /Constructor
 
 	#region Properties
-	private Microsoft.Extensions.Logging.ILogger<CompaniesController> Logger { get; }
+	private ILogger<CompaniesController> Logger { get; }
 	#endregion /Properties
 
 	#region GetAllCompaniesAsync()
@@ -48,7 +49,7 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 		{
 			var applicationError =
 				new Infrastructure.ApplicationError
-				(code: Infrastructure.Constant.ErrorCode.CompaniesController_GetCompanyByIdAsync,
+				(code: Infrastructure.Constant.ErrorCode.Admin_CompaniesController_GetAllCompaniesAsync,
 				message: ex.Message, innerException: ex);
 
 			Logger.LogError
@@ -97,7 +98,7 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 		{
 			var applicationError =
 				new Infrastructure.ApplicationError
-				(code: Infrastructure.Constant.ErrorCode.CompaniesController_GetCompanyByIdAsync,
+				(code: Infrastructure.Constant.ErrorCode.Admin_CompaniesController_GetCompanyByIdAsync,
 				message: ex.Message, innerException: ex);
 
 			Logger.LogError

@@ -3,7 +3,7 @@
 	public class ApplicationError : System.ApplicationException
 	{
 		public ApplicationError
-			(int code, string message, System.Exception? innerException = null) :
+			(long code, string message, System.Exception? innerException = null) :
 			base(message: $"{code}: {message}", innerException: innerException)
 		{
 			Code = code;
@@ -15,7 +15,7 @@
 			//	$"{code}: Internal Server Error!";
 		}
 
-		public int Code { get; }
+		public long Code { get; }
 
 		public string DisplayMessage { get; }
 	}
