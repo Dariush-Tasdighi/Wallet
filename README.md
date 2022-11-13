@@ -1,6 +1,10 @@
 # Wallet Microservice
 
 - ### Multi Company
-- ### Multi Feature
-- ### Multi Centeral User
 - ### Multi Wallet for each Company
+- ### Multi User (Independent Definition)
+- ### Multi Feature
+  - #### Payment
+  - #### Deposite
+  - #### Withdraw
+  - #### Transfer
