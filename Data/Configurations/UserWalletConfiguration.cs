@@ -14,6 +14,25 @@ internal class UserWalletConfiguration : object,
 		// **************************************************
 		// **************************************************
 		builder
+			.HasIndex(current => new { current.WalletId, current.UserId })
+			.IsUnique(unique: true)
+			;
+		// **************************************************
+
+		// **************************************************
+		builder
+			.Property(current => current.CompanyUserIdentity)
+			.IsUnicode(unicode: false)
+			;
+
+		builder
+			.HasIndex(current => new { current.WalletId, current.CompanyUserIdentity })
+			.IsUnique(unique: true)
+			;
+		// **************************************************
+
+		// **************************************************
+		builder
 			.Property(current => current.Hash)
 			.IsUnicode(unicode: false)
 			;

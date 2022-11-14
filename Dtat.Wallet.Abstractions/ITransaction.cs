@@ -16,6 +16,8 @@
 		/// </summary>
 		decimal Amount { get; }
 
+		int TimeDurationInMillisecond { get; }
+
 
 
 		string? PaymentReferenceCode { get; }
@@ -33,6 +35,12 @@
 
 
 		string? Hash { get; }
+
+		string UserIP { get; }
+
+		string ServerIP { get; }
+
+		string? AdditionalData { get; }
 
 		string? UserDescription { get; }
 

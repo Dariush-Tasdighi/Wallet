@@ -39,6 +39,7 @@
 
 
 
+		[System.ComponentModel.DataAnnotations.MaxLength(length: 50)]
 		public string CompanyUserIdentity { get; set; }
 
 		public bool PaymentFeatureIsEnabled { get; set; }
@@ -55,6 +56,8 @@
 
 		public string? Description { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength(length: 1000)]
+		public string? AdditionalData { get; set; }
 		#endregion /Properties
 	}
 }

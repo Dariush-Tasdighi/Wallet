@@ -39,6 +39,9 @@
 
 		public string? NationalCode { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength(length: 1000)]
+		public string? AdditionalData { get; set; }
+
 
 
 		[System.Text.Json.Serialization.JsonIgnore]

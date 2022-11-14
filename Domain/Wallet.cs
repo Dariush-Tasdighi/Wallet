@@ -35,6 +35,9 @@
 
 		public string? Description { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength(length: 1000)]
+		public string? AdditionalData { get; set; }
+
 
 
 		public bool IsActive { get; set; }

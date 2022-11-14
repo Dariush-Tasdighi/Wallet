@@ -26,6 +26,8 @@
 
 		string? Description { get; }
 
+		string? AdditionalData { get; }
+
 
 
 		bool PaymentFeatureIsEnabled { get; }

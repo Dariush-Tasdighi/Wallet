@@ -31,6 +31,8 @@
 
 		string? Description { get; }
 
+		string? AdditionalData { get; }
+
 
 
 		// صرفا در جهت اطلاع

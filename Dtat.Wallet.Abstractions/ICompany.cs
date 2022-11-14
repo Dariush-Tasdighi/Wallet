@@ -6,6 +6,8 @@
 
 		string? Description { get; }
 
+		string? AdditionalData { get; }
+
 
 
 		bool IsActive { get; }
