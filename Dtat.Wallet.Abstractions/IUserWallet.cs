@@ -14,12 +14,6 @@
 
 		System.DateTime UpdateDateTime { get; }
 
-		/// <summary>
-		/// فیلد مربوط به شناسه‌کاربر در سازمان مربوطه
-		/// این فیلد می‌تواند شماره تلفن همراه کاربر باشد
-		/// </summary>
-		string CompanyUserIdentity { get; }
-
 
 
 		string? Hash { get; }
@@ -36,6 +30,9 @@
 
 		bool WithdrawFeatureIsEnabled { get; }
 
-		bool TransferFeatureIsEnabled { get; }
+		/// <summary>
+		/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
+		/// </summary>
+		//bool TransferFeatureIsEnabled { get; }
 	}
 }

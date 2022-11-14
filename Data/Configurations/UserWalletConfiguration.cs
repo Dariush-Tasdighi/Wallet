@@ -21,18 +21,6 @@ internal class UserWalletConfiguration : object,
 
 		// **************************************************
 		builder
-			.Property(current => current.CompanyUserIdentity)
-			.IsUnicode(unicode: false)
-			;
-
-		builder
-			.HasIndex(current => new { current.WalletId, current.CompanyUserIdentity })
-			.IsUnique(unique: true)
-			;
-		// **************************************************
-
-		// **************************************************
-		builder
 			.Property(current => current.Hash)
 			.IsUnicode(unicode: false)
 			;
@@ -44,8 +32,7 @@ internal class UserWalletConfiguration : object,
 		// **************************************************
 		// **************************************************
 		var userWallet =
-			new Domain.UserWallet(userId: Constant.UserId1,
-			walletId: Constant.WalletId, companyUserIdentity: "09121087461")
+			new Domain.UserWallet(userId: Constant.UserId1, walletId: Constant.WalletId)
 			{
 				//Name
 				//Token
@@ -63,8 +50,7 @@ internal class UserWalletConfiguration : object,
 
 		// **************************************************
 		userWallet =
-			new Domain.UserWallet(userId: Constant.UserId2,
-			walletId: Constant.WalletId, companyUserIdentity: "09121087462")
+			new Domain.UserWallet(userId: Constant.UserId2, walletId: Constant.WalletId)
 			{
 				//Name
 				//Token

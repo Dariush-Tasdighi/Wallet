@@ -36,7 +36,7 @@ public static class Constant : object
 		// **********
 		public const long UsersController = Root + 101000;
 
-		//public const long Root_UsersController_GetUserByIdAsync = UsersController + 101;
+		public const long Root_UsersController_Deposite = UsersController + 101;
 
 		public const long Root_UsersController_GetBalanceAsync = UsersController + 102;
 

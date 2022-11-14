@@ -36,29 +36,42 @@
 
 
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.ReferenceCode)]
 		public string? PaymentReferenceCode { get; set; }
 
-		public string? TransfererCompanyUserIdentity { get; set; }
-
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.ProviderName)]
 		public string? DepositeOrWithdrawProviderName { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.ReferenceCode)]
 		public string? DepositeOrWithdrawReferenceCode { get; set; }
 
 
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Hash)]
 		public string? Hash { get; set; }
 
-		[System.ComponentModel.DataAnnotations.MaxLength(length: 15)]
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.IP)]
 		public string UserIP { get; set; }
 
-		[System.ComponentModel.DataAnnotations.MaxLength(length: 15)]
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.IP)]
 		public string ServerIP { get; set; }
 
-		[System.ComponentModel.DataAnnotations.MaxLength(length: 1000)]
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.AdditionalData)]
 		public string? AdditionalData { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Description)]
 		public string? UserDescription { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Description)]
 		public string? SystemicDescription { get; set; }
 		#endregion /Properties
 	}

@@ -3,11 +3,10 @@
 	public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<long>
 	{
 		#region Constructor
-		public UserWallet(long userId, long walletId, string companyUserIdentity) : base()
+		public UserWallet(long userId, long walletId) : base()
 		{
 			UserId = userId;
 			WalletId = walletId;
-			CompanyUserIdentity = companyUserIdentity;
 
 			UpdateDateTime = InsertDateTime;
 		}
@@ -39,24 +38,29 @@
 
 
 
-		[System.ComponentModel.DataAnnotations.MaxLength(length: 50)]
-		public string CompanyUserIdentity { get; set; }
-
 		public bool PaymentFeatureIsEnabled { get; set; }
 
 		public bool DepositeFeatureIsEnabled { get; set; }
 
 		public bool WithdrawFeatureIsEnabled { get; set; }
 
-		public bool TransferFeatureIsEnabled { get; set; }
+		/// <summary>
+		/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
+		/// </summary>
+		//public bool TransferFeatureIsEnabled { get; set; }
 
 
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Hash)]
 		public string? Hash { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Description)]
 		public string? Description { get; set; }
 
-		[System.ComponentModel.DataAnnotations.MaxLength(length: 1000)]
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.AdditionalData)]
 		public string? AdditionalData { get; set; }
 		#endregion /Properties
 	}

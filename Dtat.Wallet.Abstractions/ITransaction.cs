@@ -22,12 +22,6 @@
 
 		string? PaymentReferenceCode { get; }
 
-		/// <summary>
-		/// فیلد مربوط به شناسه‌کاربر در سازمان مربوطه
-		/// این فیلد می‌تواند شماره تلفن همراه کاربر باشد
-		/// </summary>
-		string? TransfererCompanyUserIdentity { get; }
-
 		string? DepositeOrWithdrawProviderName { get; }
 
 		string? DepositeOrWithdrawReferenceCode { get; }

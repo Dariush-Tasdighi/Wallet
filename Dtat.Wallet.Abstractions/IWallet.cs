@@ -8,14 +8,8 @@
 
 		/// <summary>
 		/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
-		/// این فیلد باید به صورت کاملا انگلیسی و بدون فاصله نوشته شود
 		/// </summary>
 		string Name { get; }
-
-		/// <summary>
-		/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
-		/// </summary>
-		string DisplayName { get; }
 
 
 
@@ -29,8 +23,6 @@
 
 		bool IsActive { get; }
 
-		string? ValidIPs { get; }
-
 		System.Guid Token { get; }
 
 		System.DateTime UpdateDateTime { get; }
@@ -43,8 +35,15 @@
 
 		bool WithdrawFeatureIsEnabled { get; }
 
-		bool TransferFeatureIsEnabled { get; }
+		/// <summary>
+		/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
+		/// </summary>
+		//bool TransferFeatureIsEnabled { get; }
 
+
+
+		// صرفا در جهت اطلاع
+		//System.Collections.Generic.IList<IValidIP<T>> ValidIPs { get; }
 
 		// صرفا در جهت اطلاع
 		//System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }

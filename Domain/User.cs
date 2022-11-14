@@ -25,21 +25,40 @@
 
 
 
+		[System.ComponentModel.DataAnnotations.Required
+			(AllowEmptyStrings = false)]
+
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.DisplayName)]
 		public string DisplayName { get; set; }
 
+		[System.ComponentModel.DataAnnotations.Required
+			(AllowEmptyStrings = false)]
+
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.CellPhoneNumber)]
 		public string CellPhoneNumber { get; set; }
 
 
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Hash)]
 		public string? Hash { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Description)]
 		public string? Description { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.EmailAddress)]
 		public string? EmailAddress { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.NationalCode)]
 		public string? NationalCode { get; set; }
 
-		[System.ComponentModel.DataAnnotations.MaxLength(length: 1000)]
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.AdditionalData)]
 		public string? AdditionalData { get; set; }
 
 

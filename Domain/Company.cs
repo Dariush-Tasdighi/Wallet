@@ -1,4 +1,6 @@
-﻿namespace Domain
+﻿using System.Runtime.Versioning;
+
+namespace Domain
 {
 	public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 	{
@@ -24,11 +26,19 @@
 
 
 
+		[System.ComponentModel.DataAnnotations.Required
+			(AllowEmptyStrings = false)]
+
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Name)]
 		public string Name { get; set; }
 
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Description)]
 		public string? Description { get; set; }
 
-		[System.ComponentModel.DataAnnotations.MaxLength(length: 1000)]
+		[System.ComponentModel.DataAnnotations.MaxLength
+			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.AdditionalData)]
 		public string? AdditionalData { get; set; }
 
 		[System.Text.Json.Serialization.JsonIgnore]

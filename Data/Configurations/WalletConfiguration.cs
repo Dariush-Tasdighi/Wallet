@@ -14,32 +14,24 @@ internal class WalletConfiguration : object,
 		// **************************************************
 		// **************************************************
 		builder
-			.Property(current => current.Name)
-			.IsUnicode(unicode: false)
-			;
-
-		builder
 			.HasIndex(current => new { current.Name })
 			.IsUnique(unique: true)
 			;
 		// **************************************************
+		// **************************************************
+		// **************************************************
 
 		// **************************************************
 		builder
-			.Property(current => current.DisplayName)
-			.IsUnicode(unicode: true)
+			.HasMany(current => current.ValidIPs)
+			.WithOne(other => other.Wallet)
+			.IsRequired(required: true)
+			.HasForeignKey(other => other.WalletId)
+			.OnDelete(deleteBehavior:
+				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
 			;
-
-		builder
-			.HasIndex(current => new { current.DisplayName })
-			.IsUnique(unique: true)
-			;
-		// **************************************************
-		// **************************************************
 		// **************************************************
 
-		// **************************************************
-		// **************************************************
 		// **************************************************
 		builder
 			.HasMany(current => current.UserWallets)
@@ -68,7 +60,8 @@ internal class WalletConfiguration : object,
 		// **************************************************
 		// **************************************************
 		var wallet =
-			new Domain.Wallet(companyId: Constant.CompanyId, name: "SEMATEC", displayName: "کیف پول سماتک")
+			new Domain.Wallet(companyId: Constant.CompanyId,
+			name: "کیف پول سماتک")
 			{
 				//Name
 				//Token
@@ -80,13 +73,12 @@ internal class WalletConfiguration : object,
 				//InsertDateTime
 				//UpdateDateTime
 
-				ValidIPs = null,
 				IsActive = true,
 				Id = Constant.WalletId,
 				PaymentFeatureIsEnabled = true,
-				TransferFeatureIsEnabled = true,
 				DepositeFeatureIsEnabled = true,
 				WithdrawFeatureIsEnabled = true,
+				//TransferFeatureIsEnabled = true,
 			};
 
 		builder.HasData(data: wallet);

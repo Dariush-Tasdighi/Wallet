@@ -19,6 +19,8 @@ public class DatabaseContext : Microsoft.EntityFrameworkCore.DbContext
 
 	public Microsoft.EntityFrameworkCore.DbSet<Domain.Wallet> Wallets { get; set; }
 
+	public Microsoft.EntityFrameworkCore.DbSet<Domain.ValidIP> ValidIPs { get; set; }
+
 	public Microsoft.EntityFrameworkCore.DbSet<Domain.Company> Companies { get; set; }
 
 	public Microsoft.EntityFrameworkCore.DbSet<Domain.UserWallet> UserWallets { get; set; }
