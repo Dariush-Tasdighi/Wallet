@@ -17,6 +17,11 @@ public static class Constant : object
 		public const string NotFound = "آیتم مورد نظر یافت نشد!";
 	}
 
+	public static class ErrorMessage : object
+	{
+		public const string AmountIsZero = "مقدار نمی‌تواند صفر باشد!";
+	}
+
 	public static class ErrorCode : object
 	{
 		static ErrorCode()

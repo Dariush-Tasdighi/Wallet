@@ -4,14 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Server.Controllers;
 
-public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
+public class UsersController :
+	Infrastructure.ControllerBaseWithDatabaseContext
 {
 	private static object Locker = new();
 
 	#region Constructor
 	public UsersController
 		(ILogger<UsersController> logger,
-		Data.DatabaseContext databaseContext) : base(databaseContext: databaseContext)
+		Data.DatabaseContext databaseContext) :
+		base(databaseContext: databaseContext)
 	{
 		Logger = logger;
 	}
@@ -23,19 +25,19 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 
 	#region GetBalanceAsync()
 	[Microsoft.AspNetCore.Mvc.HttpGet
-		(template: "[action]/{waletToken}/{companyUserIdentity}")]
+		(template: "[action]/{waletToken}/{cellPhoneNumber}")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(Domain.Wallet),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(string),
-		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
+		(type: typeof(long),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(string),
-		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
 	public async System.Threading.Tasks.Task
 		<Microsoft.AspNetCore.Mvc.ActionResult<decimal>>
 		GetBalanceAsync(System.Guid waletToken, string cellPhoneNumber)
@@ -81,7 +83,7 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 
 	#region GetLastTransactionsAsync()
 	[Microsoft.AspNetCore.Mvc.HttpGet
-		(template: "[action]/{waletToken}/{companyUserIdentity}/{count}")]
+		(template: "[action]/{waletToken}/{cellPhoneNumber}/{count}")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(Domain.Wallet),
@@ -105,10 +107,12 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 			//	DatabaseContext.UserWallets
 			//	.AsNoTracking()
 			//	.Where(current => current.IsActive)
-			//	.Where(current => current.User != null && current.User.IsActive)
+
 			//	.Where(current => current.Wallet != null && current.Wallet.IsActive)
-			//	.Where(current => current.CompanyUserIdentity == companyUserIdentity)
 			//	.Where(current => current.Wallet != null && current.Wallet.Token == waletToken)
+
+			//	.Where(current => current.User != null && current.User.IsActive)
+			//	.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
 			//	.FirstOrDefaultAsync();
 
 			// فارغ از هر شرایطی، امکان نمایش تراکنش‌های کاربر
@@ -155,82 +159,6 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 	}
 	#endregion /GetLastTransactions()
 
-	//#region RegisterUserAsync()
-	//[Microsoft.AspNetCore.Mvc.HttpGet
-	//	(template: "[action]/{waletToken}/{companyUserIdentity}/{count}")]
-
-	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
-	//	(type: typeof(Domain.Wallet),
-	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
-
-	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
-	//	(type: typeof(string),
-	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
-
-	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
-	//	(type: typeof(string),
-	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
-	//public async System.Threading.Tasks.Task
-	//	<Microsoft.AspNetCore.Mvc.ActionResult<System.Collections.Generic.IList<Domain.Transaction>>>
-	//	RegisterUserAsync(System.Guid waletToken, string companyUserIdentity, int count)
-	//{
-	//	try
-	//	{
-	//		//var foundedUserWallet =
-	//		//	await
-	//		//	DatabaseContext.UserWallets
-	//		//	.AsNoTracking()
-	//		//	.Where(current => current.IsActive)
-	//		//	.Where(current => current.User != null && current.User.IsActive)
-	//		//	.Where(current => current.Wallet != null && current.Wallet.IsActive)
-	//		//	.Where(current => current.CompanyUserIdentity == companyUserIdentity)
-	//		//	.Where(current => current.Wallet != null && current.Wallet.Token == waletToken)
-	//		//	.FirstOrDefaultAsync();
-
-	//		// فارغ از هر شرایطی، امکان نمایش تراکنش‌های کاربر
-	//		// بر روی کیف پول باید امکان‌پذیر باشد
-	//		var foundedUserWallet =
-	//			await
-	//			DatabaseContext.UserWallets
-	//			.AsNoTracking()
-	//			.Where(current => current.CompanyUserIdentity == companyUserIdentity)
-	//			.Where(current => current.Wallet != null && current.Wallet.Token == waletToken)
-	//			.FirstOrDefaultAsync();
-
-	//		if (foundedUserWallet == null)
-	//		{
-	//			return NotFound(value: null);
-	//		}
-
-	//		var transactions =
-	//			await
-	//			DatabaseContext.Transactions
-	//			.AsNoTracking()
-	//			.Where(current => current.UserId == foundedUserWallet.UserId)
-	//			.Where(current => current.WalletId == foundedUserWallet.WalletId)
-	//			.Skip(count: 0)
-	//			.Take(count: count)
-	//			.ToListAsync()
-	//			;
-
-	//		return Ok(value: transactions);
-	//	}
-	//	catch (System.Exception ex)
-	//	{
-	//		var applicationError =
-	//			new Infrastructure.ApplicationError
-	//			(code: Infrastructure.Constant.ErrorCode.Root_UsersController_GetLastTransactionsAsync,
-	//			message: ex.Message, innerException: ex);
-
-	//		Logger.LogError
-	//			(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
-
-	//		return StatusCode(statusCode: Microsoft.AspNetCore
-	//			.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
-	//	}
-	//}
-	//#endregion /GetLastTransactions()
-
 	#region Deposite()
 	/// <summary>
 	/// تعریف نمی‌کنیم Async به دلیل مسائل امنیتی و هم‌زمانی این تابع را
@@ -238,7 +166,7 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 	[Microsoft.AspNetCore.Mvc.HttpPost(template: "[action]")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(long),
+		(type: typeof(Infrastructure.Result<Dtos.Users.DepositeResponseDto>),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
@@ -252,10 +180,61 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 	{
 		try
 		{
+			var result =
+				new Infrastructure
+				.Result<Dtos.Users.DepositeResponseDto>();
+
+			// **************************************************
+			// بدست آوردن آی‌پی سرور درخواست کننده
+			// **************************************************
+			var serverIP =
+				Infrastructure.Utility
+				.GetServerIP(request: Request);
+
+			if (serverIP == null)
+			{
+				var errorMessage =
+					$"{serverIP} is null!";
+
+				result.AddErrorMessages
+					(errorMessage: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی مجاز بودن آی‌پی سرور درخواست کننده
+			// **************************************************
+
+			// **************************************************
+
+			// **************************************************
+			// بررسی صفر نبودن مقدار تراکنش
+			// **************************************************
+			if (request.Amount == 0)
+			{
+				var errorMessage =
+					$"{request.Amount} is zero!";
+
+				result.AddErrorMessages
+					(errorMessage: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی معتبر بودن بقیه فیلدهای ارسال شده
+			// **************************************************
 			ValidateDepositeRequest(request: request);
+			// **************************************************
 
 			lock (Locker)
 			{
+				// **************************************************
+				// بررسی کیف پول
+				// **************************************************
 				var wallet =
 					DatabaseContext.Wallets
 					.Where(current => current.Token == request.WaletToken)
@@ -263,35 +242,102 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 
 				if (wallet == null)
 				{
-					return NotFound(value: "Wallet not found!");
+					var errorMessage =
+						$"{nameof(Domain.Wallet)} not found!";
+
+					result.AddErrorMessages
+						(errorMessage: errorMessage);
+
+					return Ok(value: result);
 				}
 
 				if (wallet.IsActive)
 				{
-					return NotFound(value: "Wallet is not active!");
-				}
+					var errorMessage =
+						$"{nameof(Domain.Wallet)} is not active!";
 
+					result.AddErrorMessages
+						(errorMessage: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی کاربر
+				// **************************************************
 				var user =
 					CreateOrUpdateUser
-					(cellPhoneNumber: request.User.CellPhoneNumber!,
+					(cellPhoneNumber: request.User!.CellPhoneNumber!,
 					displayName: request.User.DisplayName!,
 
 					emailAddress: request.User.EmailAddress,
 					nationalCode: request.User.NationalCode,
 					additionalData: request.User.AdditionalData);
+				// **************************************************
 
+				// **************************************************
+				// بررسی عضویت کاربر به کیف پول
+				// **************************************************
 				var userWallet =
 					CreateOrUpdateUserWallet
 					(userId: user.Id, walletId: wallet.Id,
 					paymentFeatureIsEnabled: request.User.PaymentFeatureIsEnabled,
 					depositeFeatureIsEnabled: request.User.DepositeFeatureIsEnabled,
 					withdrawFeatureIsEnabled: request.User.WithdrawFeatureIsEnabled);
+				// **************************************************
 
-				// TODO
+				// **************************************************
+				// افزایش مانده حساب کاربر
+				// **************************************************
+				userWallet.Balance += request.Amount;
+				// **************************************************
+
+				// **************************************************
+				var transaction =
+					new Domain.Transaction
+					(userId: user.Id, walletId: wallet.Id,
+					amount: request.Amount, userIP: request.User.IP, serverIP: serverIP)
+					{
+						//Id
+						//Hash
+						//User
+						//UserId
+						//Amount
+						//Wallet
+						//WalletId
+						//InsertDateTime
+						//PaymentReferenceCode
+
+						ServerIP = serverIP,
+						UserIP = request.User.IP,
+						AdditionalData = request.AdditionalData,
+						UserDescription = request.UserDescription,
+						SystemicDescription = request.SystemicDescription,
+						DepositeOrWithdrawProviderName = request.ProviderName,
+						DepositeOrWithdrawReferenceCode = request.ReferenceCode,
+						TimeDurationInMillisecond = request.TimeDurationInMillisecond,
+					};
+
+				DatabaseContext.Add(entity: transaction);
+				// **************************************************
+
+				// **************************************************
+				// ذخیره تغییرات در بانک اطلاعاتی
+				// **************************************************
+				DatabaseContext.SaveChanges();
+				// **************************************************
+
+				// **************************************************
+				var depositeResponseDto =
+					new Dtos.Users.DepositeResponseDto
+					(balance: userWallet.Balance, transactionId: transaction.Id);
+
+				result.Data = depositeResponseDto;
+
+				return Ok(value: result);
+				// **************************************************
 			}
-
-			// TODO
-			return Ok(value: null);
 		}
 		catch (System.Exception ex)
 		{
@@ -389,7 +435,6 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 					//UserId
 					//Wallet
 					//WalletId
-					//IsActive
 					//Description
 					//AdditionalData
 					//InsertDateTime
@@ -397,6 +442,7 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 
 					Balance = 0,
 
+					IsActive = true,
 					PaymentFeatureIsEnabled = paymentFeatureIsEnabled,
 					DepositeFeatureIsEnabled = depositeFeatureIsEnabled,
 					WithdrawFeatureIsEnabled = withdrawFeatureIsEnabled,
