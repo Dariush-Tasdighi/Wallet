@@ -16,7 +16,7 @@
 		/// </summary>
 		decimal Amount { get; }
 
-		int TimeDurationInMillisecond { get; }
+		double TimeDurationInMillisecond { get; }
 
 
 

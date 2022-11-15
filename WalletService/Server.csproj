@@ -7,14 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Documents\Readme.txt" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Include="Documents\Readme.txt" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	</ItemGroup>
 

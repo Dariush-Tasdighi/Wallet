@@ -32,7 +32,7 @@
 
 		public decimal Amount { get; private set; }
 
-		public int TimeDurationInMillisecond { get; set; }
+		public double TimeDurationInMillisecond { get; set; }
 
 
 

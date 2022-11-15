@@ -1,4 +1,6 @@
-﻿namespace Data.Configurations;
+﻿using Data.Configurations.SeedData;
+
+namespace Data.Configurations;
 
 internal class UserConfiguration : object,
 	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.User>
@@ -91,30 +93,13 @@ internal class UserConfiguration : object,
 
 				Hash = null,
 				Description = null,
-				Id = Constant.UserId1,
-				NationalCode = "1234567890",
-				EmailAddress = "dariusht@gmail.com",
-			};
+				AdditionalData = null,
 
-		builder.HasData(data: user);
-		// **************************************************
+				IsActive = true,
+				Id = Constant.UserId,
 
-		// **************************************************
-		user =
-			new Domain.User(cellPhoneNumber: "09121087462", displayName: "علی رضا علوی")
-			{
-				//UserWallets
-				//DisplayName
-				//Transactions
-				//InsertDateTime
-				//UpdateDateTime
-				//CellPhoneNumber
-
-				Hash = null,
-				Description = null,
-				Id = Constant.UserId2,
 				NationalCode = "1234567891",
-				EmailAddress = "alirezaalavi@gmail.com",
+				EmailAddress = "dariusht@gmail.com",
 			};
 
 		builder.HasData(data: user);

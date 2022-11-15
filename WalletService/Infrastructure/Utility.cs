@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Castle.Core.Smtp;
+using System.Linq;
 
 namespace Infrastructure;
 
@@ -68,6 +69,34 @@ public static class Utility : object
 
 		var result =
 			ip.ToString();
+
+		return result;
+	}
+
+	public static System.Collections.Generic.IList<string> ValidateEntity(object entity)
+	{
+		var result =
+			new System.Collections.Generic.List<string>();
+
+		var validationContext =
+			new System.ComponentModel
+			.DataAnnotations.ValidationContext(instance: entity);
+
+		var validationResults =
+			new System.Collections.Generic.List
+			<System.ComponentModel.DataAnnotations.ValidationResult>();
+
+		System.ComponentModel.DataAnnotations.Validator
+			.TryValidateObject(instance: entity, validationContext: validationContext,
+			validationResults: validationResults, validateAllProperties: true);
+
+		foreach (var item in validationResults)
+		{
+			if (string.IsNullOrWhiteSpace(value: item.ErrorMessage) == false)
+			{
+				result.Add(item: item.ErrorMessage);
+			}
+		}
 
 		return result;
 	}

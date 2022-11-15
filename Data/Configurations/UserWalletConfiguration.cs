@@ -1,4 +1,6 @@
-﻿namespace Data.Configurations;
+﻿using Data.Configurations.SeedData;
+
+namespace Data.Configurations;
 
 internal class UserWalletConfiguration : object,
 	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.UserWallet>
@@ -32,35 +34,29 @@ internal class UserWalletConfiguration : object,
 		// **************************************************
 		// **************************************************
 		var userWallet =
-			new Domain.UserWallet(userId: Constant.UserId1, walletId: Constant.WalletId)
+			new Domain.UserWallet(userId: Constant.UserId, walletId: Constant.WalletId)
 			{
-				//Name
-				//Token
-				//Wallets
+				//Hash
+
+				//User
+				//UserId
+
+				//Wallet
+				//WalletId
+
 				//InsertDateTime
 				//UpdateDateTime
 
 				IsActive = true,
 				Description = null,
-				Id = Constant.UserWalletId1,
-			};
+				AdditionalData = null,
 
-		builder.HasData(data: userWallet);
-		// **************************************************
+				Balance = 0,
+				Id = Constant.UserWalletId,
 
-		// **************************************************
-		userWallet =
-			new Domain.UserWallet(userId: Constant.UserId2, walletId: Constant.WalletId)
-			{
-				//Name
-				//Token
-				//Wallets
-				//InsertDateTime
-				//UpdateDateTime
-
-				IsActive = true,
-				Description = null,
-				Id = Constant.UserWalletId2,
+				PaymentFeatureIsEnabled = true,
+				WithdrawFeatureIsEnabled = true,
+				DepositeFeatureIsEnabled = true,
 			};
 
 		builder.HasData(data: userWallet);

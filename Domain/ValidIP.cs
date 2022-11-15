@@ -3,9 +3,11 @@
 public class ValidIP : Seedwork.Entity, Dtat.Wallet.Abstractions.IValidIP<long>
 {
 	#region Constructor
-	public ValidIP(string serverIP) : base()
+	public ValidIP(long walletId, string serverIP) : base()
 	{
 		ServerIP = serverIP;
+		WalletId = walletId;
+		UpdateDateTime = InsertDateTime;
 	}
 	#endregion /Constructor
 
@@ -23,9 +25,15 @@ public class ValidIP : Seedwork.Entity, Dtat.Wallet.Abstractions.IValidIP<long>
 		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.IP)]
 	public string ServerIP { get; set; }
 
+	[System.ComponentModel.DataAnnotations.MaxLength
+		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Description)]
+	public string? Description { get; set; }
+
 	public int RequestCount { get; set; }
 
 	public System.DateTime? LastRequestDateTime { get; set; }
+
+	public System.DateTime UpdateDateTime { get; private set; }
 
 	#endregion /Properties
 }

@@ -1,4 +1,6 @@
-﻿namespace Data.Configurations;
+﻿using Data.Configurations.SeedData;
+
+namespace Data.Configurations;
 
 internal class WalletConfiguration : object,
 	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.Wallet>
@@ -65,13 +67,20 @@ internal class WalletConfiguration : object,
 			{
 				//Name
 				//Token
+
 				//Company
 				//CompanyId
-				//DisplayName
+
+				//ValidIPs
 				//UserWallets
 				//Transactions
+
 				//InsertDateTime
 				//UpdateDateTime
+
+				Hash = null,
+				Description = null,
+				AdditionalData = null,
 
 				IsActive = true,
 				Id = Constant.WalletId,

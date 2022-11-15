@@ -29,7 +29,23 @@ internal class ValidIPConfiguration : object,
 		// **************************************************
 		// **************************************************
 		// **************************************************
+		var validIP =
+			new Domain.ValidIP
+			(walletId: SeedData.Constant.WalletId, serverIP: "::1")
+			{
+				//Wallet
+				//WalletId
+				//ServerIP
+				//InsertDateTime
+				//UpdateDateTime
 
+				RequestCount = 0,
+				Description = null,
+				LastRequestDateTime = null,
+				Id = SeedData.Constant.ValidIP,
+			};
+
+		builder.HasData(data: validIP);
 		// **************************************************
 		// **************************************************
 		// **************************************************

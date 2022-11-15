@@ -1,4 +1,6 @@
-﻿namespace Data.Configurations;
+﻿using Data.Configurations.SeedData;
+
+namespace Data.Configurations;
 
 internal class CompanyConfiguration : object,
 	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.Company>
@@ -55,6 +57,7 @@ internal class CompanyConfiguration : object,
 
 				IsActive = true,
 				Description = null,
+				AdditionalData = null,
 				Id = Constant.CompanyId,
 			};
 

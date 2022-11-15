@@ -180,6 +180,9 @@ public class UsersController :
 	{
 		try
 		{
+			var startTime =
+				System.DateTime.Now;
+
 			var result =
 				new Infrastructure
 				.Result<Dtos.Users.DepositeResponseDto>();
@@ -194,7 +197,7 @@ public class UsersController :
 			if (serverIP == null)
 			{
 				var errorMessage =
-					$"{serverIP} is null!";
+					$"Server IP is null!";
 
 				result.AddErrorMessages
 					(errorMessage: errorMessage);
@@ -206,16 +209,15 @@ public class UsersController :
 			// **************************************************
 			// بررسی مجاز بودن آی‌پی سرور درخواست کننده
 			// **************************************************
+			var validIP =
+				DatabaseContext.ValidIPs
+				.Where(current => current.Wallet != null && current.Wallet.Token == request.WaletToken)
+				.FirstOrDefault();
 
-			// **************************************************
-
-			// **************************************************
-			// بررسی صفر نبودن مقدار تراکنش
-			// **************************************************
-			if (request.Amount == 0)
+			if (validIP == null)
 			{
 				var errorMessage =
-					$"{request.Amount} is zero!";
+					$"Server IP is not valid for this wallet!";
 
 				result.AddErrorMessages
 					(errorMessage: errorMessage);
@@ -227,7 +229,18 @@ public class UsersController :
 			// **************************************************
 			// بررسی معتبر بودن بقیه فیلدهای ارسال شده
 			// **************************************************
-			ValidateDepositeRequest(request: request);
+			var errorMessages =
+				Infrastructure.Utility.ValidateEntity(entity: request);
+
+			if (errorMessages.Count > 0)
+			{
+				foreach (var errorMessage in errorMessages)
+				{
+					result.AddErrorMessages(errorMessage: errorMessage);
+				}
+
+				return Ok(value: result);
+			}
 			// **************************************************
 
 			lock (Locker)
@@ -243,7 +256,7 @@ public class UsersController :
 				if (wallet == null)
 				{
 					var errorMessage =
-						$"{nameof(Domain.Wallet)} not found!";
+						$"Wallet not found!";
 
 					result.AddErrorMessages
 						(errorMessage: errorMessage);
@@ -251,10 +264,21 @@ public class UsersController :
 					return Ok(value: result);
 				}
 
-				if (wallet.IsActive)
+				if (wallet.IsActive == false)
 				{
 					var errorMessage =
-						$"{nameof(Domain.Wallet)} is not active!";
+						$"This wallet is not active!";
+
+					result.AddErrorMessages
+						(errorMessage: errorMessage);
+
+					return Ok(value: result);
+				}
+
+				if (wallet.DepositeFeatureIsEnabled == false)
+				{
+					var errorMessage =
+						$"Deposite feature is not enabled for this wallet!";
 
 					result.AddErrorMessages
 						(errorMessage: errorMessage);
@@ -268,23 +292,56 @@ public class UsersController :
 				// **************************************************
 				var user =
 					CreateOrUpdateUser
-					(cellPhoneNumber: request.User!.CellPhoneNumber!,
-					displayName: request.User.DisplayName!,
+					(displayName: request.User!.DisplayName!,
+					cellPhoneNumber: request.User!.CellPhoneNumber!,
 
 					emailAddress: request.User.EmailAddress,
-					nationalCode: request.User.NationalCode,
-					additionalData: request.User.AdditionalData);
+					nationalCode: request.User.NationalCode);
+
+				if (user.IsActive == false)
+				{
+					var errorMessage =
+						$"User is not active!";
+
+					result.AddErrorMessages
+						(errorMessage: errorMessage);
+
+					return Ok(value: result);
+				}
 				// **************************************************
 
 				// **************************************************
-				// بررسی عضویت کاربر به کیف پول
+				// بررسی عضویت کاربر در کیف پول
 				// **************************************************
 				var userWallet =
 					CreateOrUpdateUserWallet
 					(userId: user.Id, walletId: wallet.Id,
+					additionalData: request.AdditionalData,
 					paymentFeatureIsEnabled: request.User.PaymentFeatureIsEnabled,
 					depositeFeatureIsEnabled: request.User.DepositeFeatureIsEnabled,
 					withdrawFeatureIsEnabled: request.User.WithdrawFeatureIsEnabled);
+
+				if (userWallet.IsActive == false)
+				{
+					var errorMessage =
+						$"User is not active in this wallet!";
+
+					result.AddErrorMessages
+						(errorMessage: errorMessage);
+
+					return Ok(value: result);
+				}
+
+				if (userWallet.DepositeFeatureIsEnabled == false)
+				{
+					var errorMessage =
+						$"Deposite feature is not enabled for this user!";
+
+					result.AddErrorMessages
+						(errorMessage: errorMessage);
+
+					return Ok(value: result);
+				}
 				// **************************************************
 
 				// **************************************************
@@ -294,10 +351,19 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
+				// افزایش مانده حساب کاربر
+				// **************************************************
+				var finishTime =
+					System.DateTime.Now;
+
+				var timeDurationInMillisecond = finishTime - startTime;
+				// **************************************************
+
+				// **************************************************
 				var transaction =
 					new Domain.Transaction
 					(userId: user.Id, walletId: wallet.Id,
-					amount: request.Amount, userIP: request.User.IP, serverIP: serverIP)
+					amount: request.Amount, userIP: request.User!.IP!, serverIP: serverIP)
 					{
 						//Id
 						//Hash
@@ -310,13 +376,13 @@ public class UsersController :
 						//PaymentReferenceCode
 
 						ServerIP = serverIP,
-						UserIP = request.User.IP,
+						UserIP = request.User!.IP!,
 						AdditionalData = request.AdditionalData,
 						UserDescription = request.UserDescription,
 						SystemicDescription = request.SystemicDescription,
 						DepositeOrWithdrawProviderName = request.ProviderName,
 						DepositeOrWithdrawReferenceCode = request.ReferenceCode,
-						TimeDurationInMillisecond = request.TimeDurationInMillisecond,
+						TimeDurationInMillisecond = timeDurationInMillisecond.TotalMicroseconds,
 					};
 
 				DatabaseContext.Add(entity: transaction);
@@ -355,20 +421,9 @@ public class UsersController :
 	}
 	#endregion /Deposite()
 
-	private void ValidateDepositeRequest(Dtos.Users.DepositeRequestDto request)
-	{
-		if (request.User == null)
-		{
-			throw new System
-				.ArgumentNullException(paramName: nameof(request.User));
-		}
-
-		// TODO
-	}
-
 	private Domain.User CreateOrUpdateUser
 		(string cellPhoneNumber, string displayName,
-		string? emailAddress, string? nationalCode, string? additionalData)
+		string? emailAddress, string? nationalCode)
 	{
 		var user =
 			DatabaseContext.Users
@@ -386,6 +441,7 @@ public class UsersController :
 					//Description
 					//UserWallets
 					//Transactions
+					//AdditionalData
 					//InsertDateTime
 					//UpdateDateTime
 					//CellPhoneNumber
@@ -393,7 +449,6 @@ public class UsersController :
 					DisplayName = displayName,
 					NationalCode = nationalCode,
 					EmailAddress = emailAddress,
-					AdditionalData = additionalData,
 				};
 
 			DatabaseContext.Add(entity: user);
@@ -406,7 +461,6 @@ public class UsersController :
 			user.DisplayName = displayName;
 			user.NationalCode = nationalCode;
 			user.EmailAddress = emailAddress;
-			user.AdditionalData = additionalData;
 		}
 
 		return user;
@@ -416,7 +470,8 @@ public class UsersController :
 		(long userId, long walletId,
 		bool paymentFeatureIsEnabled,
 		bool depositeFeatureIsEnabled,
-		bool withdrawFeatureIsEnabled)
+		bool withdrawFeatureIsEnabled,
+		string? additionalData)
 	{
 		var userWallet =
 			DatabaseContext.UserWallets
@@ -436,13 +491,14 @@ public class UsersController :
 					//Wallet
 					//WalletId
 					//Description
-					//AdditionalData
 					//InsertDateTime
 					//UpdateDateTime
 
 					Balance = 0,
 
 					IsActive = true,
+
+					AdditionalData = additionalData,
 					PaymentFeatureIsEnabled = paymentFeatureIsEnabled,
 					DepositeFeatureIsEnabled = depositeFeatureIsEnabled,
 					WithdrawFeatureIsEnabled = withdrawFeatureIsEnabled,
@@ -455,6 +511,7 @@ public class UsersController :
 		}
 		else
 		{
+			userWallet.AdditionalData = additionalData;
 			userWallet.PaymentFeatureIsEnabled = paymentFeatureIsEnabled;
 			userWallet.DepositeFeatureIsEnabled = depositeFeatureIsEnabled;
 			userWallet.WithdrawFeatureIsEnabled = withdrawFeatureIsEnabled;

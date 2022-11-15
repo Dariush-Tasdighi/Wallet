@@ -4,9 +4,13 @@
 	{
 		T WalletId { get; }
 
+		int RequestCount { get; }
+
 		string ServerIP { get; }
 
-		int RequestCount { get; }
+		string? Description { get; }
+
+		System.DateTime UpdateDateTime { get; }
 
 		System.DateTime? LastRequestDateTime { get; }
 	}
