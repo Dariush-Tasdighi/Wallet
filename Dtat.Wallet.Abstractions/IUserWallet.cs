@@ -12,8 +12,6 @@
 
 		decimal Balance { get; }
 
-		System.DateTime UpdateDateTime { get; }
-
 
 
 		string? Hash { get; }
@@ -34,5 +32,9 @@
 		/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
 		/// </summary>
 		//bool TransferFeatureIsEnabled { get; }
+
+
+
+		System.DateTime UpdateDateTime { get; }
 	}
 }

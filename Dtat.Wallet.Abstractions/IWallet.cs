@@ -6,6 +6,12 @@
 
 
 
+		bool IsActive { get; }
+
+		System.Guid Token { get; }
+
+
+
 		/// <summary>
 		/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
 		/// </summary>
@@ -21,14 +27,6 @@
 
 
 
-		bool IsActive { get; }
-
-		System.Guid Token { get; }
-
-		System.DateTime UpdateDateTime { get; }
-
-
-
 		bool PaymentFeatureIsEnabled { get; }
 
 		bool DepositeFeatureIsEnabled { get; }
@@ -39,6 +37,10 @@
 		/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
 		/// </summary>
 		//bool TransferFeatureIsEnabled { get; }
+
+
+
+		System.DateTime UpdateDateTime { get; }
 
 
 

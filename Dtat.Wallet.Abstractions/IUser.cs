@@ -7,10 +7,6 @@
 	{
 		bool IsActive { get; }
 
-		string? EmailAddress { get; }
-
-		string? NationalCode { get; }
-
 
 
 		/// <summary>
@@ -23,15 +19,21 @@
 		/// </summary>
 		string CellPhoneNumber { get; }
 
-		System.DateTime UpdateDateTime { get; }
-
 
 
 		string? Hash { get; }
 
 		string? Description { get; }
 
+		string? EmailAddress { get; }
+
+		string? NationalCode { get; }
+
 		string? AdditionalData { get; }
+
+
+
+		System.DateTime UpdateDateTime { get; }
 
 
 
