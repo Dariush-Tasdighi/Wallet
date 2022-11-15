@@ -93,7 +93,6 @@ internal class UserConfiguration : object,
 
 				Hash = null,
 				Description = null,
-				AdditionalData = null,
 
 				IsActive = true,
 				Id = Constant.UserId,

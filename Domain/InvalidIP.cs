@@ -1,9 +1,9 @@
 ﻿namespace Domain;
 
-public class ValidIP : Seedwork.Entity, Dtat.Wallet.Abstractions.IValidIP<long>
+public class InvalidIP : Seedwork.Entity, Dtat.Wallet.Abstractions.IInvalidIP<long>
 {
 	#region Constructor
-	public ValidIP(long walletId, string serverIP) : base()
+	public InvalidIP(long walletId, string serverIP) : base()
 	{
 		ServerIP = serverIP;
 		WalletId = walletId;
@@ -23,10 +23,6 @@ public class ValidIP : Seedwork.Entity, Dtat.Wallet.Abstractions.IValidIP<long>
 	#endregion /Wallet
 
 
-
-	#region IsActive
-	public bool IsActive { get; set; }
-	#endregion /IsActive
 
 	#region ServerIP
 	[System.ComponentModel.DataAnnotations.Required

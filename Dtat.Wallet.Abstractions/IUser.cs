@@ -29,8 +29,6 @@
 
 		string? NationalCode { get; }
 
-		string? AdditionalData { get; }
-
 
 
 		System.DateTime UpdateDateTime { get; }

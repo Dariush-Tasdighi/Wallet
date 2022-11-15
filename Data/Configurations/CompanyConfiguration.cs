@@ -47,7 +47,7 @@ internal class CompanyConfiguration : object,
 		// **************************************************
 		// **************************************************
 		var company =
-			new Domain.Company(name: "سماتک")
+			new Domain.Company(name: "شرکت داد و ستد هستی")
 			{
 				//Name
 				//Token

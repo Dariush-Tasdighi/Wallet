@@ -23,6 +23,8 @@ public class DatabaseContext : Microsoft.EntityFrameworkCore.DbContext
 
 	public Microsoft.EntityFrameworkCore.DbSet<Domain.Company> Companies { get; set; }
 
+	public Microsoft.EntityFrameworkCore.DbSet<Domain.InvalidIP> InvalidIPs { get; set; }
+
 	public Microsoft.EntityFrameworkCore.DbSet<Domain.UserWallet> UserWallets { get; set; }
 
 	public Microsoft.EntityFrameworkCore.DbSet<Domain.Transaction> Transactions { get; set; }

@@ -57,10 +57,6 @@
 			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.NationalCode)]
 		public string? NationalCode { get; set; }
 
-		[System.ComponentModel.DataAnnotations.MaxLength
-			(length: Dtat.Wallet.Abstractions.Constant.MaxLength.AdditionalData)]
-		public string? AdditionalData { get; set; }
-
 
 
 		[System.Text.Json.Serialization.JsonIgnore]

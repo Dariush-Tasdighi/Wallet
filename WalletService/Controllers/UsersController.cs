@@ -209,12 +209,10 @@ public class UsersController :
 			// **************************************************
 			// بررسی مجاز بودن آی‌پی سرور درخواست کننده
 			// **************************************************
-			var validIP =
-				DatabaseContext.ValidIPs
-				.Where(current => current.Wallet != null && current.Wallet.Token == request.WaletToken)
-				.FirstOrDefault();
+			var isServerIPValid = ValidateServerIP
+				(waletToken: request.WaletToken, serverIP: serverIP);
 
-			if (validIP == null)
+			if (isServerIPValid == false)
 			{
 				var errorMessage =
 					$"Server IP is not valid for this wallet!";
@@ -224,11 +222,6 @@ public class UsersController :
 
 				return Ok(value: result);
 			}
-
-			validIP.RequestCount++;
-			validIP.LastRequestDateTime = Infrastructure.Utility.Now;
-
-			DatabaseContext.SaveChanges();
 			// **************************************************
 
 			// **************************************************
@@ -416,6 +409,62 @@ public class UsersController :
 		}
 	}
 	#endregion /Deposite()
+
+	private bool ValidateServerIP(System.Guid waletToken, string serverIP)
+	{
+		var isValid = false;
+
+		var now =
+			Infrastructure.Utility.Now;
+
+		var validIP =
+			DatabaseContext.ValidIPs
+			.Where(current => current.IsActive)
+			.Where(current => current.ServerIP == serverIP)
+			.Where(current => current.Wallet != null && current.Wallet.Token == waletToken)
+			.FirstOrDefault();
+
+		if (validIP != null)
+		{
+			isValid = true;
+
+			validIP.TotalRequestCount++;
+
+			if (validIP.LastRequestDateTime.HasValue == false)
+			{
+				validIP.CurrentDayRequestCount = 1;
+			}
+			else
+			{
+				if (now.Date <= validIP.LastRequestDateTime.Value.Date)
+				{
+					validIP.CurrentDayRequestCount++;
+				}
+				else
+				{
+					validIP.PreviousDay6RequestCount = validIP.PreviousDay5RequestCount;
+					validIP.PreviousDay5RequestCount = validIP.PreviousDay4RequestCount;
+					validIP.PreviousDay4RequestCount = validIP.PreviousDay3RequestCount;
+					validIP.PreviousDay3RequestCount = validIP.PreviousDay2RequestCount;
+					validIP.PreviousDay2RequestCount = validIP.PreviousDay1RequestCount;
+					validIP.PreviousDay1RequestCount = validIP.CurrentDayRequestCount;
+
+					validIP.CurrentDayRequestCount = 1;
+				}
+			}
+
+			validIP.LastRequestDateTime = now;
+		}
+		else
+		{
+			// TODO
+		}
+
+		DatabaseContext.SaveChanges();
+		// **************************************************
+
+		return isValid;
+	}
 
 	private Domain.User CreateOrUpdateUser
 		(string cellPhoneNumber, string displayName,

@@ -39,10 +39,20 @@ internal class ValidIPConfiguration : object,
 				//InsertDateTime
 				//UpdateDateTime
 
-				RequestCount = 0,
+				IsActive = true,
+
 				Description = null,
 				LastRequestDateTime = null,
 				Id = SeedData.Constant.ValidIP,
+
+				TotalRequestCount = 0,
+				CurrentDayRequestCount = 0,
+				PreviousDay1RequestCount = 0,
+				PreviousDay2RequestCount = 0,
+				PreviousDay3RequestCount = 0,
+				PreviousDay4RequestCount = 0,
+				PreviousDay5RequestCount = 0,
+				PreviousDay6RequestCount = 0,
 			};
 
 		builder.HasData(data: validIP);

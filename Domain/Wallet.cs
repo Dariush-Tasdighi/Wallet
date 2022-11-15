@@ -14,6 +14,9 @@ namespace Domain
 			ValidIPs =
 				new System.Collections.Generic.List<ValidIP>();
 
+			InvalidIPs =
+				new System.Collections.Generic.List<InvalidIP>();
+
 			UserWallets =
 				new System.Collections.Generic.List<UserWallet>();
 
@@ -77,6 +80,9 @@ namespace Domain
 
 		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual System.Collections.Generic.IList<ValidIP> ValidIPs { get; private set; }
+
+		[System.Text.Json.Serialization.JsonIgnore]
+		public virtual System.Collections.Generic.IList<InvalidIP> InvalidIPs { get; private set; }
 
 		[System.Text.Json.Serialization.JsonIgnore]
 		public virtual System.Collections.Generic.IList<UserWallet> UserWallets { get; private set; }

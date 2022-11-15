@@ -1,12 +1,10 @@
 ﻿namespace Dtat.Wallet.Abstractions
 {
-	public interface IValidIP<T>
+	public interface IInvalidIP<T>
 	{
 		T WalletId { get; }
 
 
-
-		bool IsActive { get; }
 
 		string ServerIP { get; }
 

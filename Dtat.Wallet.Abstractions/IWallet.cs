@@ -1,4 +1,6 @@
-﻿namespace Dtat.Wallet.Abstractions
+﻿using Microsoft.Win32.SafeHandles;
+
+namespace Dtat.Wallet.Abstractions
 {
 	public interface IWallet<T> : IBaseEntity<T>
 	{
@@ -46,6 +48,9 @@
 
 		// صرفا در جهت اطلاع
 		//System.Collections.Generic.IList<IValidIP<T>> ValidIPs { get; }
+
+		// صرفا در جهت اطلاع
+		//System.Collections.Generic.IList<IInvalidIP<T>> InvalidIPs { get; }
 
 		// صرفا در جهت اطلاع
 		//System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }

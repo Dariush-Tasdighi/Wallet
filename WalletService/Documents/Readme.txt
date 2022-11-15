@@ -1,12 +1,4 @@
 ﻿**************************************************
-Company Id		: 1000
-Company Token	: 9d7c4b8f-0aa5-4604-9990-bfe3d7e25bd3
-
-Wallet Id		: 500
-Wallet Token	: 4c768b67-ae06-4d1d-89c8-ae162cb448bc
-**************************************************
-
-**************************************************
 {
 	"user": {
 		"ip": "192.168.1.110",
@@ -20,7 +12,7 @@ Wallet Token	: 4c768b67-ae06-4d1d-89c8-ae162cb448bc
 		"withdrawFeatureIsEnabled": false
 	},
 	"amount": 1000,
-	"waletToken": "962b394c-7465-4916-abd0-1917f0e8f890",
+	"waletToken": "7c92aec0-a04f-475b-971b-b2a6655d18da",
 	"providerName": "ایران کیش",
 	"referenceCode": "1020304050",
 	"userDescription": "دوست داشتم کیف پولم رو شارژ کنم",
