@@ -224,6 +224,11 @@ public class UsersController :
 
 				return Ok(value: result);
 			}
+
+			validIP.RequestCount++;
+			validIP.LastRequestDateTime = Infrastructure.Utility.Now;
+
+			DatabaseContext.SaveChanges();
 			// **************************************************
 
 			// **************************************************
@@ -365,16 +370,6 @@ public class UsersController :
 					(userId: user.Id, walletId: wallet.Id,
 					amount: request.Amount, userIP: request.User!.IP!, serverIP: serverIP)
 					{
-						//Id
-						//Hash
-						//User
-						//UserId
-						//Amount
-						//Wallet
-						//WalletId
-						//InsertDateTime
-						//PaymentReferenceCode
-
 						ServerIP = serverIP,
 						UserIP = request.User!.IP!,
 						AdditionalData = request.AdditionalData,
@@ -435,16 +430,7 @@ public class UsersController :
 			user =
 				new Domain.User(cellPhoneNumber: cellPhoneNumber, displayName: displayName)
 				{
-					//Id
-					//Hash
-					//IsActive
-					//Description
-					//UserWallets
-					//Transactions
-					//AdditionalData
-					//InsertDateTime
-					//UpdateDateTime
-					//CellPhoneNumber
+					IsActive = true,
 
 					DisplayName = displayName,
 					NationalCode = nationalCode,
@@ -484,16 +470,6 @@ public class UsersController :
 			userWallet =
 				new Domain.UserWallet(userId: userId, walletId: walletId)
 				{
-					//Id
-					//Hash
-					//User
-					//UserId
-					//Wallet
-					//WalletId
-					//Description
-					//InsertDateTime
-					//UpdateDateTime
-
 					Balance = 0,
 
 					IsActive = true,

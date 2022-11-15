@@ -9,6 +9,17 @@ public static class Utility : object
 	{
 	}
 
+	public static System.DateTime Now
+	{
+		get
+		{
+			var result =
+				System.DateTime.Now;
+
+			return result;
+		}
+	}
+
 	public static string? FixText(string? text)
 	{
 		if (text == null)
