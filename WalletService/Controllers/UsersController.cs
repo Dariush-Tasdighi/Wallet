@@ -235,7 +235,8 @@ public class UsersController :
 			// بررسی معتبر بودن بقیه فیلدهای ارسال شده
 			// **************************************************
 			var errorMessages =
-				Infrastructure.Utility.ValidateEntity(entity: request);
+				Infrastructure.Utility
+				.ValidateEntity(entity: request);
 
 			if (errorMessages.Count > 0)
 			{
