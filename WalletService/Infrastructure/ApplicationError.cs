@@ -1,22 +1,21 @@
-﻿namespace Infrastructure
+﻿namespace Infrastructure;
+
+public class ApplicationError : System.ApplicationException
 {
-	public class ApplicationError : System.ApplicationException
+	public ApplicationError
+		(long code, string message, System.Exception? innerException = null) :
+		base(message: $"{code}: {message}", innerException: innerException)
 	{
-		public ApplicationError
-			(long code, string message, System.Exception? innerException = null) :
-			base(message: $"{code}: {message}", innerException: innerException)
-		{
-			Code = code;
+		Code = code;
 
-			DisplayMessage =
-				$"{code}: خطای داخلی سامانه!";
+		DisplayMessage =
+			$"{code}: خطای داخلی سامانه!";
 
-			//DisplayMessage =
-			//	$"{code}: Internal Server Error!";
-		}
-
-		public long Code { get; }
-
-		public string DisplayMessage { get; }
+		//DisplayMessage =
+		//	$"{code}: Internal Server Error!";
 	}
+
+	public long Code { get; }
+
+	public string DisplayMessage { get; }
 }

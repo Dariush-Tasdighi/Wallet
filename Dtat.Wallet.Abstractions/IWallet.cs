@@ -1,6 +1,4 @@
-﻿using Microsoft.Win32.SafeHandles;
-
-namespace Dtat.Wallet.Abstractions
+﻿namespace Dtat.Wallet.Abstractions
 {
 	public interface IWallet<T> : IBaseEntity<T>
 	{

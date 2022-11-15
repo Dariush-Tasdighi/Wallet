@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Server.Controllers;
 
@@ -23,7 +23,7 @@ public class UsersController :
 	private ILogger<UsersController> Logger { get; }
 	#endregion /Properties
 
-	#region GetBalanceAsync()
+	#region Action: GetBalanceAsync()
 	[Microsoft.AspNetCore.Mvc.HttpGet
 		(template: "[action]/{waletToken}/{cellPhoneNumber}")]
 
@@ -79,9 +79,9 @@ public class UsersController :
 				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
 		}
 	}
-	#endregion /GetBalanceAsync()
+	#endregion /Action: GetBalanceAsync()
 
-	#region GetLastTransactionsAsync()
+	#region Action: GetLastTransactionsAsync()
 	[Microsoft.AspNetCore.Mvc.HttpGet
 		(template: "[action]/{waletToken}/{cellPhoneNumber}/{count}")]
 
@@ -157,9 +157,9 @@ public class UsersController :
 				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
 		}
 	}
-	#endregion /GetLastTransactions()
+	#endregion /Action: GetLastTransactions()
 
-	#region Deposite()
+	#region Action: Deposite()
 	/// <summary>
 	/// تعریف نمی‌کنیم Async به دلیل مسائل امنیتی و هم‌زمانی این تابع را
 	/// </summary>
@@ -408,8 +408,9 @@ public class UsersController :
 				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
 		}
 	}
-	#endregion /Deposite()
+	#endregion /Action: Deposite()
 
+	#region Method: ValidateServerIP()
 	private bool ValidateServerIP(System.Guid waletToken, string serverIP)
 	{
 		var isValid = false;
@@ -465,7 +466,9 @@ public class UsersController :
 
 		return isValid;
 	}
+	#endregion /Method: ValidateServerIP()
 
+	#region Method: CreateOrUpdateUser()
 	private Domain.User CreateOrUpdateUser
 		(string cellPhoneNumber, string displayName,
 		string? emailAddress, string? nationalCode)
@@ -501,7 +504,9 @@ public class UsersController :
 
 		return user;
 	}
+	#endregion /Method: CreateOrUpdateUser()
 
+	#region Method: CreateOrUpdateUserWallet()
 	private Domain.UserWallet CreateOrUpdateUserWallet
 		(long userId, long walletId,
 		bool paymentFeatureIsEnabled,
@@ -545,4 +550,5 @@ public class UsersController :
 
 		return userWallet;
 	}
+	#endregion /Method: CreateOrUpdateUserWallet()
 }

@@ -1,5 +1,4 @@
-﻿using Castle.Core.Smtp;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Infrastructure;
 
