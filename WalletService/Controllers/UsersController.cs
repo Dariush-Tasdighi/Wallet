@@ -228,7 +228,7 @@ public class UsersController :
 			// بررسی معتبر بودن بقیه فیلدهای ارسال شده
 			// **************************************************
 			var errorMessages =
-				Infrastructure.Utility
+				Dtat.Utility
 				.ValidateEntity(entity: request);
 
 			if (errorMessages.Count > 0)
@@ -355,7 +355,7 @@ public class UsersController :
 				var finishTime =
 					System.DateTime.Now;
 
-				var timeDurationInMillisecond = finishTime - startTime;
+				var transactionDuration = finishTime - startTime;
 				// **************************************************
 
 				// **************************************************
@@ -367,11 +367,11 @@ public class UsersController :
 						ServerIP = serverIP,
 						UserIP = request.User!.IP!,
 						AdditionalData = request.AdditionalData,
+						TransactionDuration = transactionDuration,
 						UserDescription = request.UserDescription,
 						SystemicDescription = request.SystemicDescription,
 						DepositeOrWithdrawProviderName = request.ProviderName,
 						DepositeOrWithdrawReferenceCode = request.ReferenceCode,
-						TimeDurationInMillisecond = timeDurationInMillisecond.TotalMicroseconds,
 					};
 
 				DatabaseContext.Add(entity: transaction);
@@ -416,7 +416,7 @@ public class UsersController :
 		var isValid = false;
 
 		var now =
-			Infrastructure.Utility.Now;
+			Dtat.Utility.Now;
 
 		var validIP =
 			DatabaseContext.ValidIPs

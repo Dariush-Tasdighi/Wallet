@@ -1,4 +1,6 @@
-﻿namespace Domain;
+﻿using Dtat.Wallet.Abstractions.SeedWork;
+
+namespace Domain;
 
 public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransaction<long>
 {
@@ -16,62 +18,156 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 
 	#region Properties
 
+	#region UserId
 	public long UserId { get; private set; }
+	#endregion /UserId
 
+	#region User
 	[System.Text.Json.Serialization.JsonIgnore]
 	public virtual User? User { get; private set; }
+	#endregion /User
 
 
 
+	#region WalletId
 	public long WalletId { get; private set; }
+	#endregion /WalletId
 
+	#region Wallet
 	[System.Text.Json.Serialization.JsonIgnore]
 	public virtual Wallet? Wallet { get; private set; }
+	#endregion /Wallet
 
 
 
+	#region Amount
 	public decimal Amount { get; private set; }
+	#endregion /Amount
 
-	public double TimeDurationInMillisecond { get; set; }
+	#region TransactionDuration
+	public System.TimeSpan? TransactionDuration { get; set; }
+	#endregion /TransactionDuration
 
 
 
+	#region PaymentReferenceCode
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.ReferenceCode)]
+		(length: Constant.MaxLength.ReferenceCode)]
 	public string? PaymentReferenceCode { get; set; }
+	#endregion /PaymentReferenceCode
 
+	#region DepositeOrWithdrawProviderName
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.ProviderName)]
+		(length: Constant.MaxLength.ProviderName)]
 	public string? DepositeOrWithdrawProviderName { get; set; }
+	#endregion /DepositeOrWithdrawProviderName
 
+	#region DepositeOrWithdrawReferenceCode
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.ReferenceCode)]
+		(length: Constant.MaxLength.ReferenceCode)]
 	public string? DepositeOrWithdrawReferenceCode { get; set; }
+	#endregion /DepositeOrWithdrawReferenceCode
 
 
 
+	#region UserIP
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Hash)]
-	public string? Hash { get; set; }
+		(length: Constant.MaxLength.Hash)]
+	public string? Hash { get; private set; }
+	#endregion /UserIP
 
+	#region UserIP
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.IP)]
+		(length: Constant.MaxLength.IP)]
 	public string UserIP { get; set; }
+	#endregion /UserIP
 
+	#region ServerIP
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.IP)]
+		(length: Constant.MaxLength.IP)]
 	public string ServerIP { get; set; }
+	#endregion /ServerIP
 
+	#region AdditionalData
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.AdditionalData)]
+		(length: Constant.MaxLength.AdditionalData)]
 	public string? AdditionalData { get; set; }
+	#endregion /AdditionalData
 
+	#region UserDescription
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Description)]
+		(length: Constant.MaxLength.Description)]
 	public string? UserDescription { get; set; }
+	#endregion /UserDescription
 
+	#region SystemicDescription
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.Description)]
+		(length: Constant.MaxLength.Description)]
 	public string? SystemicDescription { get; set; }
+	#endregion /SystemicDescription
+
 	#endregion /Properties
+
+	#region Methods
+
+	public string GetHash()
+	{
+		var stringBuilder =
+			new System.Text.StringBuilder();
+
+		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(UserId)}:{UserId}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(WalletId)}:{WalletId}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(Amount)}:{Amount}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(TransactionDuration)}:{TransactionDuration}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(PaymentReferenceCode)}:{PaymentReferenceCode}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(DepositeOrWithdrawProviderName)}:{DepositeOrWithdrawProviderName}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(DepositeOrWithdrawReferenceCode)}:{DepositeOrWithdrawReferenceCode}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(UserIP)}:{UserIP}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(ServerIP)}:{ServerIP}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(AdditionalData)}:{AdditionalData}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(UserDescription)}:{UserDescription}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(SystemicDescription)}:{SystemicDescription}");
+
+		var text =
+			stringBuilder.ToString();
+
+		string result =
+			Dtat.Utility.GetSha256(text: text);
+
+		return result;
+	}
+
+	public void UpdateHash()
+	{
+		Hash = GetHash();
+	}
+
+	public bool CheckHashValidation()
+	{
+		var result = GetHash();
+
+		if (string.Compare(result, Hash, ignoreCase: true) == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	#endregion /Methods
 }

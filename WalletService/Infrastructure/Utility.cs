@@ -8,41 +8,6 @@ public static class Utility : object
 	{
 	}
 
-	public static System.DateTime Now
-	{
-		get
-		{
-			var result =
-				System.DateTime.Now;
-
-			return result;
-		}
-	}
-
-	public static string? FixText(string? text)
-	{
-		if (text == null)
-		{
-			return null;
-		}
-
-		text =
-			text.Trim();
-
-		if (text == string.Empty)
-		{
-			return null;
-		}
-
-		while (text.Contains("  "))
-		{
-			text =
-				text.Replace("  ", " ");
-		}
-
-		return text;
-	}
-
 	public static string? GetServerIP(Microsoft.AspNetCore.Http.HttpRequest request)
 	{
 		System.Net.IPAddress? ip = null;
@@ -79,34 +44,6 @@ public static class Utility : object
 
 		var result =
 			ip.ToString();
-
-		return result;
-	}
-
-	public static System.Collections.Generic.IList<string> ValidateEntity(object entity)
-	{
-		var result =
-			new System.Collections.Generic.List<string>();
-
-		var validationContext =
-			new System.ComponentModel
-			.DataAnnotations.ValidationContext(instance: entity);
-
-		var validationResults =
-			new System.Collections.Generic.List
-			<System.ComponentModel.DataAnnotations.ValidationResult>();
-
-		System.ComponentModel.DataAnnotations.Validator
-			.TryValidateObject(instance: entity, validationContext: validationContext,
-			validationResults: validationResults, validateAllProperties: true);
-
-		foreach (var item in validationResults)
-		{
-			if (string.IsNullOrWhiteSpace(value: item.ErrorMessage) == false)
-			{
-				result.Add(item: item.ErrorMessage);
-			}
-		}
 
 		return result;
 	}

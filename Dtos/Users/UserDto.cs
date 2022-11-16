@@ -1,4 +1,6 @@
-﻿namespace Dtos.Users;
+﻿using Dtat.Wallet.Abstractions.SeedWork;
+
+namespace Dtos.Users;
 
 public class UserDto : object
 {
@@ -15,7 +17,7 @@ public class UserDto : object
 		(AllowEmptyStrings = false)]
 
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.IP)]
+		(length: Constant.MaxLength.IP)]
 	public string? IP { get; set; }
 	#endregion /IP (User IP)
 
@@ -24,7 +26,7 @@ public class UserDto : object
 		(AllowEmptyStrings = false)]
 
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.DisplayName)]
+		(length: Constant.MaxLength.DisplayName)]
 	public string? DisplayName { get; set; }
 	#endregion /DisplayName (Full Name)
 
@@ -33,25 +35,25 @@ public class UserDto : object
 		(AllowEmptyStrings = false)]
 
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.CellPhoneNumber)]
+		(length: Constant.MaxLength.CellPhoneNumber)]
 	public string? CellPhoneNumber { get; set; }
 	#endregion /CellPhoneNumber
 
 	#region EmailAddress
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.EmailAddress)]
+		(length: Constant.MaxLength.EmailAddress)]
 	public string? EmailAddress { get; set; }
 	#endregion /EmailAddress
 
 	#region NationalCode
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.NationalCode)]
+		(length: Constant.MaxLength.NationalCode)]
 	public string? NationalCode { get; set; }
 	#endregion /NationalCode
 
 	#region AdditionalData
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.Constant.MaxLength.AdditionalData)]
+		(length: Constant.MaxLength.AdditionalData)]
 	public string? AdditionalData { get; set; }
 	#endregion /AdditionalData
 

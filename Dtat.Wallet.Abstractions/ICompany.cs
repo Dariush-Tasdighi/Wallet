@@ -1,24 +1,25 @@
-﻿namespace Dtat.Wallet.Abstractions
+﻿using Dtat.Wallet.Abstractions.SeedWork;
+
+namespace Dtat.Wallet.Abstractions;
+
+public interface ICompany<T> : IEntity<T>
 {
-	public interface ICompany<T> : IBaseEntity<T>
-	{
-		string Name { get; }
+	string Name { get; }
 
-		string? Description { get; }
+	string? Description { get; }
 
-		string? AdditionalData { get; }
+	string? AdditionalData { get; }
 
 
 
-		bool IsActive { get; }
+	bool IsActive { get; }
 
-		System.Guid Token { get; }
+	System.Guid Token { get; }
 
-		System.DateTime UpdateDateTime { get; }
+	System.DateTime UpdateDateTime { get; }
 
 
 
-		// صرفا در جهت اطلاع
-		//System.Collections.Generic.IList<IWallet<T>> Wallets { get; }
-	}
+	// صرفا در جهت اطلاع
+	//System.Collections.Generic.IList<IWallet<T>> Wallets { get; }
 }

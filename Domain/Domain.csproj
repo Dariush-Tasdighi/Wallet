@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Dtat.Wallet.Abstractions\Dtat.Wallet.Abstractions.csproj" />
+		<ProjectReference Include="..\Dtat\Dtat.csproj" />
 	</ItemGroup>
 
 </Project>

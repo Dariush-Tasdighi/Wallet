@@ -1,59 +1,58 @@
-﻿namespace Dtat.Wallet.Abstractions
+﻿using Dtat.Wallet.Abstractions.SeedWork;
+
+namespace Dtat.Wallet.Abstractions;
+
+public interface IWallet<T> : IEntity<T>, IHashing<T>
 {
-	public interface IWallet<T> : IBaseEntity<T>
-	{
-		T CompanyId { get; }
+	T CompanyId { get; }
 
 
 
-		bool IsActive { get; }
+	bool IsActive { get; }
 
-		System.Guid Token { get; }
-
-
-
-		/// <summary>
-		/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
-		/// </summary>
-		string Name { get; }
+	System.Guid Token { get; }
 
 
 
-		string? Hash { get; }
-
-		string? Description { get; }
-
-		string? AdditionalData { get; }
-
-
-
-		bool PaymentFeatureIsEnabled { get; }
-
-		bool DepositeFeatureIsEnabled { get; }
-
-		bool WithdrawFeatureIsEnabled { get; }
-
-		/// <summary>
-		/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
-		/// </summary>
-		//bool TransferFeatureIsEnabled { get; }
+	/// <summary>
+	/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
+	/// </summary>
+	string Name { get; }
 
 
 
-		System.DateTime UpdateDateTime { get; }
+	string? Description { get; }
+
+	string? AdditionalData { get; }
 
 
 
-		// صرفا در جهت اطلاع
-		//System.Collections.Generic.IList<IValidIP<T>> ValidIPs { get; }
+	bool PaymentFeatureIsEnabled { get; }
 
-		// صرفا در جهت اطلاع
-		//System.Collections.Generic.IList<IInvalidIP<T>> InvalidIPs { get; }
+	bool DepositeFeatureIsEnabled { get; }
 
-		// صرفا در جهت اطلاع
-		//System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }
+	bool WithdrawFeatureIsEnabled { get; }
 
-		// صرفا در جهت اطلاع
-		//System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
-	}
+	/// <summary>
+	/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
+	/// </summary>
+	//bool TransferFeatureIsEnabled { get; }
+
+
+
+	System.DateTime UpdateDateTime { get; }
+
+
+
+	// صرفا در جهت اطلاع
+	//System.Collections.Generic.IList<IValidIP<T>> ValidIPs { get; }
+
+	// صرفا در جهت اطلاع
+	//System.Collections.Generic.IList<IInvalidIP<T>> InvalidIPs { get; }
+
+	// صرفا در جهت اطلاع
+	//System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }
+
+	// صرفا در جهت اطلاع
+	//System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
 }

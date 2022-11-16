@@ -84,6 +84,7 @@ internal class UserConfiguration : object,
 		var user =
 			new Domain.User(cellPhoneNumber: "09121087461", displayName: "داریوش تصدیقی")
 			{
+				//Hash
 				//UserWallets
 				//DisplayName
 				//Transactions
@@ -91,7 +92,6 @@ internal class UserConfiguration : object,
 				//UpdateDateTime
 				//CellPhoneNumber
 
-				Hash = null,
 				Description = null,
 
 				IsActive = true,

@@ -19,7 +19,7 @@ public class Result<T> : object
 	public bool AddErrorMessages(string? errorMessage)
 	{
 		errorMessage =
-			Utility.FixText(text: errorMessage);
+			Dtat.Utility.FixText(text: errorMessage);
 
 		if (errorMessage == null)
 		{
