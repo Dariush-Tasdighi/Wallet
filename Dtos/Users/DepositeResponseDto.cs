@@ -1,16 +1,25 @@
-﻿namespace Dtos.Users
+﻿namespace Dtos.Users;
+
+public class DepositeResponseDto : object
 {
-	public class DepositeResponseDto : object
+	#region Constructor
+	public DepositeResponseDto
+		(decimal balance, long transactionId) : base()
 	{
-		public DepositeResponseDto
-			(decimal balance, long transactionId) : base()
-		{
-			Balance = balance;
-			TransactionId = transactionId;
-		}
-
-		public decimal Balance { get; }
-
-		public long TransactionId { get; }
+		Balance = balance;
+		TransactionId = transactionId;
 	}
+	#endregion /Constructor
+
+	#region Properties
+
+	#region Balance
+	public decimal Balance { get; }
+	#endregion /Balance
+
+	#region TransactionId
+	public long TransactionId { get; }
+	#endregion /TransactionId
+
+	#endregion /Properties
 }
