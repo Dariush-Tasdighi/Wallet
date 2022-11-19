@@ -10,9 +10,6 @@
 
 		bool IsActive { get; }
 
-		decimal Balance { get; }
-
-
 
 		string? Hash { get; }
 
@@ -36,5 +33,9 @@
 
 
 		System.DateTime UpdateDateTime { get; }
-	}
+
+        void Deposit(decimal amount);
+        decimal GetBalance();
+        decimal Withdraw(decimal amount);
+    }
 }

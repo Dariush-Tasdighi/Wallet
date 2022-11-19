@@ -1,4 +1,5 @@
 ﻿using Data.Configurations.SeedData;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Configurations;
 
@@ -51,7 +52,6 @@ internal class UserWalletConfiguration : object,
 				Description = null,
 				AdditionalData = null,
 
-				Balance = 0,
 				Id = Constant.UserWalletId,
 
 				PaymentFeatureIsEnabled = true,
@@ -63,5 +63,11 @@ internal class UserWalletConfiguration : object,
 		// **************************************************
 		// **************************************************
 		// **************************************************
-	}
+
+		builder
+				.Property<int?>("balance")
+				.UsePropertyAccessMode(PropertyAccessMode.Field)
+				.HasColumnName("Balance")
+				.IsConcurrencyToken();
+    }
 }

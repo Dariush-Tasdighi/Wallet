@@ -63,7 +63,7 @@ public class UsersController :
 				return NotFound(value: 0);
 			}
 
-			return Ok(value: item.Balance);
+			return Ok(value: item.GetBalance());
 		}
 		catch (System.Exception ex)
 		{
@@ -346,7 +346,7 @@ public class UsersController :
 				// **************************************************
 				// افزایش مانده حساب کاربر
 				// **************************************************
-				userWallet.Balance += request.Amount;
+				userWallet.Deposit(request.Amount);
 				// **************************************************
 
 				// **************************************************
@@ -386,7 +386,7 @@ public class UsersController :
 				// **************************************************
 				var depositeResponseDto =
 					new Dtos.Users.DepositeResponseDto
-					(balance: userWallet.Balance, transactionId: transaction.Id);
+					(balance: userWallet.GetBalance(), transactionId: transaction.Id);
 
 				result.Data = depositeResponseDto;
 
@@ -525,8 +525,6 @@ public class UsersController :
 			userWallet =
 				new Domain.UserWallet(userId: userId, walletId: walletId)
 				{
-					Balance = 0,
-
 					IsActive = true,
 
 					AdditionalData = additionalData,
