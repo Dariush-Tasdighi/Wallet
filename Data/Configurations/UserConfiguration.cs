@@ -1,6 +1,4 @@
-﻿using Data.Configurations.SeedData;
-
-namespace Data.Configurations;
+﻿namespace Data.Configurations;
 
 internal class UserConfiguration : object,
 	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.User>
@@ -95,7 +93,7 @@ internal class UserConfiguration : object,
 				Description = null,
 
 				IsActive = true,
-				Id = Constant.UserId,
+				Id = SeedData.Constant.Id.User,
 
 				NationalCode = "1234567891",
 				EmailAddress = "dariusht@gmail.com",

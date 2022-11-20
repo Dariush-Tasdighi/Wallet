@@ -1,6 +1,4 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
-
-namespace Domain;
+﻿namespace Domain;
 
 public class ValidIP : Seedwork.Entity, Dtat.Wallet.Abstractions.IValidIP<long>
 {
@@ -35,13 +33,13 @@ public class ValidIP : Seedwork.Entity, Dtat.Wallet.Abstractions.IValidIP<long>
 		(AllowEmptyStrings = false)]
 
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.IP)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.IP)]
 	public string ServerIP { get; set; }
 	#endregion /ServerIP
 
 	#region Description
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Description)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
 	public string? Description { get; set; }
 	#endregion /Description
 

@@ -2,15 +2,13 @@
 
 namespace Dtat.Wallet.Abstractions;
 
-public interface IWallet<T> : IEntity<T>, IHashing<T>
+public interface IWallet<T> : IEntity<T>, IHasToken<T>, IHashing<T>
 {
 	T CompanyId { get; }
 
 
 
 	bool IsActive { get; }
-
-	System.Guid Token { get; }
 
 
 

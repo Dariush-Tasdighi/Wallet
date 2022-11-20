@@ -1,9 +1,7 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
-
-namespace Domain.Seedwork;
+﻿namespace Domain.Seedwork;
 
 public abstract class Entity : object,
-	IEntity<long>
+	Dtat.Wallet.Abstractions.SeedWork.IEntity<long>
 {
 	#region Constructor
 	public Entity() : base()

@@ -1,6 +1,4 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
-
-namespace Domain;
+﻿namespace Domain;
 
 public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 {
@@ -8,8 +6,9 @@ public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 	public Company(string name) : base()
 	{
 		Name = name;
-		Token = System.Guid.NewGuid();
 		UpdateDateTime = InsertDateTime;
+
+		UpdateToken();
 
 		Wallets =
 			new System.Collections.Generic.List<Wallet>();
@@ -23,7 +22,7 @@ public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 	#endregion /IsActive
 
 	#region Token
-	public System.Guid Token { get; set; }
+	public System.Guid Token { get; private set; }
 	#endregion /Token
 
 	#region UpdateDateTime
@@ -37,19 +36,19 @@ public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 		(AllowEmptyStrings = false)]
 
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Name)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Name)]
 	public string Name { get; set; }
 	#endregion /Name
 
 	#region Description
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Description)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
 	public string? Description { get; set; }
 	#endregion /Description
 
 	#region AdditionalData
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.AdditionalData)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.AdditionalData)]
 	public string? AdditionalData { get; set; }
 	#endregion /AdditionalData
 
@@ -61,4 +60,19 @@ public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 	#endregion /Wallets
 
 	#endregion /Properties
+
+	#region Methods
+
+	public void UpdateToken(System.Guid? token = null)
+	{
+		if (token.HasValue == false)
+		{
+			token =
+				System.Guid.NewGuid();
+		}
+
+		Token = token.Value;
+	}
+
+	#endregion /Methods
 }

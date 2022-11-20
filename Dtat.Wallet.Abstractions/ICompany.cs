@@ -2,7 +2,7 @@
 
 namespace Dtat.Wallet.Abstractions;
 
-public interface ICompany<T> : IEntity<T>
+public interface ICompany<T> : IEntity<T>, IHasToken<T>
 {
 	string Name { get; }
 
@@ -13,8 +13,6 @@ public interface ICompany<T> : IEntity<T>
 
 
 	bool IsActive { get; }
-
-	System.Guid Token { get; }
 
 	System.DateTime UpdateDateTime { get; }
 

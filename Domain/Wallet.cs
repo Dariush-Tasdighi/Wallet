@@ -1,6 +1,4 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
-
-namespace Domain;
+﻿namespace Domain;
 
 public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 {
@@ -9,7 +7,8 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 	{
 		Name = name;
 		CompanyId = companyId;
-		Token = System.Guid.NewGuid();
+
+		UpdateToken();
 
 		ValidIPs =
 			new System.Collections.Generic.List<ValidIP>();
@@ -43,7 +42,7 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 		(AllowEmptyStrings = false)]
 
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Name)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Name)]
 	public string Name { get; set; }
 	#endregion /Name
 
@@ -51,19 +50,19 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 
 	#region Hash
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Hash)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Hash)]
 	public string? Hash { get; set; }
 	#endregion /Hash
 
 	#region Description
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Description)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
 	public string? Description { get; set; }
 	#endregion /Description
 
 	#region AdditionalData
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.AdditionalData)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.AdditionalData)]
 	public string? AdditionalData { get; set; }
 	#endregion /AdditionalData
 
@@ -74,7 +73,7 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 	#endregion /IsActive
 
 	#region Token
-	public System.Guid Token { get; set; }
+	public System.Guid Token { get; private set; }
 	#endregion /Token
 
 	#region UpdateDateTime
@@ -125,6 +124,17 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 	#endregion /Properties
 
 	#region Methods
+
+	public void UpdateToken(System.Guid? token = null)
+	{
+		if (token.HasValue == false)
+		{
+			token =
+				System.Guid.NewGuid();
+		}
+
+		Token = token.Value;
+	}
 
 	public string GetHash()
 	{

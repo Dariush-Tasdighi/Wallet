@@ -411,7 +411,8 @@ public class UsersController :
 	#endregion /Action: Deposite()
 
 	#region Method: ValidateServerIP()
-	private bool ValidateServerIP(System.Guid waletToken, string serverIP)
+	private bool ValidateServerIP
+		(System.Guid waletToken, string serverIP)
 	{
 		var isValid = false;
 
@@ -491,9 +492,6 @@ public class UsersController :
 				};
 
 			DatabaseContext.Add(entity: user);
-
-			// دستور ذیل باید نوشته شود Id به دلیل نوع
-			DatabaseContext.SaveChanges();
 		}
 		else
 		{
@@ -501,6 +499,9 @@ public class UsersController :
 			user.NationalCode = nationalCode;
 			user.EmailAddress = emailAddress;
 		}
+
+		// دستور ذیل باید نوشته شود Id به دلیل نوع
+		DatabaseContext.SaveChanges();
 
 		return user;
 	}
@@ -536,9 +537,6 @@ public class UsersController :
 				};
 
 			DatabaseContext.Add(entity: userWallet);
-
-			// دستور ذیل باید نوشته شود Id به دلیل نوع
-			DatabaseContext.SaveChanges();
 		}
 		else
 		{
@@ -547,6 +545,9 @@ public class UsersController :
 			userWallet.DepositeFeatureIsEnabled = depositeFeatureIsEnabled;
 			userWallet.WithdrawFeatureIsEnabled = withdrawFeatureIsEnabled;
 		}
+
+		// دستور ذیل باید نوشته شود Id به دلیل نوع
+		DatabaseContext.SaveChanges();
 
 		return userWallet;
 	}

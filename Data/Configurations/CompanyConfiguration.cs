@@ -1,6 +1,4 @@
-﻿using Data.Configurations.SeedData;
-
-namespace Data.Configurations;
+﻿namespace Data.Configurations;
 
 internal class CompanyConfiguration : object,
 	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.Company>
@@ -58,8 +56,11 @@ internal class CompanyConfiguration : object,
 				IsActive = true,
 				Description = null,
 				AdditionalData = null,
-				Id = Constant.CompanyId,
+				Id = SeedData.Constant.Id.Company,
 			};
+
+		company.UpdateToken
+			(token: SeedData.Constant.Token.Company);
 
 		builder.HasData(data: company);
 		// **************************************************

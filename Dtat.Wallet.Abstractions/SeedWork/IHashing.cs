@@ -1,6 +1,4 @@
-﻿using System.Net.Mail;
-
-namespace Dtat.Wallet.Abstractions.SeedWork;
+﻿namespace Dtat.Wallet.Abstractions.SeedWork;
 
 public interface IHashing<T>
 {

@@ -1,6 +1,4 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
-
-namespace Domain;
+﻿namespace Domain;
 
 public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 {
@@ -36,7 +34,7 @@ public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 		(AllowEmptyStrings = false)]
 
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.DisplayName)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.DisplayName)]
 	public string DisplayName { get; set; }
 	#endregion /DisplayName
 
@@ -45,7 +43,7 @@ public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 		(AllowEmptyStrings = false)]
 
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.CellPhoneNumber)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.CellPhoneNumber)]
 	public string CellPhoneNumber { get; set; }
 	#endregion /CellPhoneNumber
 
@@ -53,25 +51,25 @@ public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 
 	#region Hash
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Hash)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Hash)]
 	public string? Hash { get; private set; }
 	#endregion /Hash
 
 	#region Description
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Description)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
 	public string? Description { get; set; }
 	#endregion /Description
 
 	#region EmailAddress
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.EmailAddress)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.EmailAddress)]
 	public string? EmailAddress { get; set; }
 	#endregion /EmailAddress
 
 	#region NationalCode
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.NationalCode)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.NationalCode)]
 	public string? NationalCode { get; set; }
 	#endregion /NationalCode
 

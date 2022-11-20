@@ -1,6 +1,4 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
-
-namespace Domain;
+﻿namespace Domain;
 
 public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransaction<long>
 {
@@ -52,19 +50,19 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 
 	#region PaymentReferenceCode
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.ReferenceCode)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.ReferenceCode)]
 	public string? PaymentReferenceCode { get; set; }
 	#endregion /PaymentReferenceCode
 
 	#region DepositeOrWithdrawProviderName
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.ProviderName)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.ProviderName)]
 	public string? DepositeOrWithdrawProviderName { get; set; }
 	#endregion /DepositeOrWithdrawProviderName
 
 	#region DepositeOrWithdrawReferenceCode
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.ReferenceCode)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.ReferenceCode)]
 	public string? DepositeOrWithdrawReferenceCode { get; set; }
 	#endregion /DepositeOrWithdrawReferenceCode
 
@@ -72,37 +70,37 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 
 	#region UserIP
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Hash)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Hash)]
 	public string? Hash { get; private set; }
 	#endregion /UserIP
 
 	#region UserIP
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.IP)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.IP)]
 	public string UserIP { get; set; }
 	#endregion /UserIP
 
 	#region ServerIP
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.IP)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.IP)]
 	public string ServerIP { get; set; }
 	#endregion /ServerIP
 
 	#region AdditionalData
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.AdditionalData)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.AdditionalData)]
 	public string? AdditionalData { get; set; }
 	#endregion /AdditionalData
 
 	#region UserDescription
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Description)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
 	public string? UserDescription { get; set; }
 	#endregion /UserDescription
 
 	#region SystemicDescription
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Description)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
 	public string? SystemicDescription { get; set; }
 	#endregion /SystemicDescription
 

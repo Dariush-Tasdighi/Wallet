@@ -1,6 +1,4 @@
-﻿using Data.Configurations.SeedData;
-
-namespace Data.Configurations;
+﻿namespace Data.Configurations;
 
 internal class WalletConfiguration : object,
 	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.Wallet>
@@ -73,7 +71,7 @@ internal class WalletConfiguration : object,
 		// **************************************************
 		// **************************************************
 		var wallet =
-			new Domain.Wallet(companyId: Constant.CompanyId,
+			new Domain.Wallet(companyId: SeedData.Constant.Id.Company,
 			name: "کیف پول هستی")
 			{
 				//Name
@@ -84,6 +82,7 @@ internal class WalletConfiguration : object,
 
 				//ValidIPs
 				//InvalidIPs
+
 				//UserWallets
 				//Transactions
 
@@ -95,12 +94,17 @@ internal class WalletConfiguration : object,
 				AdditionalData = null,
 
 				IsActive = true,
-				Id = Constant.WalletId,
+
 				PaymentFeatureIsEnabled = true,
 				DepositeFeatureIsEnabled = true,
 				WithdrawFeatureIsEnabled = true,
 				//TransferFeatureIsEnabled = true,
+
+				Id = SeedData.Constant.Id.Wallet,
 			};
+
+		wallet.UpdateToken
+			(token: SeedData.Constant.Token.Wallet);
 
 		builder.HasData(data: wallet);
 		// **************************************************
