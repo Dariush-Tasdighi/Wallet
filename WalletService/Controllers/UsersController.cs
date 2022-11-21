@@ -63,7 +63,7 @@ public class UsersController :
 				return NotFound(value: 0);
 			}
 
-			return Ok(value: item.Balance);
+			return Ok(value: item.GetBalance());
 		}
 		catch (System.Exception ex)
 		{
@@ -341,18 +341,18 @@ public class UsersController :
 
 					return Ok(value: result);
 				}
-				// **************************************************
+                // **************************************************
 
-				// **************************************************
-				// افزایش مانده حساب کاربر
-				// **************************************************
-				userWallet.Balance += request.Amount;
-				// **************************************************
+                // **************************************************
+                // افزایش مانده حساب کاربر
+                // **************************************************
+                userWallet.Deposit(request.Amount);
+                // **************************************************
 
-				// **************************************************
-				// افزایش مانده حساب کاربر
-				// **************************************************
-				var finishTime =
+                // **************************************************
+                // افزایش مانده حساب کاربر
+                // **************************************************
+                var finishTime =
 					System.DateTime.Now;
 
 				var transactionDuration = finishTime - startTime;
@@ -386,7 +386,7 @@ public class UsersController :
 				// **************************************************
 				var depositeResponseDto =
 					new Dtos.Users.DepositeResponseDto
-					(balance: userWallet.Balance, transactionId: transaction.Id);
+					(balance: userWallet.GetBalance(), transactionId: transaction.Id);
 
 				result.Data = depositeResponseDto;
 
@@ -526,7 +526,6 @@ public class UsersController :
 			userWallet =
 				new Domain.UserWallet(userId: userId, walletId: walletId)
 				{
-					Balance = 0,
 
 					IsActive = true,
 

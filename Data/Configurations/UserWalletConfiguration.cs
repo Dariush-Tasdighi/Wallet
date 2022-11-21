@@ -1,4 +1,6 @@
-﻿namespace Data.Configurations;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Data.Configurations;
 
 internal class UserWalletConfiguration : object,
 	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.UserWallet>
@@ -51,7 +53,6 @@ internal class UserWalletConfiguration : object,
 				Description = null,
 				AdditionalData = null,
 
-				Balance = 0,
 
 				PaymentFeatureIsEnabled = true,
 				WithdrawFeatureIsEnabled = true,
@@ -61,8 +62,15 @@ internal class UserWalletConfiguration : object,
 			};
 
 		builder.HasData(data: userWallet);
-		// **************************************************
-		// **************************************************
-		// **************************************************
-	}
+
+        builder
+                .Property<decimal>("balance")
+                .UsePropertyAccessMode(PropertyAccessMode.Field)
+                .HasColumnName("Balance")
+                .IsConcurrencyToken();
+
+        // **************************************************
+        // **************************************************
+        // **************************************************
+    }
 }
