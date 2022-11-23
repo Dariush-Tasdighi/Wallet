@@ -1,5 +1,5 @@
 # Hasti Wallet
-Hasti Wallet is a simple **multi-company** **multi-user** wallet with multiple features such as **payments**, **deposits**, **withdrawals** and **transfers**.
+Hasti Wallet is a simple **multi-company**, **multi-wallet** **multi-user** wallet with multiple features such as **payments**, **deposits**, **withdrawals** and **transfers**.
 
 ## Description
 
@@ -45,9 +45,9 @@ Make sure you have installed **.NET 7** in your environment. After that, you can
 
 ## Contributors 
 
-[Dariush-Tasdighi](https://www.linkedin.com/in/Tasdighi/)
-[Mehran Rivadeh](https://www.linkedin.com/in/Mehran-Rivadeh-ab55845)
-[Ali Bayat](https://www.linkedin.com/in/AliBayatgh)
+- [Dariush-Tasdighi](https://www.linkedin.com/in/Tasdighi/)
+- [Mehran Rivadeh](https://www.linkedin.com/in/Mehran-Rivadeh-ab55845)
+- [Ali Bayat](https://www.linkedin.com/in/AliBayatgh)
 
 ## Version History
 
