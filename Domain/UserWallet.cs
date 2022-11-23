@@ -1,9 +1,13 @@
-﻿namespace Domain;
+﻿using System;
+
+namespace Domain;
 
 public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<long>
 {
-	#region Constructor
-	public UserWallet(long userId, long walletId) : base()
+    private readonly object balanceLock = new object();
+    private decimal balance;
+    #region Constructor
+    public UserWallet(long userId, long walletId) : base()
 	{
 		UserId = userId;
 		WalletId = walletId;
@@ -46,9 +50,6 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 
 
 
-	#region Balance
-	public decimal Balance { get; set; }
-	#endregion /Balance
 
 
 
@@ -108,7 +109,7 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime}");
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Balance)}:{Balance}");
+		stringBuilder.Append($"{nameof(balance)}:{balance}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(PaymentFeatureIsEnabled)}:{PaymentFeatureIsEnabled}");
 		stringBuilder.Append('|');
@@ -148,5 +149,43 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 		}
 	}
 
-	#endregion /Methods
+    public void Deposit(decimal amount)
+    {
+        if (amount < 0)
+            throw new ArgumentOutOfRangeException(nameof(amount), "The deposit amount cannot be negative.");
+
+        lock (balanceLock)
+        {
+            balance += amount;
+        }
+    }
+
+    public decimal Withdraw(decimal amount)
+    {
+        if (amount < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), "The withdraw amount cannot be negative.");
+        }
+
+        decimal appliedAmount = 0;
+        lock (balanceLock)
+        {
+            if (balance >= amount)
+            {
+                balance -= amount;
+                appliedAmount = amount;
+            }
+        }
+
+        return appliedAmount;
+    }
+
+    public decimal GetBalance()
+    {
+        lock (balanceLock)
+        {
+            return balance;
+        }
+    }
+    #endregion /Methods
 }

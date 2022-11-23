@@ -12,7 +12,6 @@ public interface IUserWallet<T> : IEntity<T>, IHashing<T>
 
 	bool IsActive { get; }
 
-	decimal Balance { get; }
 
 
 
@@ -36,4 +35,8 @@ public interface IUserWallet<T> : IEntity<T>, IHashing<T>
 
 
 	System.DateTime UpdateDateTime { get; }
+
+    void Deposit(decimal amount);
+    decimal GetBalance();
+    decimal Withdraw(decimal amount);
 }
