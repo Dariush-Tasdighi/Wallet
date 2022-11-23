@@ -5,6 +5,9 @@ Hasti Wallet is a simple **multi-company**, **multi-wallet** **multi-user** wall
 
 **Hasti Wallet** is a secure wallet platform. This project was created by **Dariush Tasdighi**,  and is sponsored by **Hasti innovative trader** inc.
 
+- https://hasti.co/
+- https://www.linkedin.com/company/hasti-innovative-trading/mycompany/
+
 ## Getting Started
 Make sure you have installed **.NET 7** in your environment. After that, you can run the below commands from the **/WalletService/** directory and get started with the `Hasti wallet` immediately.
 
@@ -20,8 +23,9 @@ Make sure you have installed **.NET 7** in your environment. After that, you can
 * Download & Install **.NET 7** from [here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 * Configure connection strings
 * Run the project
-* Create a user using following pay 
+* Create a user by using following pay:
 
+```yaml
     {
     	"user": {
     		"ip": "192.168.1.110",
@@ -45,9 +49,9 @@ Make sure you have installed **.NET 7** in your environment. After that, you can
 
 ## Contributors 
 
-- [Dariush-Tasdighi](https://www.linkedin.com/in/Tasdighi/)
-- [Mehran Rivadeh](https://www.linkedin.com/in/Mehran-Rivadeh-ab55845)
-- [Ali Bayat](https://www.linkedin.com/in/AliBayatgh)
+- [Mr. Dariush Tasdighi](https://www.linkedin.com/in/Tasdighi/)
+- [Mr. Mehran Rivadeh](https://www.linkedin.com/in/Mehran-Rivadeh-ab55845)
+- [Mr. Ali Bayat](https://www.linkedin.com/in/AliBayatgh)
 
 ## Version History
 
