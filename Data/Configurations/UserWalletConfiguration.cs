@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Data.Configurations;
+﻿namespace Data.Configurations;
 
 internal class UserWalletConfiguration : object,
 	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.UserWallet>
@@ -27,6 +25,16 @@ internal class UserWalletConfiguration : object,
 			.IsUnicode(unicode: false)
 			;
 		// **************************************************
+
+		// **************************************************
+		//Precision = Total number of characters used.
+		// Scale = Total number after the dot.
+		// **************************************************
+		builder
+			.Property(current => current.Balance)
+			.HasPrecision(precision: 18, scale: 2)
+			;
+		// **************************************************
 		// **************************************************
 		// **************************************************
 
@@ -49,10 +57,10 @@ internal class UserWalletConfiguration : object,
 				//InsertDateTime
 				//UpdateDateTime
 
+				Balance = 0,
 				IsActive = true,
 				Description = null,
 				AdditionalData = null,
-
 
 				PaymentFeatureIsEnabled = true,
 				WithdrawFeatureIsEnabled = true,
@@ -62,15 +70,8 @@ internal class UserWalletConfiguration : object,
 			};
 
 		builder.HasData(data: userWallet);
-
-        builder
-                .Property<decimal>("balance")
-                .UsePropertyAccessMode(PropertyAccessMode.Field)
-                .HasColumnName("Balance")
-                .IsConcurrencyToken();
-
-        // **************************************************
-        // **************************************************
-        // **************************************************
-    }
+		// **************************************************
+		// **************************************************
+		// **************************************************
+	}
 }

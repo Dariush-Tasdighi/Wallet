@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Server.Controllers.Admin;
 
 [Microsoft.AspNetCore.Mvc.Route(template: Infrastructure.Constant.DefaultAdminRoute)]
-public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseContext
+public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 {
 	#region Constructor
-	public CompaniesController
-		(ILogger<CompaniesController> logger,
+	public UsersController
+		(ILogger<UsersController> logger,
 		Data.DatabaseContext databaseContext) : base(databaseContext: databaseContext)
 	{
 		Logger = logger;
@@ -17,14 +17,14 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 	#endregion /Constructor
 
 	#region Properties
-	private ILogger<CompaniesController> Logger { get; }
+	private ILogger<UsersController> Logger { get; }
 	#endregion /Properties
 
-	#region GetAllCompaniesAsync()
+	#region GetAllUsersAsync()
 	[Microsoft.AspNetCore.Mvc.HttpGet]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(System.Collections.Generic.IEnumerable<Domain.Company>),
+		(type: typeof(System.Collections.Generic.IEnumerable<Domain.User>),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
@@ -32,14 +32,21 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
 	public async System.Threading.Tasks.Task
 		<Microsoft.AspNetCore.Mvc.ActionResult
-		<System.Collections.Generic.IEnumerable<Domain.Company>>> GetAllCompaniesAsync()
+		<System.Collections.Generic.IEnumerable<Domain.User>>>
+		GetAllUsersAsync(Dtat.Pagination pagination)
 	{
 		try
 		{
-			var items =
+			System.Collections.Generic
+				.IEnumerable<Domain.User> items;
+
+			items =
 				await
-				DatabaseContext.Companies
+				DatabaseContext.Users
 				.AsNoTracking()
+				.OrderBy(current => current.InsertDateTime)
+				.Skip(count: pagination.Skip)
+				.Take(count: pagination.PageSize)
 				.ToListAsync()
 				;
 
@@ -49,7 +56,7 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 		{
 			var applicationError =
 				new Infrastructure.ApplicationError
-				(code: Infrastructure.Constant.ErrorCode.Admin_CompaniesController_GetAllCompaniesAsync,
+				(code: Infrastructure.Constant.ErrorCode.Admin_UsersController_GetAllUsersAsync,
 				message: ex.Message, innerException: ex);
 
 			Logger.LogError
@@ -59,13 +66,13 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
 		}
 	}
-	#endregion /GetAllCompaniesAsync()
+	#endregion /GetAllUsersAsync()
 
-	#region GetCompanyByIdAsync()
+	#region GetUserByIdAsync()
 	[Microsoft.AspNetCore.Mvc.HttpGet(template: "{id}")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(Domain.Company),
+		(type: typeof(Domain.User),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
@@ -76,13 +83,13 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 		(type: typeof(string),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
 	public async System.Threading.Tasks.Task
-		<Microsoft.AspNetCore.Mvc.ActionResult<Domain.Company>> GetCompanyByIdAsync(long id)
+		<Microsoft.AspNetCore.Mvc.ActionResult<Domain.User>> GetUserByIdAsync(long id)
 	{
 		try
 		{
 			var item =
 				await
-				DatabaseContext.Companies
+				DatabaseContext.Users
 				.AsNoTracking()
 				.Where(current => current.Id == id)
 				.FirstOrDefaultAsync();
@@ -98,7 +105,7 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 		{
 			var applicationError =
 				new Infrastructure.ApplicationError
-				(code: Infrastructure.Constant.ErrorCode.Admin_CompaniesController_GetCompanyByIdAsync,
+				(code: Infrastructure.Constant.ErrorCode.Admin_UsersController_GetUserByIdAsync,
 				message: ex.Message, innerException: ex);
 
 			Logger.LogError
@@ -108,5 +115,5 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
 		}
 	}
-	#endregion /GetCompanyByIdAsync()
+	#endregion /GetUserByIdAsync()
 }

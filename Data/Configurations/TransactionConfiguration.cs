@@ -32,6 +32,16 @@ internal class TransactionConfiguration : object,
 			.IsUnicode(unicode: false)
 			;
 		// **************************************************
+
+		// **************************************************
+		//Precision = Total number of characters used.
+		// Scale = Total number after the dot.
+		// **************************************************
+		builder
+			.Property(current => current.Amount)
+			.HasPrecision(precision: 18, scale: 2)
+			;
+		// **************************************************
 		// **************************************************
 		// **************************************************
 	}

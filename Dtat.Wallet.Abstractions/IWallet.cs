@@ -1,8 +1,7 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
+﻿namespace Dtat.Wallet.Abstractions;
 
-namespace Dtat.Wallet.Abstractions;
-
-public interface IWallet<T> : IEntity<T>, IHasToken<T>, IHashing<T>
+public interface IWallet<T> :
+	SeedWork.IEntity<T>, SeedWork.IHasToken<T>, SeedWork.IHashing<T> where T : struct
 {
 	T CompanyId { get; }
 
@@ -31,10 +30,7 @@ public interface IWallet<T> : IEntity<T>, IHasToken<T>, IHashing<T>
 
 	bool WithdrawFeatureIsEnabled { get; }
 
-	/// <summary>
-	/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
-	/// </summary>
-	//bool TransferFeatureIsEnabled { get; }
+	bool TransferFeatureIsEnabled { get; }
 
 
 

@@ -43,14 +43,5 @@ public class DatabaseContext : Microsoft.EntityFrameworkCore.DbContext
 	protected override void ConfigureConventions
 		(Microsoft.EntityFrameworkCore.ModelConfigurationBuilder builder)
 	{
-		//builder.Properties<System.DateOnly>()
-		//	.HaveConversion<Conventions.DateTimeConventions.DateOnlyConverter>()
-		//	.HaveColumnType(typeName: nameof(System.DateTime.Date))
-		//	;
-
-		//builder.Properties<System.DateOnly?>()
-		//	.HaveConversion<Conventions.DateTimeConventions.NullableDateOnlyConverter>()
-		//	.HaveColumnType(typeName: nameof(System.DateTime.Date))
-		//	;
 	}
 }

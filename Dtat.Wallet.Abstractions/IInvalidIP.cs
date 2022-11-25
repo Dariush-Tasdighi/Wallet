@@ -1,6 +1,6 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
-public interface IInvalidIP<T>
+public interface IInvalidIP<T> where T : struct
 {
 	T WalletId { get; }
 

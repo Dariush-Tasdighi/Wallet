@@ -1,8 +1,7 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
+﻿namespace Dtat.Wallet.Abstractions;
 
-namespace Dtat.Wallet.Abstractions;
-
-public interface ICompany<T> : IEntity<T>, IHasToken<T>
+public interface ICompany<T> :
+	SeedWork.IEntity<T>, SeedWork.IHasToken<T> where T : struct
 {
 	string Name { get; }
 

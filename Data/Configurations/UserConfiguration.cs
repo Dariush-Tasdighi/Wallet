@@ -73,6 +73,17 @@ internal class UserConfiguration : object,
 				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
 			;
 		// **************************************************
+
+		// **************************************************
+		builder
+			.HasMany(current => current.PartyTransactions)
+			.WithOne(other => other.PartyUser)
+			.IsRequired(required: false)
+			.HasForeignKey(other => other.PartyUserId)
+			.OnDelete(deleteBehavior:
+				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
+			;
+		// **************************************************
 		// **************************************************
 		// **************************************************
 

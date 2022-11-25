@@ -14,6 +14,9 @@ public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 
 		Transactions =
 			new System.Collections.Generic.List<Transaction>();
+
+		PartyTransactions =
+			new System.Collections.Generic.List<Transaction>();
 	}
 	#endregion /Constructor
 
@@ -85,9 +88,15 @@ public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 	public virtual System.Collections.Generic.IList<Transaction> Transactions { get; private set; }
 	#endregion /Transactions
 
+	#region PartyTransactions
+	[System.Text.Json.Serialization.JsonIgnore]
+	public virtual System.Collections.Generic.IList<Transaction> PartyTransactions { get; private set; }
+	#endregion /PartyTransactions
+
 	#endregion /Properties
 
 	#region Methods
+
 	public string GetHash()
 	{
 		var stringBuilder =

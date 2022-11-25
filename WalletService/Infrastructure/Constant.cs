@@ -65,5 +65,37 @@ public static class Constant : object
 
 		public const long Admin_WalletsController_GetWalletsByCompanyIdAsync = Admin_WalletsController + 103;
 		// **********
+
+		// **********
+		public const long Admin_UsersController = Admin + 103000;
+
+		public const long Admin_UsersController_GetUserByIdAsync = Admin_UsersController + 101;
+
+		public const long Admin_UsersController_GetAllUsersAsync = Admin_UsersController + 102;
+
+		public const long Admin_UsersController_GetUsersByFiltersAsync = Admin_UsersController + 103;
+		// **********
+
+		// **********
+		public const long Admin_TransactionsController = Admin + 104000;
+
+		public const long Admin_TransactionsController_GetAllTransactionsAsync = Admin_TransactionsController + 101;
+
+		public const long Admin_TransactionsController_GetTransactionByIdAsync = Admin_TransactionsController + 102;
+
+		public const long Admin_TransactionsController_GetTransactionByHashAsync = Admin_TransactionsController + 103;
+
+		public const long Admin_TransactionsController_GetTransactionsByUserIdAsync = Admin_TransactionsController + 104;
+
+		public const long Admin_TransactionsController_GetTransactionsByFiltersAsync = Admin_TransactionsController + 105;
+
+		public const long Admin_TransactionsController_GetTransactionsByWalletIdAsync = Admin_TransactionsController + 106;
+
+		public const long Admin_TransactionsController_GetTransactionsByCompanyIdAsync = Admin_TransactionsController + 107;
+
+		public const long Admin_TransactionsController_GetTransactionByPaymentReferenceCodeAsync = Admin_TransactionsController + 108;
+
+		public const long Admin_TransactionsController_GetTransactionByDepositeOrWithdrawReferenceCodeAsync = Admin_TransactionsController + 109;
+		// **********
 	}
 }

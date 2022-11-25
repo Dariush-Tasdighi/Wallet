@@ -94,10 +94,9 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 	public bool WithdrawFeatureIsEnabled { get; set; }
 	#endregion /WithdrawFeatureIsEnabled
 
-	/// <summary>
-	/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
-	/// </summary>
-	//public bool TransferFeatureIsEnabled { get; set; }
+	#region TransferFeatureIsEnabled
+	public bool TransferFeatureIsEnabled { get; set; }
+	#endregion /TransferFeatureIsEnabled
 
 
 
@@ -162,6 +161,8 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 		stringBuilder.Append($"{nameof(DepositeFeatureIsEnabled)}:{DepositeFeatureIsEnabled}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(WithdrawFeatureIsEnabled)}:{WithdrawFeatureIsEnabled}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(TransferFeatureIsEnabled)}:{TransferFeatureIsEnabled}");
 
 		var text =
 			stringBuilder.ToString();

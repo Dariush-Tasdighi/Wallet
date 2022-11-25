@@ -1,8 +1,7 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
+﻿namespace Dtat.Wallet.Abstractions;
 
-namespace Dtat.Wallet.Abstractions;
-
-public interface IUserWallet<T> : IEntity<T>, IHashing<T>
+public interface IUserWallet<T> :
+	SeedWork.IEntity<T>, SeedWork.IHashing<T> where T : struct
 {
 	T UserId { get; }
 
@@ -12,6 +11,7 @@ public interface IUserWallet<T> : IEntity<T>, IHashing<T>
 
 	bool IsActive { get; }
 
+	decimal Balance { get; }
 
 
 
@@ -27,16 +27,9 @@ public interface IUserWallet<T> : IEntity<T>, IHashing<T>
 
 	bool WithdrawFeatureIsEnabled { get; }
 
-	/// <summary>
-	/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
-	/// </summary>
-	//bool TransferFeatureIsEnabled { get; }
+	bool TransferFeatureIsEnabled { get; }
 
 
 
 	System.DateTime UpdateDateTime { get; }
-
-    void Deposit(decimal amount);
-    decimal GetBalance();
-    decimal Withdraw(decimal amount);
 }

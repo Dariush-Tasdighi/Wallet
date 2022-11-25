@@ -1,6 +1,4 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
-
-namespace Dtos.Users;
+﻿namespace Dtos.Users;
 
 public class DepositeRequestDto : object
 {
@@ -32,7 +30,7 @@ public class DepositeRequestDto : object
 		(AllowEmptyStrings = false)]
 
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.ProviderName)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.ProviderName)]
 	public string? ProviderName { get; set; }
 	#endregion /ProviderName
 
@@ -41,25 +39,25 @@ public class DepositeRequestDto : object
 		(AllowEmptyStrings = false)]
 
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.ReferenceCode)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.ReferenceCode)]
 	public string? ReferenceCode { get; set; }
 	#endregion /ReferenceCode
 
 	#region UserDescription
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Description)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
 	public string? UserDescription { get; set; }
 	#endregion /UserDescription
 
 	#region SystemicDescription
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.Description)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
 	public string? SystemicDescription { get; set; }
 	#endregion /SystemicDescription
 
 	#region AdditionalData
 	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Constant.MaxLength.AdditionalData)]
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.AdditionalData)]
 	public string? AdditionalData { get; set; }
 	#endregion /AdditionalData
 

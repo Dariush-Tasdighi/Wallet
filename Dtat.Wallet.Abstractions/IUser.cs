@@ -1,11 +1,12 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
+﻿using System.Transactions;
 
 namespace Dtat.Wallet.Abstractions;
 
 /// <summary>
 /// شخص حقیقی / حقوقی
 /// </summary>
-public interface IUser<T> : IEntity<T>, IHashing<T>
+public interface IUser<T> :
+	SeedWork.IEntity<T>, SeedWork.IHashing<T> where T : struct
 {
 	bool IsActive { get; }
 
@@ -40,4 +41,7 @@ public interface IUser<T> : IEntity<T>, IHashing<T>
 
 	// صرفا در جهت اطلاع
 	//System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
+
+	// صرفا در جهت اطلاع
+	//System.Collections.Generic.IList<ITransaction<T>> PartyTransactions { get; }
 }

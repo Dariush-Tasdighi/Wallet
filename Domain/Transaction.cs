@@ -38,12 +38,23 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 
 
 
+	#region PartyUserId
+	public long? PartyUserId { get; set; }
+	#endregion /PartyUserId
+
+	#region PartyUser
+	[System.Text.Json.Serialization.JsonIgnore]
+	public virtual User? PartyUser { get; private set; }
+	#endregion /PartyUser
+
+
+
 	#region Amount
 	public decimal Amount { get; private set; }
 	#endregion /Amount
 
 	#region TransactionDuration
-	public System.TimeSpan? TransactionDuration { get; set; }
+	public System.TimeSpan TransactionDuration { get; set; }
 	#endregion /TransactionDuration
 
 
@@ -68,11 +79,11 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 
 
 
-	#region UserIP
+	#region Hash
 	[System.ComponentModel.DataAnnotations.MaxLength
 		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Hash)]
 	public string? Hash { get; private set; }
-	#endregion /UserIP
+	#endregion /Hash
 
 	#region UserIP
 	[System.ComponentModel.DataAnnotations.MaxLength
@@ -118,6 +129,8 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 		stringBuilder.Append($"{nameof(UserId)}:{UserId}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(WalletId)}:{WalletId}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(PartyUserId)}:{PartyUserId}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(Amount)}:{Amount}");
 		stringBuilder.Append('|');

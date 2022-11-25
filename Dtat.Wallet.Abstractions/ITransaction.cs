@@ -1,12 +1,16 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
+﻿namespace Dtat.Wallet.Abstractions;
 
-namespace Dtat.Wallet.Abstractions;
-
-public interface ITransaction<T> : IEntity<T>, IHashing<T>
+public interface ITransaction<T> :
+	SeedWork.IEntity<T>, SeedWork.IHashing<T> where T : struct
 {
 	T UserId { get; }
 
 	T WalletId { get; }
+
+	/// <summary>
+	/// طرف حساب
+	/// </summary>
+	T? PartyUserId { get; }
 
 
 
@@ -18,7 +22,8 @@ public interface ITransaction<T> : IEntity<T>, IHashing<T>
 	/// </summary>
 	decimal Amount { get; }
 
-	System.TimeSpan? TransactionDuration { get; }
+	System.TimeSpan TransactionDuration { get; }
+
 
 
 	string UserIP { get; }

@@ -1,6 +1,6 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
-public interface IValidIP<T>
+public interface IValidIP<T> where T : struct
 {
 	T WalletId { get; }
 

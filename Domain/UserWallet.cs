@@ -1,13 +1,9 @@
-﻿using System;
-
-namespace Domain;
+﻿namespace Domain;
 
 public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<long>
 {
-    private readonly object balanceLock = new object();
-    private decimal balance;
-    #region Constructor
-    public UserWallet(long userId, long walletId) : base()
+	#region Constructor
+	public UserWallet(long userId, long walletId) : base()
 	{
 		UserId = userId;
 		WalletId = walletId;
@@ -44,12 +40,13 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 	public bool IsActive { get; set; }
 	#endregion /IsActive
 
+	#region Balance
+	public decimal Balance { get; set; }
+	#endregion /Balance
+
 	#region UpdateDateTime
 	public System.DateTime UpdateDateTime { get; private set; }
 	#endregion /UpdateDateTime
-
-
-
 
 
 
@@ -65,10 +62,9 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 	public bool WithdrawFeatureIsEnabled { get; set; }
 	#endregion /WithdrawFeatureIsEnabled
 
-	/// <summary>
-	/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
-	/// </summary>
-	//public bool TransferFeatureIsEnabled { get; set; }
+	#region TransferFeatureIsEnabled
+	public bool TransferFeatureIsEnabled { get; set; }
+	#endregion /TransferFeatureIsEnabled
 
 
 
@@ -107,15 +103,17 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(IsActive)}:{IsActive}");
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime}");
+		stringBuilder.Append($"{nameof(Balance)}:{Balance}");
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(balance)}:{balance}");
+		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(PaymentFeatureIsEnabled)}:{PaymentFeatureIsEnabled}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(DepositeFeatureIsEnabled)}:{DepositeFeatureIsEnabled}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(WithdrawFeatureIsEnabled)}:{WithdrawFeatureIsEnabled}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(TransferFeatureIsEnabled)}:{TransferFeatureIsEnabled}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(Description)}:{Description}");
 		stringBuilder.Append('|');
@@ -149,43 +147,5 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 		}
 	}
 
-    public void Deposit(decimal amount)
-    {
-        if (amount < 0)
-            throw new ArgumentOutOfRangeException(nameof(amount), "The deposit amount cannot be negative.");
-
-        lock (balanceLock)
-        {
-            balance += amount;
-        }
-    }
-
-    public decimal Withdraw(decimal amount)
-    {
-        if (amount < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(amount), "The withdraw amount cannot be negative.");
-        }
-
-        decimal appliedAmount = 0;
-        lock (balanceLock)
-        {
-            if (balance >= amount)
-            {
-                balance -= amount;
-                appliedAmount = amount;
-            }
-        }
-
-        return appliedAmount;
-    }
-
-    public decimal GetBalance()
-    {
-        lock (balanceLock)
-        {
-            return balance;
-        }
-    }
-    #endregion /Methods
+	#endregion /Methods
 }
