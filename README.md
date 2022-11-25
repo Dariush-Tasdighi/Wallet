@@ -8,6 +8,13 @@ Hasti Wallet is a simple **multi-company**, **multi-wallet** **multi-user** wall
 - https://hasti.co/
 - https://www.linkedin.com/company/hasti-innovative-trading/mycompany/
 
+## Features
+
+- Payment
+- Deposite
+- Withdraw
+- Transfer
+
 ## Getting Started
 Make sure you have installed **.NET 7** in your environment. After that, you can run the below commands from the **/WalletService/** directory and get started with the `Hasti wallet` immediately.
 
@@ -23,7 +30,7 @@ Make sure you have installed **.NET 7** in your environment. After that, you can
 * Download & Install **.NET 7** from [here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 * Configure connection strings
 * Run the project
-* Create a user by using following pay:
+* Create or update an user by using following json in deposite method (POST):
 
 ```yaml
 {
@@ -52,12 +59,10 @@ Make sure you have installed **.NET 7** in your environment. After that, you can
 
 - [Mr. Dariush Tasdighi](https://www.linkedin.com/in/Tasdighi/)
 - [Mr. Mehran Rivadeh](https://www.linkedin.com/in/Mehran-Rivadeh-ab55845)
+- [Mr. Reza Qadimi](https://www.linkedin.com/in/Reza-Qadimi)
 - [Mr. Ali Bayat](https://www.linkedin.com/in/AliBayatgh)
 
 ## Version History
 
-* 2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 1
-    * Initial Release
+* 5
+    * Adding TransferFeatureIsEnabled to Application!
