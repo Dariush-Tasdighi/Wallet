@@ -2,16 +2,16 @@
 import http from 'k6/http';
 
 export const options = {
-    vus: 1000,
-    duration: '1m',
-    thresholds: {
-        'http_req_duration': ['p(99)<1000']
-    }
+	vus: 1000,
+	duration: '1m',
+	thresholds: {
+		'http_req_duration': ['p(99)<1000']
+	}
 };
 
 export default () => {
 
-    const url = 'https://localhost:7087/api/users/deposite';
+	const url = 'https://localhost:7087/api/users/deposite';
 	const payload = JSON.stringify({
 		"user": {
 			"ip": "192.168.1.110",
@@ -32,14 +32,17 @@ export default () => {
 		"systemicDescription": "شارژ کیف پول",
 		"additionalData": null
 	});
-    const params = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    const res = http.post(url, payload, params);
 
-    check(res, {
-        'is status 200': (r) => r.status === 200,
-    });
+	const params = {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	};
+
+	const res =
+		http.post(url, payload, params);
+
+	check(res, {
+		'is status 200': (r) => r.status === 200,
+	});
 };

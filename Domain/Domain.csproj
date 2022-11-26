@@ -7,8 +7,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Dtat.Wallet.Abstractions\Dtat.Wallet.Abstractions.csproj" />
 		<ProjectReference Include="..\Dtat\Dtat.csproj" />
+		<ProjectReference Include="..\Dtat.Wallet.Abstractions\Dtat.Wallet.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>
