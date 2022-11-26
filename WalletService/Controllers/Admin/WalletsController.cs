@@ -110,53 +110,54 @@ public class WalletsController : Infrastructure.ControllerBaseWithDatabaseContex
 	}
 	#endregion /GetWalletByIdAsync()
 
-	#region GetWalletsByCompanyIdAsync()
-	[Microsoft.AspNetCore.Mvc.HttpGet
-		(template: "[action]/{companyId}")]
+	//#region GetWalletsByCompanyIdAsync()
+	//[Microsoft.AspNetCore.Mvc.HttpGet
+	//	(template: "[action]/{companyId}")]
 
-	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(Domain.Wallet),
-		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
+	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
+	//	(type: typeof(Domain.Wallet),
+	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
 
-	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(string),
-		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
+	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
+	//	(type: typeof(string),
+	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
 
-	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(string),
-		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
-	public async System.Threading.Tasks.Task
-		<Microsoft.AspNetCore.Mvc.ActionResult<Domain.Wallet>> GetWalletsByCompanyIdAsync(long companyId)
-	{
-		try
-		{
-			var item =
-				await
-				DatabaseContext.Wallets
-				.AsNoTracking()
-				.Where(current => current.CompanyId == companyId)
-				.FirstOrDefaultAsync();
+	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
+	//	(type: typeof(string),
+	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
+	//public async System.Threading.Tasks.Task
+	//	<Microsoft.AspNetCore.Mvc.ActionResult<Domain.Wallet>>
+	//	GetWalletsByCompanyIdAsync(long companyId)
+	//{
+	//	try
+	//	{
+	//		var item =
+	//			await
+	//			DatabaseContext.Wallets
+	//			.AsNoTracking()
+	//			.Where(current => current.CompanyId == companyId)
+	//			.FirstOrDefaultAsync();
 
-			if (item == null)
-			{
-				return NotFound(value: Infrastructure.Constant.Message.NotFound);
-			}
+	//		if (item == null)
+	//		{
+	//			return NotFound(value: Infrastructure.Constant.Message.NotFound);
+	//		}
 
-			return Ok(value: item);
-		}
-		catch (System.Exception ex)
-		{
-			var applicationError =
-				new Infrastructure.ApplicationError
-				(code: Infrastructure.Constant.ErrorCode.Admin_WalletsController_GetWalletByIdAsync,
-				message: ex.Message, innerException: ex);
+	//		return Ok(value: item);
+	//	}
+	//	catch (System.Exception ex)
+	//	{
+	//		var applicationError =
+	//			new Infrastructure.ApplicationError
+	//			(code: Infrastructure.Constant.ErrorCode.Admin_WalletsController_GetWalletByIdAsync,
+	//			message: ex.Message, innerException: ex);
 
-			Logger.LogError
-				(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
+	//		Logger.LogError
+	//			(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
 
-			return StatusCode(statusCode: Microsoft.AspNetCore
-				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
-		}
-	}
-	#endregion /GetWalletsByCompanyIdAsync()
+	//		return StatusCode(statusCode: Microsoft.AspNetCore
+	//			.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
+	//	}
+	//}
+	//#endregion /GetWalletsByCompanyIdAsync()
 }

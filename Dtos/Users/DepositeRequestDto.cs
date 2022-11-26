@@ -16,14 +16,22 @@ public class DepositeRequestDto : object
 	#endregion /User
 
 	#region Amount
+	[System.ComponentModel.DataAnnotations.Required]
+
 	[System.ComponentModel.DataAnnotations.Range
 		(minimum: 0, maximum: 500_000_000)]
 	public decimal Amount { get; set; }
 	#endregion /Amount
 
 	#region WaletToken
+	[System.ComponentModel.DataAnnotations.Required]
 	public System.Guid WaletToken { get; set; }
 	#endregion /WaletToken
+
+	#region CompanyToken
+	[System.ComponentModel.DataAnnotations.Required]
+	public System.Guid CompanyToken { get; set; }
+	#endregion /CompanyToken
 
 	#region ProviderName (PSP)
 	[System.ComponentModel.DataAnnotations.Required

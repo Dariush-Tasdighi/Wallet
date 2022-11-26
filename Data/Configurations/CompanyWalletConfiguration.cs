@@ -1,20 +1,20 @@
 ﻿namespace Data.Configurations;
 
-internal class UserWalletConfiguration : object,
-	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.UserWallet>
+internal class CompanyWalletConfiguration : object,
+	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.CompanyWallet>
 {
-	public UserWalletConfiguration() : base()
+	public CompanyWalletConfiguration() : base()
 	{
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.UserWallet> builder)
+		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.CompanyWallet> builder)
 	{
 		// **************************************************
 		// **************************************************
 		// **************************************************
 		builder
-			.HasIndex(current => new { current.UserId, current.WalletId })
+			.HasIndex(current => new { current.CompanyId, current.WalletId })
 			.IsUnique(unique: true)
 			;
 		// **************************************************
@@ -25,31 +25,21 @@ internal class UserWalletConfiguration : object,
 			.IsUnicode(unicode: false)
 			;
 		// **************************************************
-
-		// **************************************************
-		//Precision = Total number of characters used.
-		// Scale = Total number after the dot.
-		// **************************************************
-		builder
-			.Property(current => current.Balance)
-			.HasPrecision(precision: 18, scale: 2)
-			;
-		// **************************************************
 		// **************************************************
 		// **************************************************
 
 		// **************************************************
 		// **************************************************
 		// **************************************************
-		var userWallet =
-			new Domain.UserWallet
-			(userId: SeedData.Constant.Id.User,
+		var companyWallet =
+			new Domain.CompanyWallet
+			(companyId: SeedData.Constant.Id.Company,
 			walletId: SeedData.Constant.Id.Wallet)
 			{
 				//Hash
 
-				//User
-				//UserId
+				//Company
+				//CompanyId
 
 				//Wallet
 				//WalletId
@@ -57,19 +47,16 @@ internal class UserWalletConfiguration : object,
 				//InsertDateTime
 				//UpdateDateTime
 
-				Balance = 0,
+				IsOwner = true,
 				IsActive = true,
+
 				Description = null,
 				AdditionalData = null,
 
-				PaymentFeatureIsEnabled = true,
-				WithdrawFeatureIsEnabled = true,
-				DepositeFeatureIsEnabled = true,
-
-				Id = SeedData.Constant.Id.UserWallet,
+				Id = SeedData.Constant.Id.CompanyWallet,
 			};
 
-		builder.HasData(data: userWallet);
+		builder.HasData(data: companyWallet);
 		// **************************************************
 		// **************************************************
 		// **************************************************

@@ -1,12 +1,8 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface IWallet<T> :
-	SeedWork.IEntity<T>, SeedWork.IHasToken<T>, SeedWork.IHashing<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHashing<T> where T : struct
 {
-	T CompanyId { get; }
-
-
-
 	bool IsActive { get; }
 
 
@@ -49,4 +45,7 @@ public interface IWallet<T> :
 
 	// صرفا در جهت اطلاع
 	//System.Collections.Generic.IList<ITransaction<T>> Transactions { get; }
+
+	// صرفا در جهت اطلاع
+	//System.Collections.Generic.IList<ICompanyWallet<T>> CompanyWallets { get; }
 }

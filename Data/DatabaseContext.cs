@@ -27,6 +27,8 @@ public class DatabaseContext : Microsoft.EntityFrameworkCore.DbContext
 
 	public Microsoft.EntityFrameworkCore.DbSet<Domain.Transaction> Transactions { get; set; }
 
+	public Microsoft.EntityFrameworkCore.DbSet<Domain.CompanyWallet> CompanyWallets { get; set; }
+
 	protected override void OnConfiguring
 		(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
 	{

@@ -56,6 +56,17 @@ internal class WalletConfiguration : object,
 
 		// **************************************************
 		builder
+			.HasMany(current => current.CompanyWallets)
+			.WithOne(other => other.Wallet)
+			.IsRequired(required: true)
+			.HasForeignKey(other => other.WalletId)
+			.OnDelete(deleteBehavior:
+				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
+			;
+		// **************************************************
+
+		// **************************************************
+		builder
 			.HasMany(current => current.Transactions)
 			.WithOne(other => other.Wallet)
 			.IsRequired(required: true)
@@ -71,14 +82,10 @@ internal class WalletConfiguration : object,
 		// **************************************************
 		// **************************************************
 		var wallet =
-			new Domain.Wallet(companyId: SeedData.Constant.Id.Company,
-			name: "کیف پول هستی")
+			new Domain.Wallet(name: "کیف پول هستی")
 			{
 				//Name
 				//Token
-
-				//Company
-				//CompanyId
 
 				//ValidIPs
 				//InvalidIPs

@@ -22,7 +22,9 @@
 
 			public const long ValidIP_2 = 402;
 
-			public const long UserWallet = 500;
+			public const long UserWallet = 501;
+
+			public const long CompanyWallet = 601;
 		}
 
 		public static class Token : object

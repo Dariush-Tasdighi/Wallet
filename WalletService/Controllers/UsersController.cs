@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using System.IO.Pipes;
+using Azure.Core;
 
 namespace Server.Controllers;
 
@@ -166,7 +168,7 @@ public class UsersController :
 	[Microsoft.AspNetCore.Mvc.HttpPost(template: "[action]")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(Infrastructure.Result<Dtos.Users.DepositeResponseDto>),
+		(type: typeof(Dtat.Result<Dtos.Users.DepositeResponseDto>),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
@@ -183,9 +185,26 @@ public class UsersController :
 			var startTime =
 				System.DateTime.Now;
 
-			var result =
-				new Infrastructure
-				.Result<Dtos.Users.DepositeResponseDto>();
+			var result = new Dtat.Result
+				<Dtos.Users.DepositeResponseDto>();
+
+			// **************************************************
+			// بررسی معتبر بودن فیلدهای ارسال شده
+			// **************************************************
+			var errorMessages =
+				Dtat.Utility
+				.ValidateEntity(entity: request);
+
+			if (errorMessages.Count > 0)
+			{
+				foreach (var errorMessage in errorMessages)
+				{
+					result.AddErrorMessages(message: errorMessage);
+				}
+
+				return Ok(value: result);
+			}
+			// **************************************************
 
 			// **************************************************
 			// بدست آوردن آی‌پی سرور درخواست کننده
@@ -200,7 +219,7 @@ public class UsersController :
 					$"Server IP is null!";
 
 				result.AddErrorMessages
-					(errorMessage: errorMessage);
+					(message: errorMessage);
 
 				return Ok(value: result);
 			}
@@ -218,25 +237,7 @@ public class UsersController :
 					$"Server IP is not valid for this wallet!";
 
 				result.AddErrorMessages
-					(errorMessage: errorMessage);
-
-				return Ok(value: result);
-			}
-			// **************************************************
-
-			// **************************************************
-			// بررسی معتبر بودن بقیه فیلدهای ارسال شده
-			// **************************************************
-			var errorMessages =
-				Dtat.Utility
-				.ValidateEntity(entity: request);
-
-			if (errorMessages.Count > 0)
-			{
-				foreach (var errorMessage in errorMessages)
-				{
-					result.AddErrorMessages(errorMessage: errorMessage);
-				}
+					(message: errorMessage);
 
 				return Ok(value: result);
 			}
@@ -245,45 +246,39 @@ public class UsersController :
 			lock (Locker)
 			{
 				// **************************************************
-				// بررسی کیف پول
+				// بررسی شرکت بر اساس توکن
 				// **************************************************
+				var companyResult =
+					ValidateCompanyByToken(token: request.CompanyToken);
+
+				if (companyResult.IsSuccess == false)
+				{
+					return Ok(value: companyResult);
+				}
+
+				var company =
+					companyResult.Data;
+				// **************************************************
+
+				// **************************************************
+				// بررسی کیف پول بر اساس توکن
+				// **************************************************
+				var walletResult =
+					ValidateWalletByToken(token: request.WaletToken);
+
+				if (walletResult.IsSuccess == false)
+				{
+					return Ok(value: companyResult);
+				}
+
 				var wallet =
-					DatabaseContext.Wallets
-					.Where(current => current.Token == request.WaletToken)
-					.FirstOrDefault();
+					companyResult.Data;
+				// **************************************************
 
-				if (wallet == null)
-				{
-					var errorMessage =
-						$"Wallet not found!";
-
-					result.AddErrorMessages
-						(errorMessage: errorMessage);
-
-					return Ok(value: result);
-				}
-
-				if (wallet.IsActive == false)
-				{
-					var errorMessage =
-						$"This wallet is not active!";
-
-					result.AddErrorMessages
-						(errorMessage: errorMessage);
-
-					return Ok(value: result);
-				}
-
-				if (wallet.DepositeFeatureIsEnabled == false)
-				{
-					var errorMessage =
-						$"Deposite feature is not enabled for this wallet!";
-
-					result.AddErrorMessages
-						(errorMessage: errorMessage);
-
-					return Ok(value: result);
-				}
+				// **************************************************
+				// بررسی شرکت و کیف پول مربوطه بر اساس  توکن آن‌ها
+				// **************************************************
+				// TODO!
 				// **************************************************
 
 				// **************************************************
@@ -303,7 +298,7 @@ public class UsersController :
 						$"User is not active!";
 
 					result.AddErrorMessages
-						(errorMessage: errorMessage);
+						(message: errorMessage);
 
 					return Ok(value: result);
 				}
@@ -326,7 +321,7 @@ public class UsersController :
 						$"User is not active in this wallet!";
 
 					result.AddErrorMessages
-						(errorMessage: errorMessage);
+						(message: errorMessage);
 
 					return Ok(value: result);
 				}
@@ -337,7 +332,7 @@ public class UsersController :
 						$"Deposite feature is not enabled for this user!";
 
 					result.AddErrorMessages
-						(errorMessage: errorMessage);
+						(message: errorMessage);
 
 					return Ok(value: result);
 				}
@@ -409,6 +404,97 @@ public class UsersController :
 		}
 	}
 	#endregion /Action: Deposite()
+
+	#region Method: ValidateCompanyByToken()
+	private Dtat.Result<Domain.Company>
+		ValidateCompanyByToken(System.Guid token)
+	{
+		var result =
+			new Dtat.Result<Domain.Company>();
+
+		var company =
+			DatabaseContext.Companies
+			.Where(current => current.Token == token)
+			.FirstOrDefault();
+
+		if (company == null)
+		{
+			var errorMessage =
+				$"Company not found!";
+
+			result.AddErrorMessages
+				(message: errorMessage);
+
+			return result;
+		}
+
+		if (company.IsActive == false)
+		{
+			var errorMessage =
+				$"This company is not active!";
+
+			result.AddErrorMessages
+				(message: errorMessage);
+
+			return result;
+		}
+
+		result.Data = company;
+
+		return result;
+	}
+	#endregion /Method: ValidateCompanyByToken()
+
+	#region Method: ValidateWalletByToken()
+	private Dtat.Result<Domain.Wallet>
+		ValidateWalletByToken(System.Guid token)
+	{
+		var result =
+			new Dtat.Result<Domain.Wallet>();
+
+		var wallet =
+			DatabaseContext.Wallets
+			.Where(current => current.Token == token)
+			.FirstOrDefault();
+
+		if (wallet == null)
+		{
+			var errorMessage =
+				$"Wallet not found!";
+
+			result.AddErrorMessages
+				(message: errorMessage);
+
+			return result;
+		}
+
+		if (wallet.IsActive == false)
+		{
+			var errorMessage =
+				$"This wallet is not active!";
+
+			result.AddErrorMessages
+				(message: errorMessage);
+
+			return result;
+		}
+
+		if (wallet.DepositeFeatureIsEnabled == false)
+		{
+			var errorMessage =
+				$"Deposite feature is not enabled for this wallet!";
+
+			result.AddErrorMessages
+				(message: errorMessage);
+
+			return result;
+		}
+
+		result.Data = wallet;
+
+		return result;
+	}
+	#endregion /Method: ValidateWalletByToken()
 
 	#region Method: ValidateServerIP()
 	private bool ValidateServerIP

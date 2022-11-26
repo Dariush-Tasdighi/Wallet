@@ -10,8 +10,8 @@ public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 
 		UpdateToken();
 
-		Wallets =
-			new System.Collections.Generic.List<Wallet>();
+		CompanyWallets =
+			new System.Collections.Generic.List<CompanyWallet>();
 	}
 	#endregion /Constructor
 
@@ -54,10 +54,10 @@ public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 
 
 
-	#region Wallets
+	#region CompanyWallets
 	[System.Text.Json.Serialization.JsonIgnore]
-	public virtual System.Collections.Generic.IList<Wallet> Wallets { get; private set; }
-	#endregion /Wallets
+	public virtual System.Collections.Generic.IList<CompanyWallet> CompanyWallets { get; private set; }
+	#endregion /CompanyWallets
 
 	#endregion /Properties
 

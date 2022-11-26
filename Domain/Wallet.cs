@@ -3,10 +3,9 @@
 public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 {
 	#region Constructor
-	public Wallet(long companyId, string name) : base()
+	public Wallet(string name) : base()
 	{
 		Name = name;
-		CompanyId = companyId;
 
 		UpdateToken();
 
@@ -21,21 +20,13 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 
 		Transactions =
 			new System.Collections.Generic.List<Transaction>();
+
+		CompanyWallets =
+			new System.Collections.Generic.List<CompanyWallet>();
 	}
 	#endregion /Constructor
 
 	#region Properties
-
-	#region CompanyId
-	public long CompanyId { get; private set; }
-	#endregion /CompanyId
-
-	#region Company
-	[System.Text.Json.Serialization.JsonIgnore]
-	public virtual Company? Company { get; private set; }
-	#endregion /Company
-
-
 
 	#region Name
 	[System.ComponentModel.DataAnnotations.Required
@@ -120,6 +111,11 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 	public virtual System.Collections.Generic.IList<Transaction> Transactions { get; private set; }
 	#endregion /Transactions
 
+	#region CompanyWallets
+	[System.Text.Json.Serialization.JsonIgnore]
+	public virtual System.Collections.Generic.IList<CompanyWallet> CompanyWallets { get; private set; }
+	#endregion /CompanyWallets
+
 	#endregion /Properties
 
 	#region Methods
@@ -141,8 +137,6 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 			new System.Text.StringBuilder();
 
 		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(CompanyId)}:{CompanyId}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(Name)}:{Name}");
 		stringBuilder.Append('|');

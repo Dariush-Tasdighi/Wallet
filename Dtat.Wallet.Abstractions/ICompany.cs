@@ -18,5 +18,5 @@ public interface ICompany<T> :
 
 
 	// صرفا در جهت اطلاع
-	//System.Collections.Generic.IList<IWallet<T>> Wallets { get; }
+	//System.Collections.Generic.IList<ICompanyWallet<T>> CompanyWallets { get; }
 }

@@ -249,46 +249,46 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 	}
 	#endregion /GetTransactionsByWalletIdAsync()
 
-	#region GetTransactionsByCompanyIdAsync()
-	[Microsoft.AspNetCore.Mvc.HttpGet(template: "{id}/company")]
+	//#region GetTransactionsByCompanyIdAsync()
+	//[Microsoft.AspNetCore.Mvc.HttpGet(template: "{id}/company")]
 
-	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(System.Collections.Generic.IEnumerable<Domain.Transaction>),
-		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
+	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
+	//	(type: typeof(System.Collections.Generic.IEnumerable<Domain.Transaction>),
+	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
 
-	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(string),
-		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
-	public async System.Threading.Tasks.Task
-		<Microsoft.AspNetCore.Mvc.ActionResult
-		<System.Collections.Generic.IEnumerable<Domain.Transaction>>> GetTransactionsByCompanyIdAsync(long id)
-	{
-		try
-		{
-			var items =
-				await
-				DatabaseContext.Transactions
-				.AsNoTracking()
-				.Where(current => current.Wallet != null && current.Wallet.CompanyId == id)
-				.ToListAsync();
+	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
+	//	(type: typeof(string),
+	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
+	//public async System.Threading.Tasks.Task
+	//	<Microsoft.AspNetCore.Mvc.ActionResult
+	//	<System.Collections.Generic.IEnumerable<Domain.Transaction>>> GetTransactionsByCompanyIdAsync(long id)
+	//{
+	//	try
+	//	{
+	//		var items =
+	//			await
+	//			DatabaseContext.Transactions
+	//			.AsNoTracking()
+	//			.Where(current => current.Wallet != null && current.Wallet.CompanyId == id)
+	//			.ToListAsync();
 
-			return Ok(value: items);
-		}
-		catch (System.Exception ex)
-		{
-			var applicationError =
-				new Infrastructure.ApplicationError
-				(code: Infrastructure.Constant.ErrorCode.Admin_TransactionsController_GetTransactionsByCompanyIdAsync,
-				message: ex.Message, innerException: ex);
+	//		return Ok(value: items);
+	//	}
+	//	catch (System.Exception ex)
+	//	{
+	//		var applicationError =
+	//			new Infrastructure.ApplicationError
+	//			(code: Infrastructure.Constant.ErrorCode.Admin_TransactionsController_GetTransactionsByCompanyIdAsync,
+	//			message: ex.Message, innerException: ex);
 
-			Logger.LogError
-				(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
+	//		Logger.LogError
+	//			(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
 
-			return StatusCode(statusCode: Microsoft.AspNetCore
-				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
-		}
-	}
-	#endregion /GetTransactionsByCompanyIdAsync()
+	//		return StatusCode(statusCode: Microsoft.AspNetCore
+	//			.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
+	//	}
+	//}
+	//#endregion /GetTransactionsByCompanyIdAsync()
 
 	#region GetTransactionByPaymentReferenceCodeAsync()
 	[Microsoft.AspNetCore.Mvc.HttpGet(template: "{paymentReferenceCode}/payment-reference-code")]

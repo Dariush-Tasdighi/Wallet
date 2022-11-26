@@ -30,7 +30,7 @@ internal class CompanyConfiguration : object,
 		// **************************************************
 		// **************************************************
 		builder
-			.HasMany(current => current.Wallets)
+			.HasMany(current => current.CompanyWallets)
 			.WithOne(other => other.Company)
 			.IsRequired(required: true)
 			.HasForeignKey(other => other.CompanyId)
