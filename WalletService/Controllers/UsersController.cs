@@ -189,24 +189,6 @@ public class UsersController :
 				<Dtos.Users.DepositeResponseDto>();
 
 			// **************************************************
-			// بررسی معتبر بودن فیلدهای ارسال شده
-			// **************************************************
-			var errorMessages =
-				Dtat.Utility
-				.ValidateEntity(entity: request);
-
-			if (errorMessages.Count > 0)
-			{
-				foreach (var errorMessage in errorMessages)
-				{
-					result.AddErrorMessages(message: errorMessage);
-				}
-
-				return Ok(value: result);
-			}
-			// **************************************************
-
-			// **************************************************
 			// بدست آوردن آی‌پی سرور درخواست کننده
 			// **************************************************
 			var serverIP =
@@ -226,18 +208,18 @@ public class UsersController :
 			// **************************************************
 
 			// **************************************************
-			// بررسی مجاز بودن آی‌پی سرور درخواست کننده
+			// بررسی معتبر بودن فیلدهای ارسال شده
 			// **************************************************
-			var isServerIPValid = ValidateServerIP
-				(companyToken: request.WaletToken, serverIP: serverIP);
+			var errorMessages =
+				Dtat.Utility
+				.ValidateEntity(entity: request);
 
-			if (isServerIPValid == false)
+			if (errorMessages.Count > 0)
 			{
-				var errorMessage =
-					$"Server IP is not valid for this wallet!";
-
-				result.AddErrorMessages
-					(message: errorMessage);
+				foreach (var errorMessage in errorMessages)
+				{
+					result.AddErrorMessages(message: errorMessage);
+				}
 
 				return Ok(value: result);
 			}
@@ -249,7 +231,8 @@ public class UsersController :
 				// بررسی شرکت بر اساس توکن
 				// **************************************************
 				var companyResult =
-					ValidateCompanyByToken(token: request.CompanyToken);
+					Services.CompaniesService.CheckAndGetCompanyByToken
+					(databaseContext: DatabaseContext, token: request.CompanyToken);
 
 				if (companyResult.IsSuccess == false)
 				{
@@ -258,13 +241,41 @@ public class UsersController :
 
 				var company =
 					companyResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (company == null)
+				{
+					var errorMessage =
+						$"${nameof(Domain.Company)} is null!";
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی مجاز بودن آی‌پی سرور درخواست کننده
+				// **************************************************
+				var validIPResult =
+					Services.ValidIPsService.CheckServerIPByCompanyToken
+					(databaseContext: DatabaseContext, serverIP: serverIP,
+					companyToken: request.CompanyToken, walletToken: request.WaletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber);
+
+				if (validIPResult.IsSuccess == false)
+				{
+					return Ok(value: validIPResult);
+				}
 				// **************************************************
 
 				// **************************************************
 				// بررسی کیف پول بر اساس توکن
 				// **************************************************
 				var walletResult =
-					ValidateWalletByToken(token: request.WaletToken);
+					Services.WalletsService.CheckAndGetWalletByToken
+					(databaseContext: DatabaseContext, token: request.WaletToken);
 
 				if (walletResult.IsSuccess == false)
 				{
@@ -272,21 +283,67 @@ public class UsersController :
 				}
 
 				var wallet =
-					companyResult.Data;
+					walletResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (wallet == null)
+				{
+					var errorMessage =
+						$"${nameof(Domain.Wallet)} is null!";
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+
+				if (wallet.DepositeFeatureIsEnabled == false)
+				{
+					var errorMessage =
+						$"Deposite feature is not enabled for this wallet!";
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
 				// **************************************************
 
 				// **************************************************
-				// بررسی شرکت و کیف پول مربوطه بر اساس  توکن آن‌ها
+				// بررسی دسترسی شرکت به کیف پول مربوطه، بر اساس  توکن‌های آن‌ها
 				// **************************************************
-				// TODO!
+				var companyWalletResult =
+					Services.CompanyWalletsService.CheckAndGetCompanyWalletByTokens
+					(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WaletToken);
+
+				if (companyWalletResult.IsSuccess == false)
+				{
+					return Ok(value: companyWalletResult);
+				}
+
+				var companyWallet =
+					companyWalletResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (companyWallet == null)
+				{
+					var errorMessage =
+						$"${nameof(Domain.CompanyWallet)} is null!";
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
 				// **************************************************
 
 				// **************************************************
 				// بررسی کاربر
 				// **************************************************
 				var user =
-					CreateOrUpdateUser
-					(displayName: request.User!.DisplayName!,
+					Services.UsersService.CreateOrUpdateUser
+					(databaseContext: DatabaseContext,
+					displayName: request.User!.DisplayName!,
 					cellPhoneNumber: request.User!.CellPhoneNumber!,
 
 					emailAddress: request.User.EmailAddress,
@@ -305,15 +362,17 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
-				// بررسی عضویت کاربر در کیف پول
+				// بررسی دسترسی کاربر به کیف پول مربوطه
 				// **************************************************
 				var userWallet =
-					CreateOrUpdateUserWallet
-					(userId: user.Id, walletId: wallet.Id,
+					Services.UserWalletsService.CreateOrUpdateUserWallet
+					(databaseContext: DatabaseContext,
+					userId: user.Id, walletId: wallet.Id,
 					additionalData: request.AdditionalData,
 					paymentFeatureIsEnabled: request.User.PaymentFeatureIsEnabled,
 					depositeFeatureIsEnabled: request.User.DepositeFeatureIsEnabled,
-					withdrawFeatureIsEnabled: request.User.WithdrawFeatureIsEnabled);
+					withdrawFeatureIsEnabled: request.User.WithdrawFeatureIsEnabled,
+					transferFeatureIsEnabled: request.User.TransferFeatureIsEnabled);
 
 				if (userWallet.IsActive == false)
 				{
@@ -339,13 +398,13 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
-				// افزایش مانده حساب کاربر
+				// افزایش مانده حساب کاربر در کیف پول جاری
 				// **************************************************
 				userWallet.Balance += request.Amount;
 				// **************************************************
 
 				// **************************************************
-				// افزایش مانده حساب کاربر
+				// محاسبه کل زمان پردازش
 				// **************************************************
 				var finishTime =
 					System.DateTime.Now;
@@ -383,7 +442,8 @@ public class UsersController :
 					new Dtos.Users.DepositeResponseDto
 					(balance: userWallet.Balance, transactionId: transaction.Id);
 
-				result.Data = depositeResponseDto;
+				result.Data =
+					depositeResponseDto;
 
 				return Ok(value: result);
 				// **************************************************
@@ -404,237 +464,4 @@ public class UsersController :
 		}
 	}
 	#endregion /Action: Deposite()
-
-	#region Method: ValidateCompanyByToken()
-	private Dtat.Result<Domain.Company>
-		ValidateCompanyByToken(System.Guid token)
-	{
-		var result =
-			new Dtat.Result<Domain.Company>();
-
-		var company =
-			DatabaseContext.Companies
-			.Where(current => current.Token == token)
-			.FirstOrDefault();
-
-		if (company == null)
-		{
-			var errorMessage =
-				$"Company not found!";
-
-			result.AddErrorMessages
-				(message: errorMessage);
-
-			return result;
-		}
-
-		if (company.IsActive == false)
-		{
-			var errorMessage =
-				$"This company is not active!";
-
-			result.AddErrorMessages
-				(message: errorMessage);
-
-			return result;
-		}
-
-		result.Data = company;
-
-		return result;
-	}
-	#endregion /Method: ValidateCompanyByToken()
-
-	#region Method: ValidateWalletByToken()
-	private Dtat.Result<Domain.Wallet>
-		ValidateWalletByToken(System.Guid token)
-	{
-		var result =
-			new Dtat.Result<Domain.Wallet>();
-
-		var wallet =
-			DatabaseContext.Wallets
-			.Where(current => current.Token == token)
-			.FirstOrDefault();
-
-		if (wallet == null)
-		{
-			var errorMessage =
-				$"Wallet not found!";
-
-			result.AddErrorMessages
-				(message: errorMessage);
-
-			return result;
-		}
-
-		if (wallet.IsActive == false)
-		{
-			var errorMessage =
-				$"This wallet is not active!";
-
-			result.AddErrorMessages
-				(message: errorMessage);
-
-			return result;
-		}
-
-		if (wallet.DepositeFeatureIsEnabled == false)
-		{
-			var errorMessage =
-				$"Deposite feature is not enabled for this wallet!";
-
-			result.AddErrorMessages
-				(message: errorMessage);
-
-			return result;
-		}
-
-		result.Data = wallet;
-
-		return result;
-	}
-	#endregion /Method: ValidateWalletByToken()
-
-	#region Method: ValidateServerIP()
-	private bool ValidateServerIP
-		(System.Guid companyToken, string serverIP)
-	{
-		var isValid = false;
-
-		var now =
-			Dtat.Utility.Now;
-
-		var validIP =
-			DatabaseContext.ValidIPs
-			.Where(current => current.IsActive)
-			.Where(current => current.ServerIP == serverIP)
-			.Where(current => current.Company != null && current.Company.Token == companyToken)
-			.FirstOrDefault();
-
-		if (validIP != null)
-		{
-			isValid = true;
-
-			validIP.TotalRequestCount++;
-
-			if (validIP.LastRequestDateTime.HasValue == false)
-			{
-				validIP.CurrentDayRequestCount = 1;
-			}
-			else
-			{
-				if (now.Date <= validIP.LastRequestDateTime.Value.Date)
-				{
-					validIP.CurrentDayRequestCount++;
-				}
-				else
-				{
-					validIP.PreviousDay6RequestCount = validIP.PreviousDay5RequestCount;
-					validIP.PreviousDay5RequestCount = validIP.PreviousDay4RequestCount;
-					validIP.PreviousDay4RequestCount = validIP.PreviousDay3RequestCount;
-					validIP.PreviousDay3RequestCount = validIP.PreviousDay2RequestCount;
-					validIP.PreviousDay2RequestCount = validIP.PreviousDay1RequestCount;
-					validIP.PreviousDay1RequestCount = validIP.CurrentDayRequestCount;
-
-					validIP.CurrentDayRequestCount = 1;
-				}
-			}
-
-			validIP.LastRequestDateTime = now;
-		}
-		else
-		{
-			// TODO
-		}
-
-		DatabaseContext.SaveChanges();
-		// **************************************************
-
-		return isValid;
-	}
-	#endregion /Method: ValidateServerIP()
-
-	#region Method: CreateOrUpdateUser()
-	private Domain.User CreateOrUpdateUser
-		(string cellPhoneNumber, string displayName,
-		string? emailAddress, string? nationalCode)
-	{
-		var user =
-			DatabaseContext.Users
-			.Where(current => current.CellPhoneNumber == cellPhoneNumber)
-			.FirstOrDefault();
-
-		if (user == null)
-		{
-			user =
-				new Domain.User(cellPhoneNumber: cellPhoneNumber, displayName: displayName)
-				{
-					IsActive = true,
-
-					DisplayName = displayName,
-					NationalCode = nationalCode,
-					EmailAddress = emailAddress,
-				};
-
-			DatabaseContext.Add(entity: user);
-		}
-		else
-		{
-			user.DisplayName = displayName;
-			user.NationalCode = nationalCode;
-			user.EmailAddress = emailAddress;
-		}
-
-		// دستور ذیل باید نوشته شود Id به دلیل نوع
-		DatabaseContext.SaveChanges();
-
-		return user;
-	}
-	#endregion /Method: CreateOrUpdateUser()
-
-	#region Method: CreateOrUpdateUserWallet()
-	private Domain.UserWallet CreateOrUpdateUserWallet
-		(long userId, long walletId,
-		bool paymentFeatureIsEnabled,
-		bool depositeFeatureIsEnabled,
-		bool withdrawFeatureIsEnabled,
-		string? additionalData)
-	{
-		var userWallet =
-			DatabaseContext.UserWallets
-			.Where(current => current.UserId == userId)
-			.Where(current => current.WalletId == walletId)
-			.FirstOrDefault();
-
-		if (userWallet == null)
-		{
-			userWallet =
-				new Domain.UserWallet(userId: userId, walletId: walletId)
-				{
-
-					IsActive = true,
-
-					AdditionalData = additionalData,
-					PaymentFeatureIsEnabled = paymentFeatureIsEnabled,
-					DepositeFeatureIsEnabled = depositeFeatureIsEnabled,
-					WithdrawFeatureIsEnabled = withdrawFeatureIsEnabled,
-				};
-
-			DatabaseContext.Add(entity: userWallet);
-		}
-		else
-		{
-			userWallet.AdditionalData = additionalData;
-			userWallet.PaymentFeatureIsEnabled = paymentFeatureIsEnabled;
-			userWallet.DepositeFeatureIsEnabled = depositeFeatureIsEnabled;
-			userWallet.WithdrawFeatureIsEnabled = withdrawFeatureIsEnabled;
-		}
-
-		// دستور ذیل باید نوشته شود Id به دلیل نوع
-		DatabaseContext.SaveChanges();
-
-		return userWallet;
-	}
-	#endregion /Method: CreateOrUpdateUserWallet()
 }

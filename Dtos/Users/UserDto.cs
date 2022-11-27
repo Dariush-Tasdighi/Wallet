@@ -67,10 +67,9 @@ public class UserDto : object
 	public bool WithdrawFeatureIsEnabled { get; set; }
 	#endregion /WithdrawFeatureIsEnabled
 
-	/// <summary>
-	/// فعلا در این فاز انتقال به غیر طراحی و پیاده‌سازی نشده است
-	/// </summary>
-	//public bool TransferFeatureIsEnabled { get; set; }
+	#region TransferFeatureIsEnabled
+	public bool TransferFeatureIsEnabled { get; set; }
+	#endregion /TransferFeatureIsEnabled
 
 	#endregion /Properties
 }
