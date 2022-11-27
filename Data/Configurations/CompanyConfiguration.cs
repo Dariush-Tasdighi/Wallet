@@ -30,6 +30,17 @@ internal class CompanyConfiguration : object,
 		// **************************************************
 		// **************************************************
 		builder
+			.HasMany(current => current.ValidIPs)
+			.WithOne(other => other.Company)
+			.IsRequired(required: true)
+			.HasForeignKey(other => other.CompanyId)
+			.OnDelete(deleteBehavior:
+				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
+			;
+		// **************************************************
+
+		// **************************************************
+		builder
 			.HasMany(current => current.CompanyWallets)
 			.WithOne(other => other.Company)
 			.IsRequired(required: true)

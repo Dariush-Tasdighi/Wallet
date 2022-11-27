@@ -9,11 +9,7 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 
 		UpdateToken();
 
-		ValidIPs =
-			new System.Collections.Generic.List<ValidIP>();
-
-		InvalidIPs =
-			new System.Collections.Generic.List<InvalidIP>();
+		UpdateDateTime = InsertDateTime;
 
 		UserWallets =
 			new System.Collections.Generic.List<UserWallet>();
@@ -90,16 +86,6 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 	#endregion /TransferFeatureIsEnabled
 
 
-
-	#region ValidIPs
-	[System.Text.Json.Serialization.JsonIgnore]
-	public virtual System.Collections.Generic.IList<ValidIP> ValidIPs { get; private set; }
-	#endregion /ValidIPs
-
-	#region InvalidIPs
-	[System.Text.Json.Serialization.JsonIgnore]
-	public virtual System.Collections.Generic.IList<InvalidIP> InvalidIPs { get; private set; }
-	#endregion /InvalidIPs
 
 	#region UserWallets
 	[System.Text.Json.Serialization.JsonIgnore]

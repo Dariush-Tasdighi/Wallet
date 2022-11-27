@@ -229,7 +229,7 @@ public class UsersController :
 			// بررسی مجاز بودن آی‌پی سرور درخواست کننده
 			// **************************************************
 			var isServerIPValid = ValidateServerIP
-				(waletToken: request.WaletToken, serverIP: serverIP);
+				(companyToken: request.WaletToken, serverIP: serverIP);
 
 			if (isServerIPValid == false)
 			{
@@ -498,7 +498,7 @@ public class UsersController :
 
 	#region Method: ValidateServerIP()
 	private bool ValidateServerIP
-		(System.Guid waletToken, string serverIP)
+		(System.Guid companyToken, string serverIP)
 	{
 		var isValid = false;
 
@@ -509,7 +509,7 @@ public class UsersController :
 			DatabaseContext.ValidIPs
 			.Where(current => current.IsActive)
 			.Where(current => current.ServerIP == serverIP)
-			.Where(current => current.Wallet != null && current.Wallet.Token == waletToken)
+			.Where(current => current.Company != null && current.Company.Token == companyToken)
 			.FirstOrDefault();
 
 		if (validIP != null)

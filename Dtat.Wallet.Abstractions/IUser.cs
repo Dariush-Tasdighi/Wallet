@@ -1,17 +1,11 @@
-﻿using System.Transactions;
-
-namespace Dtat.Wallet.Abstractions;
+﻿namespace Dtat.Wallet.Abstractions;
 
 /// <summary>
 /// شخص حقیقی / حقوقی
 /// </summary>
 public interface IUser<T> :
-	SeedWork.IEntity<T>, SeedWork.IHashing<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T>, SeedWork.IHashing<T> where T : struct
 {
-	bool IsActive { get; }
-
-
-
 	/// <summary>
 	/// این فیلد الزامی است
 	/// </summary>

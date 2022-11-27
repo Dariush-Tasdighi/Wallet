@@ -78,7 +78,7 @@ internal class UserConfiguration : object,
 		builder
 			.HasMany(current => current.PartyTransactions)
 			.WithOne(other => other.PartyUser)
-			.IsRequired(required: false)
+			.IsRequired(required: false) // Note: [false]
 			.HasForeignKey(other => other.PartyUserId)
 			.OnDelete(deleteBehavior:
 				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)

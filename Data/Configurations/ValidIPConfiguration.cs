@@ -19,7 +19,7 @@ internal class ValidIPConfiguration : object,
 			;
 
 		builder
-			.HasIndex(current => new { current.WalletId, current.ServerIP })
+			.HasIndex(current => new { current.CompanyId, current.ServerIP })
 			.IsUnique(unique: true)
 			;
 		// **************************************************
@@ -31,7 +31,7 @@ internal class ValidIPConfiguration : object,
 		// **************************************************
 		var validIP1 =
 			new Domain.ValidIP
-			(walletId: SeedData.Constant.Id.Wallet, serverIP: "::1")
+			(companyId: SeedData.Constant.Id.Company, serverIP: "::1")
 			{
 				//Wallet
 				//WalletId
@@ -64,7 +64,7 @@ internal class ValidIPConfiguration : object,
 		// **************************************************
 		var validIP2 =
 			new Domain.ValidIP
-			(walletId: SeedData.Constant.Id.Wallet, serverIP: "127.0.0.1")
+			(companyId: SeedData.Constant.Id.Company, serverIP: "127.0.0.1")
 			{
 				//Wallet
 				//WalletId

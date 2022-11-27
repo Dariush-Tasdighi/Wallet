@@ -1,7 +1,7 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface ICompanyWallet<T> :
-	SeedWork.IEntity<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T> where T : struct
 {
 	T WalletId { get; }
 
@@ -10,8 +10,6 @@ public interface ICompanyWallet<T> :
 
 
 	bool IsOwner { get; }
-
-	bool IsActive { get; }
 
 
 

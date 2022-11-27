@@ -1,15 +1,13 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface IUserWallet<T> :
-	SeedWork.IEntity<T>, SeedWork.IHashing<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T>, SeedWork.IHashing<T> where T : struct
 {
 	T UserId { get; }
 
 	T WalletId { get; }
 
 
-
-	bool IsActive { get; }
 
 	decimal Balance { get; }
 

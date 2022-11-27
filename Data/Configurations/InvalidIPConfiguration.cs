@@ -1,14 +1,14 @@
 ﻿namespace Data.Configurations;
 
 internal class InvalidIPConfiguration : object,
-	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.InvalidIP>
+	Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Domain.InvalidRequestLog>
 {
 	public InvalidIPConfiguration() : base()
 	{
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.InvalidIP> builder)
+		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.InvalidRequestLog> builder)
 	{
 		// **************************************************
 		// **************************************************
@@ -19,7 +19,7 @@ internal class InvalidIPConfiguration : object,
 			;
 
 		builder
-			.HasIndex(current => new { current.WalletId, current.ServerIP })
+			.HasIndex(current => new { current.ServerIP })
 			.IsUnique(unique: true)
 			;
 		// **************************************************

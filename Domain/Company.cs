@@ -10,6 +10,9 @@ public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 
 		UpdateToken();
 
+		ValidIPs =
+			new System.Collections.Generic.List<ValidIP>();
+
 		CompanyWallets =
 			new System.Collections.Generic.List<CompanyWallet>();
 	}
@@ -53,6 +56,11 @@ public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 	#endregion /AdditionalData
 
 
+
+	#region ValidIPs
+	[System.Text.Json.Serialization.JsonIgnore]
+	public virtual System.Collections.Generic.IList<ValidIP> ValidIPs { get; private set; }
+	#endregion /ValidIPs
 
 	#region CompanyWallets
 	[System.Text.Json.Serialization.JsonIgnore]

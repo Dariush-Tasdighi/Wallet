@@ -22,27 +22,7 @@ internal class WalletConfiguration : object,
 		// **************************************************
 
 		// **************************************************
-		builder
-			.HasMany(current => current.ValidIPs)
-			.WithOne(other => other.Wallet)
-			.IsRequired(required: true)
-			.HasForeignKey(other => other.WalletId)
-			.OnDelete(deleteBehavior:
-				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
-			;
 		// **************************************************
-
-		// **************************************************
-		builder
-			.HasMany(current => current.InvalidIPs)
-			.WithOne(other => other.Wallet)
-			.IsRequired(required: true)
-			.HasForeignKey(other => other.WalletId)
-			.OnDelete(deleteBehavior:
-				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
-			;
-		// **************************************************
-
 		// **************************************************
 		builder
 			.HasMany(current => current.UserWallets)
@@ -56,7 +36,7 @@ internal class WalletConfiguration : object,
 
 		// **************************************************
 		builder
-			.HasMany(current => current.CompanyWallets)
+			.HasMany(current => current.Transactions)
 			.WithOne(other => other.Wallet)
 			.IsRequired(required: true)
 			.HasForeignKey(other => other.WalletId)
@@ -67,7 +47,7 @@ internal class WalletConfiguration : object,
 
 		// **************************************************
 		builder
-			.HasMany(current => current.Transactions)
+			.HasMany(current => current.CompanyWallets)
 			.WithOne(other => other.Wallet)
 			.IsRequired(required: true)
 			.HasForeignKey(other => other.WalletId)

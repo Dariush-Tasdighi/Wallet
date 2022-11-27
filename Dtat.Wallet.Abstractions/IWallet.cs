@@ -1,12 +1,8 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface IWallet<T> :
-	SeedWork.IEntity<T>, SeedWork.IHashing<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T>, SeedWork.IHashing<T> where T : struct
 {
-	bool IsActive { get; }
-
-
-
 	/// <summary>
 	/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
 	/// </summary>
@@ -33,12 +29,6 @@ public interface IWallet<T> :
 	System.DateTime UpdateDateTime { get; }
 
 
-
-	// صرفا در جهت اطلاع
-	//System.Collections.Generic.IList<IValidIP<T>> ValidIPs { get; }
-
-	// صرفا در جهت اطلاع
-	//System.Collections.Generic.IList<IInvalidIP<T>> InvalidIPs { get; }
 
 	// صرفا در جهت اطلاع
 	//System.Collections.Generic.IList<IUserWallet<T>> UserWallets { get; }

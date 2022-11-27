@@ -1,7 +1,7 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface ICompany<T> :
-	SeedWork.IEntity<T>, SeedWork.IHasToken<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T>, SeedWork.IHasToken<T> where T : struct
 {
 	string Name { get; }
 
@@ -11,11 +11,12 @@ public interface ICompany<T> :
 
 
 
-	bool IsActive { get; }
-
 	System.DateTime UpdateDateTime { get; }
 
 
+
+	// صرفا در جهت اطلاع
+	//System.Collections.Generic.IList<IValidIP<T>> ValidIPs { get; }
 
 	// صرفا در جهت اطلاع
 	//System.Collections.Generic.IList<ICompanyWallet<T>> CompanyWallets { get; }

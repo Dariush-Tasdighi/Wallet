@@ -1,12 +1,11 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
-public interface IValidIP<T> where T : struct
+public interface IValidIP<T> :
+	SeedWork.IHasIsActive<T> where T : struct
 {
-	T WalletId { get; }
+	T CompanyId { get; }
 
 
-
-	bool IsActive { get; }
 
 	string ServerIP { get; }
 
