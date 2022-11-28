@@ -46,4 +46,44 @@ public static class UsersService : object
 		return user;
 	}
 	#endregion /CreateOrUpdateUser()
+
+	#region CheckAndGetUserByCellPhoneNumber()
+	public static Dtat.Result<Domain.User> CheckAndGetUserByCellPhoneNumber
+		(Data.DatabaseContext databaseContext, string cellPhoneNumber)
+	{
+		var result =
+			new Dtat.Result<Domain.User>();
+
+		var user =
+			databaseContext.Users
+			.Where(current => current.CellPhoneNumber == cellPhoneNumber)
+			.FirstOrDefault();
+
+		if (user == null)
+		{
+			var errorMessage =
+				$"There is not any user with this cell phone number!";
+
+			result.AddErrorMessages
+				(message: errorMessage);
+
+			return result;
+		}
+
+		if (user.IsActive == false)
+		{
+			var errorMessage =
+				$"This user is not active!";
+
+			result.AddErrorMessages
+				(message: errorMessage);
+
+			return result;
+		}
+
+		result.Data = user;
+
+		return result;
+	}
+	#endregion /CheckAndGetUserByCellPhoneNumber()
 }

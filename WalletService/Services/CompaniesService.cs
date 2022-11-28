@@ -23,7 +23,7 @@ public static class CompaniesService : object
 		if (company == null)
 		{
 			var errorMessage =
-				$"There is no any company with this token!";
+				$"There is not any company with this token!";
 
 			result.AddErrorMessages
 				(message: errorMessage);

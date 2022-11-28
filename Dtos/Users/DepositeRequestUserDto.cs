@@ -1,10 +1,13 @@
 ﻿namespace Dtos.Users;
 
-public class UserDto : object
+public class DepositeRequestUserDto : object
 {
 	#region Constructor
-	public UserDto() : base()
+	public DepositeRequestUserDto() : base()
 	{
+		IP = string.Empty;
+		DisplayName = string.Empty;
+		CellPhoneNumber = string.Empty;
 	}
 	#endregion /Constructor
 
@@ -16,7 +19,7 @@ public class UserDto : object
 
 	[System.ComponentModel.DataAnnotations.MaxLength
 		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.IP)]
-	public string? IP { get; set; }
+	public string IP { get; set; }
 	#endregion /IP (User IP)
 
 	#region DisplayName (Full Name)
@@ -25,7 +28,7 @@ public class UserDto : object
 
 	[System.ComponentModel.DataAnnotations.MaxLength
 		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.DisplayName)]
-	public string? DisplayName { get; set; }
+	public string DisplayName { get; set; }
 	#endregion /DisplayName (Full Name)
 
 	#region CellPhoneNumber
@@ -34,7 +37,7 @@ public class UserDto : object
 
 	[System.ComponentModel.DataAnnotations.MaxLength
 		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.CellPhoneNumber)]
-	public string? CellPhoneNumber { get; set; }
+	public string CellPhoneNumber { get; set; }
 	#endregion /CellPhoneNumber
 
 	#region EmailAddress

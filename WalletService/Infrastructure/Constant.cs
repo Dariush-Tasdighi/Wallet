@@ -41,11 +41,13 @@ public static class Constant : object
 		// **********
 		public const long UsersController = Root + 101000;
 
-		public const long Root_UsersController_Deposite = UsersController + 101;
+		public const long Root_UsersController_Payment = UsersController + 101;
 
-		public const long Root_UsersController_GetBalanceAsync = UsersController + 102;
+		public const long Root_UsersController_Deposite = UsersController + 102;
 
-		public const long Root_UsersController_GetLastTransactionsAsync = UsersController + 103;
+		public const long Root_UsersController_GetBalanceAsync = UsersController + 103;
+
+		public const long Root_UsersController_GetLastTransactionsAsync = UsersController + 104;
 		// **********
 
 		// **********

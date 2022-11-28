@@ -1,15 +1,12 @@
 ﻿namespace Dtos.Users;
 
-public class DepositeRequestDto : object
+public class PaymentRequestDto : object
 {
 	#region Constructor
-	public DepositeRequestDto() : base()
+	public PaymentRequestDto() : base()
 	{
-		ProviderName = string.Empty;
 		ReferenceCode = string.Empty;
-
-		User =
-			new DepositeRequestUserDto();
+		User = new PaymentRequestUserDto();
 	}
 	#endregion /Constructor
 
@@ -17,7 +14,7 @@ public class DepositeRequestDto : object
 
 	#region User
 	[System.ComponentModel.DataAnnotations.Required]
-	public DepositeRequestUserDto User { get; set; }
+	public PaymentRequestUserDto User { get; set; }
 	#endregion /User
 
 	#region Amount
@@ -37,15 +34,6 @@ public class DepositeRequestDto : object
 	[System.ComponentModel.DataAnnotations.Required]
 	public System.Guid CompanyToken { get; set; }
 	#endregion /CompanyToken
-
-	#region ProviderName (PSP)
-	[System.ComponentModel.DataAnnotations.Required
-		(AllowEmptyStrings = false)]
-
-	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.ProviderName)]
-	public string ProviderName { get; set; }
-	#endregion /ProviderName
 
 	#region ReferenceCode
 	[System.ComponentModel.DataAnnotations.Required

@@ -23,7 +23,7 @@ public static class WalletsService : object
 		if (wallet == null)
 		{
 			var errorMessage =
-				$"There is no any wallet with this token!";
+				$"There is not any wallet with this token!";
 
 			result.AddErrorMessages
 				(message: errorMessage);

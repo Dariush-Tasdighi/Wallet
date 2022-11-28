@@ -41,10 +41,38 @@ public static class Utility : object
 		return text;
 	}
 
-	public static System.Collections.Generic.IList<string> ValidateEntity(object entity)
+	//public static System.Collections.Generic.IList<string> ValidateEntity(object entity)
+	//{
+	//	var result =
+	//		new System.Collections.Generic.List<string>();
+
+	//	var validationContext =
+	//		new System.ComponentModel
+	//		.DataAnnotations.ValidationContext(instance: entity);
+
+	//	var validationResults =
+	//		new System.Collections.Generic.List
+	//		<System.ComponentModel.DataAnnotations.ValidationResult>();
+
+	//	System.ComponentModel.DataAnnotations.Validator
+	//		.TryValidateObject(instance: entity, validationContext: validationContext,
+	//		validationResults: validationResults, validateAllProperties: true);
+
+	//	foreach (var item in validationResults)
+	//	{
+	//		if (string.IsNullOrWhiteSpace(value: item.ErrorMessage) == false)
+	//		{
+	//			result.Add(item: item.ErrorMessage);
+	//		}
+	//	}
+
+	//	return result;
+	//}
+
+	public static Result ValidateEntity(object entity)
 	{
 		var result =
-			new System.Collections.Generic.List<string>();
+			new Result();
 
 		var validationContext =
 			new System.ComponentModel
@@ -60,10 +88,7 @@ public static class Utility : object
 
 		foreach (var item in validationResults)
 		{
-			if (string.IsNullOrWhiteSpace(value: item.ErrorMessage) == false)
-			{
-				result.Add(item: item.ErrorMessage);
-			}
+			result.AddErrorMessages(message: item.ErrorMessage);
 		}
 
 		return result;

@@ -54,4 +54,45 @@ public static class UserWalletsService : object
 		return userWallet;
 	}
 	#endregion /CreateOrUpdateUserWallet()
+
+	#region CheckAndGetUserWallet()
+	public static Dtat.Result<Domain.UserWallet> CheckAndGetUserWallet
+		(Data.DatabaseContext databaseContext, string cellPhoneNumber, System.Guid walletToken)
+	{
+		var result =
+			new Dtat.Result<Domain.UserWallet>();
+
+		var userWallet =
+			databaseContext.UserWallets
+			.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
+			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
+			.FirstOrDefault();
+
+		if (userWallet == null)
+		{
+			var errorMessage =
+				$"This user does not have any access to this wallet!";
+
+			result.AddErrorMessages
+				(message: errorMessage);
+
+			return result;
+		}
+
+		if (userWallet.IsActive == false)
+		{
+			var errorMessage =
+				$"Access of this user to the wallet is not active!";
+
+			result.AddErrorMessages
+				(message: errorMessage);
+
+			return result;
+		}
+
+		result.Data = userWallet;
+
+		return result;
+	}
+	#endregion /CheckAndGetUserWallet()
 }
