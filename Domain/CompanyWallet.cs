@@ -50,12 +50,6 @@ public class CompanyWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompanyW
 
 
 
-	#region Hash
-	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Hash)]
-	public string? Hash { get; private set; }
-	#endregion /Hash
-
 	#region Description
 	[System.ComponentModel.DataAnnotations.MaxLength
 		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
@@ -72,52 +66,7 @@ public class CompanyWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompanyW
 
 	#region Methods
 
-	public string GetHash()
-	{
-		var stringBuilder =
-			new System.Text.StringBuilder();
 
-		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(CompanyId)}:{CompanyId}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(WalletId)}:{WalletId}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(IsActive)}:{IsActive}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Description)}:{Description}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(AdditionalData)}:{AdditionalData}");
-
-		var text =
-			stringBuilder.ToString();
-
-		string result =
-			Dtat.Utility.GetSha256(text: text);
-
-		return result;
-	}
-
-	public void UpdateHash()
-	{
-		Hash = GetHash();
-	}
-
-	public bool CheckHashValidation()
-	{
-		var result = GetHash();
-
-		if (string.Compare(result, Hash, ignoreCase: true) == 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
 
 	#endregion /Methods
 }

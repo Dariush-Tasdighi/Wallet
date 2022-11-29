@@ -45,9 +45,9 @@ public static class Constant : object
 
 		public const long Root_UsersController_Deposite = UsersController + 102;
 
-		public const long Root_UsersController_GetBalanceAsync = UsersController + 103;
+		public const long Root_UsersController_GetBalance = UsersController + 103;
 
-		public const long Root_UsersController_GetLastTransactionsAsync = UsersController + 104;
+		public const long Root_UsersController_GetLastTransactions = UsersController + 104;
 		// **********
 
 		// **********

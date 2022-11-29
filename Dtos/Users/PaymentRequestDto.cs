@@ -5,8 +5,9 @@ public class PaymentRequestDto : object
 	#region Constructor
 	public PaymentRequestDto() : base()
 	{
+		User = new();
+
 		ReferenceCode = string.Empty;
-		User = new PaymentRequestUserDto();
 	}
 	#endregion /Constructor
 

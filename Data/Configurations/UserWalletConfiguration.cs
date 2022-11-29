@@ -41,35 +41,35 @@ internal class UserWalletConfiguration : object,
 		// **************************************************
 		// **************************************************
 		// **************************************************
-		var userWallet =
-			new Domain.UserWallet
-			(userId: SeedData.Constant.Id.User,
-			walletId: SeedData.Constant.Id.Wallet)
-			{
-				//Hash
+		//var userWallet =
+		//	new Domain.UserWallet
+		//	(userId: SeedData.Constant.Id.User,
+		//	walletId: SeedData.Constant.Id.Wallet)
+		//	{
+		//		//Hash
 
-				//User
-				//UserId
+		//		//User
+		//		//UserId
 
-				//Wallet
-				//WalletId
+		//		//Wallet
+		//		//WalletId
 
-				//InsertDateTime
-				//UpdateDateTime
+		//		//InsertDateTime
+		//		//UpdateDateTime
 
-				Balance = 0,
-				IsActive = true,
-				Description = null,
-				AdditionalData = null,
+		//		Balance = 0,
+		//		IsActive = true,
+		//		Description = null,
+		//		AdditionalData = null,
 
-				PaymentFeatureIsEnabled = true,
-				WithdrawFeatureIsEnabled = true,
-				DepositeFeatureIsEnabled = true,
+		//		PaymentFeatureIsEnabled = true,
+		//		WithdrawFeatureIsEnabled = true,
+		//		DepositeFeatureIsEnabled = true,
 
-				Id = SeedData.Constant.Id.UserWallet,
-			};
+		//		Id = SeedData.Constant.Id.UserWallet,
+		//	};
 
-		builder.HasData(data: userWallet);
+		//builder.HasData(data: userWallet);
 		// **************************************************
 		// **************************************************
 		// **************************************************

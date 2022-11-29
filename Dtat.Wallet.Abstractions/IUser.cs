@@ -26,6 +26,8 @@ public interface IUser<T> :
 
 
 
+	bool IsVerified { get; }
+
 	System.DateTime UpdateDateTime { get; }
 
 

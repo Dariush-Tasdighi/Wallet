@@ -7,19 +7,21 @@ public static System.Guid Company =
 **************************************************
 
 **************************************************
+*** Deposite *************************************
+**************************************************
 {
 	"user": {
 		"ip": "192.168.1.110",
-		"displayName": "علی رضا علوی",
-		"cellPhoneNumber": "09123456789",
-		"emailAddress": "AliReza@GMail.com",
+		"displayName": "داریوش تصدیقی",
+		"cellPhoneNumber": "09121087461",
+		"emailAddress": "DariushT@GMail.com",
 		"nationalCode": "1234512345",
 		"additionalData": null,
 		"paymentFeatureIsEnabled": true,
 		"depositeFeatureIsEnabled": true,
 		"withdrawFeatureIsEnabled": false
 	},
-	"amount": 1,
+	"amount": 10,
 	"waletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
 	"companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
 	"providerName": "ایران کیش",
@@ -31,12 +33,27 @@ public static System.Guid Company =
 **************************************************
 
 **************************************************
+*** GetBalance ***********************************
+**************************************************
 {
 	"user": {
 		"ip": "192.168.1.110",
-		"cellPhoneNumber": "09123456789"
+		"cellPhoneNumber": "09121087461"
 	},
-	"amount": 1,
+	"waletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
+	"companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728"
+}
+**************************************************
+
+**************************************************
+*** Payment **************************************
+**************************************************
+{
+	"user": {
+		"ip": "192.168.1.110",
+		"cellPhoneNumber": "09121087461"
+	},
+	"amount": 8,
 	"waletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
 	"companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
 	"referenceCode": "2030405060",

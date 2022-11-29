@@ -76,7 +76,6 @@ internal class WalletConfiguration : object,
 				//InsertDateTime
 				//UpdateDateTime
 
-				Hash = null,
 				Description = null,
 				AdditionalData = null,
 

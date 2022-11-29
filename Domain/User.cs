@@ -26,6 +26,10 @@ public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 	public bool IsActive { get; set; }
 	#endregion /IsActive
 
+	#region IsVerified
+	public bool IsVerified { get; set; }
+	#endregion /IsVerified
+
 	#region UpdateDateTime
 	public System.DateTime UpdateDateTime { get; private set; }
 	#endregion /UpdateDateTime
@@ -105,6 +109,8 @@ public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(IsActive)}:{IsActive}");
+		stringBuilder.Append('|');
+		stringBuilder.Append($"{nameof(IsVerified)}:{IsVerified}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime}");
 		stringBuilder.Append('|');

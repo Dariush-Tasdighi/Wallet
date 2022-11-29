@@ -5,11 +5,10 @@ public class DepositeRequestDto : object
 	#region Constructor
 	public DepositeRequestDto() : base()
 	{
+		User = new();
+
 		ProviderName = string.Empty;
 		ReferenceCode = string.Empty;
-
-		User =
-			new DepositeRequestUserDto();
 	}
 	#endregion /Constructor
 

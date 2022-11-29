@@ -90,27 +90,30 @@ internal class UserConfiguration : object,
 		// **************************************************
 		// **************************************************
 		// **************************************************
-		var user =
-			new Domain.User(cellPhoneNumber: "09121087461", displayName: "داریوش تصدیقی")
-			{
-				//Hash
-				//UserWallets
-				//DisplayName
-				//Transactions
-				//InsertDateTime
-				//UpdateDateTime
-				//CellPhoneNumber
+		//var user =
+		//	new Domain.User(cellPhoneNumber: "09121087461", displayName: "داریوش تصدیقی")
+		//	{
+		//		//Hash
+		//		//UserWallets
+		//		//DisplayName
+		//		//Transactions
+		//		//InsertDateTime
+		//		//UpdateDateTime
+		//		//CellPhoneNumber
 
-				Description = null,
+		//		Description = null,
 
-				IsActive = true,
-				Id = SeedData.Constant.Id.User,
+		//		IsActive = true,
+		//		IsVerified = true,
+		//		Id = SeedData.Constant.Id.User,
 
-				NationalCode = "1234567891",
-				EmailAddress = "dariusht@gmail.com",
-			};
+		//		NationalCode = "1234567891",
+		//		EmailAddress = "dariusht@gmail.com",
+		//	};
 
-		builder.HasData(data: user);
+		//user.UpdateHash();
+
+		//builder.HasData(data: user);
 		// **************************************************
 		// **************************************************
 		// **************************************************

@@ -18,13 +18,6 @@ internal class CompanyWalletConfiguration : object,
 			.IsUnique(unique: true)
 			;
 		// **************************************************
-
-		// **************************************************
-		builder
-			.Property(current => current.Hash)
-			.IsUnicode(unicode: false)
-			;
-		// **************************************************
 		// **************************************************
 		// **************************************************
 
@@ -36,8 +29,6 @@ internal class CompanyWalletConfiguration : object,
 			(companyId: SeedData.Constant.Id.Company,
 			walletId: SeedData.Constant.Id.Wallet)
 			{
-				//Hash
-
 				//Company
 				//CompanyId
 

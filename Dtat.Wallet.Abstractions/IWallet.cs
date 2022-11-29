@@ -1,7 +1,7 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface IWallet<T> :
-	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T>, SeedWork.IHashing<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T> where T : struct
 {
 	/// <summary>
 	/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد

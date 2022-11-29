@@ -14,7 +14,10 @@ public static class Constant : object
 
 		public const int IP = 15;
 
-		public const int Hash = 40;
+		/// <summary>
+		/// For Hash 256
+		/// </summary>
+		public const int Hash = 64;
 
 		public const int Name = 100;
 

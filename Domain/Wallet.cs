@@ -35,12 +35,6 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 
 
 
-	#region Hash
-	[System.ComponentModel.DataAnnotations.MaxLength
-		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Hash)]
-	public string? Hash { get; set; }
-	#endregion /Hash
-
 	#region Description
 	[System.ComponentModel.DataAnnotations.MaxLength
 		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
@@ -115,59 +109,6 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 		}
 
 		Token = token.Value;
-	}
-
-	public string GetHash()
-	{
-		var stringBuilder =
-			new System.Text.StringBuilder();
-
-		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Name)}:{Name}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Description)}:{Description}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(AdditionalData)}:{AdditionalData}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(IsActive)}:{IsActive}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(PaymentFeatureIsEnabled)}:{PaymentFeatureIsEnabled}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(DepositeFeatureIsEnabled)}:{DepositeFeatureIsEnabled}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(WithdrawFeatureIsEnabled)}:{WithdrawFeatureIsEnabled}");
-		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(TransferFeatureIsEnabled)}:{TransferFeatureIsEnabled}");
-
-		var text =
-			stringBuilder.ToString();
-
-		string result =
-			Dtat.Utility.GetSha256(text: text);
-
-		return result;
-	}
-
-	public void UpdateHash()
-	{
-		Hash = GetHash();
-	}
-
-	public bool CheckHashValidation()
-	{
-		var result = GetHash();
-
-		if (string.Compare(result, Hash, ignoreCase: true) == 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 
 	#endregion /Methods

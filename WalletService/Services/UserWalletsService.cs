@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Domain;
+using System.Linq;
 
 namespace Server.Services;
 
@@ -48,6 +49,8 @@ public static class UserWalletsService : object
 			userWallet.TransferFeatureIsEnabled = transferFeatureIsEnabled;
 		}
 
+		userWallet.UpdateHash();
+
 		// دستور ذیل باید نوشته شود Id به دلیل نوع
 		databaseContext.SaveChanges();
 
@@ -79,6 +82,20 @@ public static class UserWalletsService : object
 			return result;
 		}
 
+		var hashValidation =
+			userWallet.CheckHashValidation();
+
+		if (hashValidation == false)
+		{
+			var errorMessage =
+				$"There is inconsitency data in user wallet!";
+
+			result.AddErrorMessages
+				(message: errorMessage);
+
+			return result;
+		}
+
 		if (userWallet.IsActive == false)
 		{
 			var errorMessage =
@@ -95,4 +112,60 @@ public static class UserWalletsService : object
 		return result;
 	}
 	#endregion /CheckAndGetUserWallet()
+
+	#region GetUserBalanceWithCheckingDataConsistency()
+	public static Dtat.Result<decimal> GetUserBalanceWithCheckingDataConsistency
+		(Data.DatabaseContext databaseContext, System.Guid waletToken,
+		string cellPhoneNumber, Domain.UserWallet userWallet)
+	{
+		var result =
+			new Dtat.Result<decimal>();
+
+		// **************************************************
+		// نوع اول
+		// بررسی معتبر بودن مقدار مانده کاربر
+		// در کیف پول بر اساس هش موجود در رکورد
+		// **************************************************
+		var hashValidation =
+			userWallet.CheckHashValidation();
+
+		if (hashValidation == false)
+		{
+			var errorMessage =
+				$"There is inconsitency data (Type 1) in user wallet balance!";
+
+			result.AddErrorMessages(message: errorMessage);
+
+			return result;
+		}
+		// **************************************************
+
+		// **************************************************
+		// نوع دوم
+		// بررسی معتبر بودن مقدار مانده کاربر در کیف پول
+		// بر اساس کلیه تراکنش‌های کاربر در کیف پول مربوطه
+		// **************************************************
+		var balance =
+			databaseContext.Transactions
+			.Where(current => current.Wallet != null && current.Wallet.Token == waletToken)
+			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
+			.Sum(current => current.Amount);
+
+		if (balance != userWallet.Balance)
+		{
+			var errorMessage =
+				$"There is inconsitency data (Type 2) in user wallet balance!";
+
+			result.AddErrorMessages(message: errorMessage);
+
+			return result;
+		}
+		// **************************************************
+
+		result.Data =
+			userWallet.Balance;
+
+		return result;
+	}
+	#endregion /GetUserBalanceWithCheckingDataConsistency()
 }
