@@ -132,8 +132,6 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(IsActive)}:{IsActive}");
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Token)}:{Token}");
-		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(PaymentFeatureIsEnabled)}:{PaymentFeatureIsEnabled}");
