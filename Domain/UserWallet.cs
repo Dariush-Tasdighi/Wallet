@@ -41,11 +41,12 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 	#endregion /IsActive
 
 	#region Balance
-	public decimal Balance { get; set; }
-	#endregion /Balance
+	private decimal _balance;
+    public decimal Balance { get => _balance; set { _balance = value; UpdateHash(); } }
+    #endregion /Balance
 
-	#region UpdateDateTime
-	public System.DateTime UpdateDateTime { get; private set; }
+    #region UpdateDateTime
+    public System.DateTime UpdateDateTime { get; private set; }
 	#endregion /UpdateDateTime
 
 
@@ -103,7 +104,7 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(IsActive)}:{IsActive}");
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Balance)}:{Balance}");
+		stringBuilder.Append($"{nameof(Balance)}:{(long)Balance}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime}");
 		stringBuilder.Append('|');
