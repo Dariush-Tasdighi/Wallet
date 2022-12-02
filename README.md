@@ -59,7 +59,7 @@ Make sure you have installed **.NET 7** in your environment. After that, you can
 ## Contributors (LinkedIn)
 
 - [Mr. Dariush Tasdighi](https://www.linkedin.com/in/Tasdighi/)
-- [Mr. Ali Khosandam Esfahani](https://www.linkedin.com/in/ali-khoshandam-esfahani-55720767/)
+- [Mr. Ali Khoshandam Esfahani](https://www.linkedin.com/in/ali-khoshandam-esfahani-55720767/)
 - [Mr. Mehran Rivadeh](https://www.linkedin.com/in/Mehran-Rivadeh-ab55845)
 - [Mr. Reza Qadimi](https://www.linkedin.com/in/Reza-Qadimi)
 - [Mr. Ali Bayat](https://www.linkedin.com/in/AliBayatgh)
