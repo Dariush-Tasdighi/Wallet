@@ -1,9 +1,11 @@
-namespace Tests;
-
-public class UserWalletTest
+public class UserWalletTest : object
 {
-	[Fact]
-	public async Task Concurrency_Test()
+	public UserWalletTest() : base()
+	{
+	}
+
+	[Xunit.Fact]
+	public async System.Threading.Tasks.Task Concurrency_Test()
 	{
 		decimal expectedBalance = 10_000;
 
@@ -11,11 +13,11 @@ public class UserWalletTest
 			new Domain.UserWallet(userId: 1, walletId: 1);
 
 		var tasks =
-			new Task[1000];
+			new System.Threading.Tasks.Task[1000];
 
 		for (int index = 0; index < tasks.Length; index++)
 		{
-			tasks[index] = Task.Run(() =>
+			tasks[index] = System.Threading.Tasks.Task.Run(() =>
 			{
 				decimal[] amounts =
 					{ 8, 2, -2, 6, -6, -3, 0, -5, 11, -1 };
@@ -28,18 +30,17 @@ public class UserWalletTest
 					}
 					else
 					{
-						userWallet.Balance -= Math.Abs(amount);
+						userWallet.Balance -= System.Math.Abs(amount);
 					}
 				}
-			}
-			);
+			});
 		}
 
-		await Task.WhenAll(tasks);
+		await System.Threading.Tasks.Task.WhenAll(tasks);
 
 		var actualBalance =
 			userWallet.Balance;
 
-		Assert.Equal(expectedBalance, actualBalance);
+		Xunit.Assert.Equal(expectedBalance, actualBalance);
 	}
 }

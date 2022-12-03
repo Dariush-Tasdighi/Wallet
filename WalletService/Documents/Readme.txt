@@ -22,7 +22,7 @@ public static System.Guid Company =
 		"withdrawFeatureIsEnabled": false
 	},
 	"amount": 10,
-	"waletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
+	"walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
 	"companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
 	"providerName": "ایران کیش",
 	"referenceCode": "1020304050",
@@ -40,7 +40,7 @@ public static System.Guid Company =
 		"ip": "192.168.1.110",
 		"cellPhoneNumber": "09121087461"
 	},
-	"waletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
+	"walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
 	"companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728"
 }
 **************************************************
@@ -54,7 +54,7 @@ public static System.Guid Company =
 		"cellPhoneNumber": "09121087461"
 	},
 	"amount": 8,
-	"waletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
+	"walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
 	"companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
 	"referenceCode": "2030405060",
 	"userDescription": null,

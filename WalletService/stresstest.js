@@ -28,7 +28,7 @@ export default () => {
 				"withdrawFeatureIsEnabled": false
 			},
 			"amount": 1000,
-			"waletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
+			"walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
 			"providerName": "ایران کیش",
 			"referenceCode": "1020304050",
 			"userDescription": "دوست داشتم کیف پولم رو شارژ کنم",
