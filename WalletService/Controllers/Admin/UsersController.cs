@@ -33,7 +33,7 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 	public async System.Threading.Tasks.Task
 		<Microsoft.AspNetCore.Mvc.ActionResult
 		<System.Collections.Generic.IEnumerable<Domain.User>>>
-		GetAllUsersAsync(Dtat.Pagination pagination)
+		GetAllUsersAsync([Microsoft.AspNetCore.Mvc.FromQuery] Dtat.Pagination pagination)
 	{
 		try
 		{

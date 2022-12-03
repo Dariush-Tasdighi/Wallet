@@ -33,7 +33,7 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 	public async System.Threading.Tasks.Task
 		<Microsoft.AspNetCore.Mvc.ActionResult
 		<System.Collections.Generic.IEnumerable<Domain.Transaction>>>
-		GetAllTransactionsAsync(Dtat.Pagination pagination)
+		GetAllTransactionsAsync([Microsoft.AspNetCore.Mvc.FromQuery] Dtat.Pagination pagination)
 	{
 		try
 		{
