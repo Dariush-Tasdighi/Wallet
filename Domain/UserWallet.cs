@@ -95,29 +95,61 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 		var stringBuilder =
 			new System.Text.StringBuilder();
 
-		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime.ToString("yyyy/MM/dd-HH:mm:ss")}");
+		stringBuilder.Append
+			($"{nameof(InsertDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: InsertDateTime)}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(UserId)}:{UserId}");
+
+		stringBuilder.Append
+			($"{nameof(UserId)}:{UserId}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(WalletId)}:{WalletId}");
+
+		stringBuilder.Append
+			($"{nameof(WalletId)}:{WalletId}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(IsActive)}:{IsActive}");
+
+		stringBuilder.Append
+			($"{nameof(IsActive)}:{IsActive}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Balance)}:{Balance.ToString("0.00")}");
+
+		stringBuilder.Append
+			($"{nameof(Balance)}:{Dtat.ConvertForHashing.FromDecimal(value: Balance)}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime.ToString("yyyy/MM/dd-HH:mm:ss")}");
+
+		stringBuilder.Append
+			($"{nameof(UpdateDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: UpdateDateTime)}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(PaymentFeatureIsEnabled)}:{PaymentFeatureIsEnabled}");
+
+		stringBuilder.Append
+			($"{nameof(PaymentFeatureIsEnabled)}:{PaymentFeatureIsEnabled}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(DepositeFeatureIsEnabled)}:{DepositeFeatureIsEnabled}");
+
+		stringBuilder.Append
+			($"{nameof(DepositeFeatureIsEnabled)}:{DepositeFeatureIsEnabled}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(WithdrawFeatureIsEnabled)}:{WithdrawFeatureIsEnabled}");
+		stringBuilder.Append
+			($"{nameof(WithdrawFeatureIsEnabled)}:{WithdrawFeatureIsEnabled}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(TransferFeatureIsEnabled)}:{TransferFeatureIsEnabled}");
+		stringBuilder.Append
+			($"{nameof(TransferFeatureIsEnabled)}:{TransferFeatureIsEnabled}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Description)}:{Description}");
+
+		stringBuilder.Append
+			($"{nameof(Description)}:{Dtat.ConvertForHashing.FromString(value: Description)}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(AdditionalData)}:{AdditionalData}");
+
+		stringBuilder.Append
+			($"{nameof(AdditionalData)}:{Dtat.ConvertForHashing.FromString(value: AdditionalData)}");
 
 		var text =
 			stringBuilder.ToString();

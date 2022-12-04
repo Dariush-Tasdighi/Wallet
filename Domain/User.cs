@@ -106,23 +106,48 @@ public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 		var stringBuilder =
 			new System.Text.StringBuilder();
 
-		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime.ToString("yyyy/MM/dd-HH:mm:ss")}");
+		stringBuilder.Append
+			($"{nameof(InsertDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: InsertDateTime)}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(IsActive)}:{IsActive}");
+
+		stringBuilder.Append
+			($"{nameof(IsActive)}:{IsActive}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(IsVerified)}:{IsVerified}");
+
+		stringBuilder.Append
+			($"{nameof(IsVerified)}:{IsVerified}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime.ToString("yyyy/MM/dd-HH:mm:ss")}");
+
+		stringBuilder.Append
+			($"{nameof(UpdateDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: UpdateDateTime)}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(DisplayName)}:{DisplayName}");
+
+		stringBuilder.Append
+			($"{nameof(DisplayName)}:{Dtat.ConvertForHashing.FromString(value: DisplayName)}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(CellPhoneNumber)}:{CellPhoneNumber}");
+
+		stringBuilder.Append
+			($"{nameof(CellPhoneNumber)}:{Dtat.ConvertForHashing.FromString(value: CellPhoneNumber)}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Description)}:{Description}");
+
+		stringBuilder.Append
+			($"{nameof(Description)}:{Dtat.ConvertForHashing.FromString(value: Description)}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(EmailAddress)}:{EmailAddress}");
+
+		stringBuilder.Append
+			($"{nameof(EmailAddress)}:{Dtat.ConvertForHashing.FromString(value: EmailAddress)}");
+
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(NationalCode)}:{NationalCode}");
+
+		stringBuilder.Append
+			($"{nameof(NationalCode)}:{Dtat.ConvertForHashing.FromString(value: NationalCode)}");
 
 		var text =
 			stringBuilder.ToString();
