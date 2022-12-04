@@ -1,7 +1,4 @@
-﻿using System.Linq;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using Azure.Core;
 
 namespace Server.Controllers;
 
