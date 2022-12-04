@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Server.Controllers.Admin;
 
@@ -21,7 +22,7 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 	#endregion /Properties
 
 	#region GetAllTransactionsAsync()
-	[Microsoft.AspNetCore.Mvc.HttpGet]
+	[Microsoft.AspNetCore.Mvc.HttpPost]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(System.Collections.Generic.IEnumerable<Domain.Transaction>),
