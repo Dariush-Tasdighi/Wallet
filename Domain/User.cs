@@ -106,13 +106,13 @@ public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 		var stringBuilder =
 			new System.Text.StringBuilder();
 
-		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime}");
+		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime.ToString("yyyy/MM/dd-HH:mm:ss")}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(IsActive)}:{IsActive}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(IsVerified)}:{IsVerified}");
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime}");
+		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime.ToString("yyyy/MM/dd-HH:mm:ss")}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(DisplayName)}:{DisplayName}");
 		stringBuilder.Append('|');

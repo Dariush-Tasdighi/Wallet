@@ -1,5 +1,4 @@
-﻿using Domain;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Server.Services;
 
@@ -11,7 +10,8 @@ public static class UserWalletsService : object
 
 	#region CreateOrUpdateUserWallet()
 	public static Domain.UserWallet
-		CreateOrUpdateUserWallet(Data.DatabaseContext databaseContext,
+		CreateOrUpdateUserWallet
+		(Data.DatabaseContext databaseContext,
 		long userId, long walletId, bool paymentFeatureIsEnabled,
 		bool depositeFeatureIsEnabled, bool withdrawFeatureIsEnabled,
 		bool transferFeatureIsEnabled, string? additionalData)

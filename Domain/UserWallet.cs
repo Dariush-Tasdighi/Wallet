@@ -95,7 +95,7 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 		var stringBuilder =
 			new System.Text.StringBuilder();
 
-		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime}");
+		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime.ToString("yyyy/MM/dd-HH:mm:ss")}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(UserId)}:{UserId}");
 		stringBuilder.Append('|');
@@ -103,9 +103,9 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(IsActive)}:{IsActive}");
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Balance)}:{Balance}");
+		stringBuilder.Append($"{nameof(Balance)}:{Balance.ToString("0.00")}");
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime}");
+		stringBuilder.Append($"{nameof(UpdateDateTime)}:{UpdateDateTime.ToString("yyyy/MM/dd-HH:mm:ss")}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(PaymentFeatureIsEnabled)}:{PaymentFeatureIsEnabled}");
 		stringBuilder.Append('|');

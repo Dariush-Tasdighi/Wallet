@@ -86,6 +86,7 @@ public static class UsersService : object
 			return result;
 		}
 
+		
 		if (user.IsActive == false)
 		{
 			var errorMessage =

@@ -124,7 +124,7 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 		var stringBuilder =
 			new System.Text.StringBuilder();
 
-		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime}");
+		stringBuilder.Append($"{nameof(InsertDateTime)}:{InsertDateTime.ToString("yyyy/MM/dd-HH:mm:ss")}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(UserId)}:{UserId}");
 		stringBuilder.Append('|');
@@ -132,7 +132,7 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(PartyUserId)}:{PartyUserId}");
 		stringBuilder.Append('|');
-		stringBuilder.Append($"{nameof(Amount)}:{Amount}");
+		stringBuilder.Append($"{nameof(Amount)}:{Amount.ToString("0.00")}");
 		stringBuilder.Append('|');
 		stringBuilder.Append($"{nameof(TransactionDuration)}:{TransactionDuration}");
 		stringBuilder.Append('|');
