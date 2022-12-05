@@ -21,7 +21,7 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 	#endregion /Properties
 
 	#region GetAllUsersAsync()
-	[Microsoft.AspNetCore.Mvc.HttpGet]
+	[Microsoft.AspNetCore.Mvc.HttpPost]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(System.Collections.Generic.IEnumerable<Domain.User>),

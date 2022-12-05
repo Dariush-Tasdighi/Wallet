@@ -27,10 +27,10 @@ public class DepositeRequestDto : object
 	public decimal Amount { get; set; }
 	#endregion /Amount
 
-	#region WaletToken
+	#region WalletToken
 	[System.ComponentModel.DataAnnotations.Required]
-	public System.Guid WaletToken { get; set; }
-	#endregion /WaletToken
+	public System.Guid WalletToken { get; set; }
+	#endregion /WalletToken
 
 	#region CompanyToken
 	[System.ComponentModel.DataAnnotations.Required]

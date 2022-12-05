@@ -1,5 +1,4 @@
-﻿using Domain;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Server.Services;
 
@@ -11,7 +10,8 @@ public static class UserWalletsService : object
 
 	#region CreateOrUpdateUserWallet()
 	public static Domain.UserWallet
-		CreateOrUpdateUserWallet(Data.DatabaseContext databaseContext,
+		CreateOrUpdateUserWallet
+		(Data.DatabaseContext databaseContext,
 		long userId, long walletId, bool paymentFeatureIsEnabled,
 		bool depositeFeatureIsEnabled, bool withdrawFeatureIsEnabled,
 		bool transferFeatureIsEnabled, string? additionalData)
@@ -115,7 +115,7 @@ public static class UserWalletsService : object
 
 	#region GetUserBalanceWithCheckingDataConsistency()
 	public static Dtat.Result<decimal> GetUserBalanceWithCheckingDataConsistency
-		(Data.DatabaseContext databaseContext, System.Guid waletToken,
+		(Data.DatabaseContext databaseContext, System.Guid walletToken,
 		string cellPhoneNumber, Domain.UserWallet userWallet)
 	{
 		var result =
@@ -147,7 +147,7 @@ public static class UserWalletsService : object
 		// **************************************************
 		var balance =
 			databaseContext.Transactions
-			.Where(current => current.Wallet != null && current.Wallet.Token == waletToken)
+			.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
 			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
 			.Sum(current => current.Amount);
 

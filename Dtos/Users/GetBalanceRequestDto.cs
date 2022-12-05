@@ -16,10 +16,10 @@ public class GetBalanceRequestDto : object
 	public GetBalanceRequestUserDto User { get; set; }
 	#endregion /User
 
-	#region WaletToken
+	#region WalletToken
 	[System.ComponentModel.DataAnnotations.Required]
-	public System.Guid WaletToken { get; set; }
-	#endregion /WaletToken
+	public System.Guid WalletToken { get; set; }
+	#endregion /WalletToken
 
 	#region CompanyToken
 	[System.ComponentModel.DataAnnotations.Required]

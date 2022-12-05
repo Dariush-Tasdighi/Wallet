@@ -110,7 +110,7 @@ public class UsersController :
 				var validIPResult =
 					Services.ValidIPsService.CheckServerIPByCompanyToken
 					(databaseContext: DatabaseContext, serverIP: serverIP,
-					companyToken: request.CompanyToken, walletToken: request.WaletToken,
+					companyToken: request.CompanyToken, walletToken: request.WalletToken,
 					cellPhoneNumber: request.User.CellPhoneNumber);
 
 				if (validIPResult.IsSuccess == false)
@@ -124,7 +124,7 @@ public class UsersController :
 				// **************************************************
 				var walletResult =
 					Services.WalletsService.CheckAndGetWalletByToken
-					(databaseContext: DatabaseContext, token: request.WaletToken);
+					(databaseContext: DatabaseContext, token: request.WalletToken);
 
 				if (walletResult.IsSuccess == false)
 				{
@@ -152,7 +152,7 @@ public class UsersController :
 				// **************************************************
 				var companyWalletResult =
 					Services.CompanyWalletsService.CheckAndGetCompanyWalletByTokens
-					(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WaletToken);
+					(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WalletToken);
 
 				if (companyWalletResult.IsSuccess == false)
 				{
@@ -209,7 +209,7 @@ public class UsersController :
 				// **************************************************
 				var userWalletResult =
 					Services.UserWalletsService.CheckAndGetUserWallet(databaseContext: DatabaseContext,
-					cellPhoneNumber: request.User.CellPhoneNumber, walletToken: request.WaletToken);
+					cellPhoneNumber: request.User.CellPhoneNumber, walletToken: request.WalletToken);
 
 				if (userWalletResult.IsSuccess == false)
 				{
@@ -238,7 +238,7 @@ public class UsersController :
 				// **************************************************
 				var balanceResult =
 					Services.UserWalletsService.GetUserBalanceWithCheckingDataConsistency
-					(databaseContext: DatabaseContext, waletToken: request.WaletToken,
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
 					cellPhoneNumber: request.User.CellPhoneNumber, userWallet: userWallet);
 
 				if (balanceResult.IsSuccess == false)
@@ -273,7 +273,7 @@ public class UsersController :
 
 	//#region Action: GetLastTransactionsAsync()
 	//[Microsoft.AspNetCore.Mvc.HttpGet
-	//	(template: "[action]/{waletToken}/{cellPhoneNumber}/{count}")]
+	//	(template: "[action]/{walletToken}/{cellPhoneNumber}/{count}")]
 
 	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
 	//	(type: typeof(Domain.Wallet),
@@ -288,7 +288,7 @@ public class UsersController :
 	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
 	//public async System.Threading.Tasks.Task
 	//	<Microsoft.AspNetCore.Mvc.ActionResult<System.Collections.Generic.IList<Domain.Transaction>>>
-	//	GetLastTransactionsAsync(System.Guid waletToken, string cellPhoneNumber, int count)
+	//	GetLastTransactionsAsync(System.Guid walletToken, string cellPhoneNumber, int count)
 	//{
 	//	try
 	//	{
@@ -299,7 +299,7 @@ public class UsersController :
 	//		//	.Where(current => current.IsActive)
 
 	//		//	.Where(current => current.Wallet != null && current.Wallet.IsActive)
-	//		//	.Where(current => current.Wallet != null && current.Wallet.Token == waletToken)
+	//		//	.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
 
 	//		//	.Where(current => current.User != null && current.User.IsActive)
 	//		//	.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
@@ -311,7 +311,7 @@ public class UsersController :
 	//			await
 	//			DatabaseContext.UserWallets
 	//			.AsNoTracking()
-	//			.Where(current => current.Wallet != null && current.Wallet.Token == waletToken)
+	//			.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
 	//			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
 	//			.FirstOrDefaultAsync();
 
@@ -439,7 +439,7 @@ public class UsersController :
 				var validIPResult =
 					Services.ValidIPsService.CheckServerIPByCompanyToken
 					(databaseContext: DatabaseContext, serverIP: serverIP,
-					companyToken: request.CompanyToken, walletToken: request.WaletToken,
+					companyToken: request.CompanyToken, walletToken: request.WalletToken,
 					cellPhoneNumber: request.User.CellPhoneNumber);
 
 				if (validIPResult.IsSuccess == false)
@@ -453,7 +453,7 @@ public class UsersController :
 				// **************************************************
 				var walletResult =
 					Services.WalletsService.CheckAndGetWalletByToken
-					(databaseContext: DatabaseContext, token: request.WaletToken);
+					(databaseContext: DatabaseContext, token: request.WalletToken);
 
 				if (walletResult.IsSuccess == false)
 				{
@@ -492,7 +492,7 @@ public class UsersController :
 				// **************************************************
 				var companyWalletResult =
 					Services.CompanyWalletsService.CheckAndGetCompanyWalletByTokens
-					(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WaletToken);
+					(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WalletToken);
 
 				if (companyWalletResult.IsSuccess == false)
 				{
@@ -582,7 +582,7 @@ public class UsersController :
 				// **************************************************
 				var balanceResult =
 					Services.UserWalletsService.GetUserBalanceWithCheckingDataConsistency
-					(databaseContext: DatabaseContext, waletToken: request.WaletToken,
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
 					cellPhoneNumber: request.User.CellPhoneNumber, userWallet: userWallet);
 
 				if (balanceResult.IsSuccess == false)
@@ -597,6 +597,12 @@ public class UsersController :
 				userWallet.Balance += request.Amount;
 
 				userWallet.UpdateHash();
+				// **************************************************
+
+				// **************************************************
+				// ذخیره تغییرات در بانک اطلاعاتی
+				// **************************************************
+				DatabaseContext.SaveChanges();
 				// **************************************************
 
 				// **************************************************
@@ -756,7 +762,7 @@ public class UsersController :
 				var validIPResult =
 					Services.ValidIPsService.CheckServerIPByCompanyToken
 					(databaseContext: DatabaseContext, serverIP: serverIP,
-					companyToken: request.CompanyToken, walletToken: request.WaletToken,
+					companyToken: request.CompanyToken, walletToken: request.WalletToken,
 					cellPhoneNumber: request.User.CellPhoneNumber);
 
 				if (validIPResult.IsSuccess == false)
@@ -770,7 +776,7 @@ public class UsersController :
 				// **************************************************
 				var walletResult =
 					Services.WalletsService.CheckAndGetWalletByToken
-					(databaseContext: DatabaseContext, token: request.WaletToken);
+					(databaseContext: DatabaseContext, token: request.WalletToken);
 
 				if (walletResult.IsSuccess == false)
 				{
@@ -809,7 +815,7 @@ public class UsersController :
 				// **************************************************
 				var companyWalletResult =
 					Services.CompanyWalletsService.CheckAndGetCompanyWalletByTokens
-					(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WaletToken);
+					(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WalletToken);
 
 				if (companyWalletResult.IsSuccess == false)
 				{
@@ -866,7 +872,7 @@ public class UsersController :
 				// **************************************************
 				var userWalletResult =
 					Services.UserWalletsService.CheckAndGetUserWallet(databaseContext: DatabaseContext,
-					cellPhoneNumber: request.User.CellPhoneNumber, walletToken: request.WaletToken);
+					cellPhoneNumber: request.User.CellPhoneNumber, walletToken: request.WalletToken);
 
 				if (userWalletResult.IsSuccess == false)
 				{
@@ -906,7 +912,7 @@ public class UsersController :
 				// **************************************************
 				var balanceResult =
 					Services.UserWalletsService.GetUserBalanceWithCheckingDataConsistency
-					(databaseContext: DatabaseContext, waletToken: request.WaletToken,
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
 					cellPhoneNumber: request.User.CellPhoneNumber, userWallet: userWallet);
 
 				if (balanceResult.IsSuccess == false)
