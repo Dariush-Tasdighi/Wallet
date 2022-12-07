@@ -13,6 +13,9 @@ public class PaymentRequestUserDto : object
 	#region Properties
 
 	#region IP (User IP)
+	/// <summary>
+	/// آی‌پی کاربر
+	/// </summary>
 	[System.ComponentModel.DataAnnotations.Required
 		(AllowEmptyStrings = false)]
 
@@ -22,6 +25,9 @@ public class PaymentRequestUserDto : object
 	#endregion /IP (User IP)
 
 	#region CellPhoneNumber
+	/// <summary>
+	/// شماره تلفن کاربر
+	/// </summary>
 	[System.ComponentModel.DataAnnotations.Required
 		(AllowEmptyStrings = false)]
 

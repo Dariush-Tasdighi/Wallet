@@ -24,6 +24,9 @@ public class GetBalanceRequestUserDto : object
 	#endregion /IP (User IP)
 
 	#region CellPhoneNumber
+	/// <summary>
+	/// شماره تلفن همراه
+	/// </summary>
 	[System.ComponentModel.DataAnnotations.Required
 		(AllowEmptyStrings = false)]
 

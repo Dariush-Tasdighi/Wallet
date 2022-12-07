@@ -53,6 +53,17 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 	public decimal Amount { get; private set; }
 	#endregion /Amount
 
+	#region IsCleared
+	/// <summary>
+	/// تسویه شده
+	/// </summary>
+	public bool IsCleared { get; set; }
+	#endregion /IsCleared
+
+	#region WithdrawDateTime
+	public System.DateTime? WithdrawDateTime { get; set; }
+	#endregion /WithdrawDateTime
+
 	#region TransactionDuration
 	public System.TimeSpan TransactionDuration { get; set; }
 	#endregion /TransactionDuration
@@ -143,6 +154,16 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 
 		stringBuilder.Append
 			($"{nameof(Amount)}:{Dtat.ConvertForHashing.FromDecimal(value: Amount)}");
+
+		stringBuilder.Append('|');
+
+		stringBuilder.Append
+			($"{nameof(IsCleared)}:{IsCleared}");
+
+		stringBuilder.Append('|');
+
+		stringBuilder.Append
+			($"{nameof(WithdrawDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: WithdrawDateTime)}");
 
 		stringBuilder.Append('|');
 

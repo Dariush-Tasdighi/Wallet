@@ -50,24 +50,6 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 
 
 
-	#region PaymentFeatureIsEnabled
-	public bool PaymentFeatureIsEnabled { get; set; }
-	#endregion /PaymentFeatureIsEnabled
-
-	#region DepositeFeatureIsEnabled
-	public bool DepositeFeatureIsEnabled { get; set; }
-	#endregion /DepositeFeatureIsEnabled
-
-	#region WithdrawFeatureIsEnabled
-	public bool WithdrawFeatureIsEnabled { get; set; }
-	#endregion /WithdrawFeatureIsEnabled
-
-	#region TransferFeatureIsEnabled
-	public bool TransferFeatureIsEnabled { get; set; }
-	#endregion /TransferFeatureIsEnabled
-
-
-
 	#region Hash
 	[System.ComponentModel.DataAnnotations.MaxLength
 		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Hash)]
@@ -122,24 +104,6 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 
 		stringBuilder.Append
 			($"{nameof(UpdateDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: UpdateDateTime)}");
-
-		stringBuilder.Append('|');
-
-		stringBuilder.Append
-			($"{nameof(PaymentFeatureIsEnabled)}:{PaymentFeatureIsEnabled}");
-
-		stringBuilder.Append('|');
-
-		stringBuilder.Append
-			($"{nameof(DepositeFeatureIsEnabled)}:{DepositeFeatureIsEnabled}");
-
-		stringBuilder.Append('|');
-		stringBuilder.Append
-			($"{nameof(WithdrawFeatureIsEnabled)}:{WithdrawFeatureIsEnabled}");
-
-		stringBuilder.Append('|');
-		stringBuilder.Append
-			($"{nameof(TransferFeatureIsEnabled)}:{TransferFeatureIsEnabled}");
 
 		stringBuilder.Append('|');
 

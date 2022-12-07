@@ -1,25 +1,12 @@
 ﻿namespace Dtos.Users;
 
-public class PaymentResponseDto : object
+public class PaymentResponseDto : Base.Response
 {
 	#region Constructor
 	public PaymentResponseDto
-		(decimal balance, long transactionId) : base()
+		(decimal balance, decimal withdrawBalance, long transactionId) :
+		base(balance: balance, withdrawBalance: withdrawBalance, transactionId: transactionId)
 	{
-		Balance = balance;
-		TransactionId = transactionId;
 	}
 	#endregion /Constructor
-
-	#region Properties
-
-	#region Balance
-	public decimal Balance { get; }
-	#endregion /Balance
-
-	#region TransactionId
-	public long TransactionId { get; }
-	#endregion /TransactionId
-
-	#endregion /Properties
 }

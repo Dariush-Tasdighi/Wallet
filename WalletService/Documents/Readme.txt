@@ -16,10 +16,7 @@ public static System.Guid Company =
 		"cellPhoneNumber": "09121087461",
 		"emailAddress": "DariushT@GMail.com",
 		"nationalCode": "1234512345",
-		"additionalData": null,
-		"paymentFeatureIsEnabled": true,
-		"depositeFeatureIsEnabled": true,
-		"withdrawFeatureIsEnabled": false
+		"additionalData": null
 	},
 	"amount": 10,
 	"walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",

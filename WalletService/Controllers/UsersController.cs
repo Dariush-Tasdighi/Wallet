@@ -547,27 +547,12 @@ public class UsersController :
 					Services.UserWalletsService.CreateOrUpdateUserWallet
 					(databaseContext: DatabaseContext,
 					userId: user.Id, walletId: wallet.Id,
-					additionalData: request.AdditionalData,
-					paymentFeatureIsEnabled: request.User.PaymentFeatureIsEnabled,
-					depositeFeatureIsEnabled: request.User.DepositeFeatureIsEnabled,
-					withdrawFeatureIsEnabled: request.User.WithdrawFeatureIsEnabled,
-					transferFeatureIsEnabled: request.User.TransferFeatureIsEnabled);
+					additionalData: request.AdditionalData);
 
 				if (userWallet.IsActive == false)
 				{
 					var errorMessage =
 						$"User is not active in this wallet!";
-
-					result.AddErrorMessages
-						(message: errorMessage);
-
-					return Ok(value: result);
-				}
-
-				if (userWallet.DepositeFeatureIsEnabled == false)
-				{
-					var errorMessage =
-						$"Deposite feature is not enabled for this user!";
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -645,9 +630,10 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
+				// TODO
 				var depositeResponseDto =
 					new Dtos.Users.DepositeResponseDto
-					(balance: userWallet.Balance, transactionId: transaction.Id);
+					(balance: userWallet.Balance, withdrawBalance: 0, transactionId: transaction.Id);
 
 				result.Data =
 					depositeResponseDto;
@@ -893,17 +879,6 @@ public class UsersController :
 
 					return Ok(value: result);
 				}
-
-				if (userWallet.PaymentFeatureIsEnabled == false)
-				{
-					var errorMessage =
-						$"Payment feature is not enabled for this user!";
-
-					result.AddErrorMessages
-						(message: errorMessage);
-
-					return Ok(value: result);
-				}
 				// **************************************************
 
 				// **************************************************
@@ -983,9 +958,10 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
+				// TODO
 				var paymentResponseDto =
 					new Dtos.Users.PaymentResponseDto
-					(balance: userWallet.Balance, transactionId: transaction.Id);
+					(balance: userWallet.Balance, withdrawBalance: 0, transactionId: transaction.Id);
 
 				result.Data =
 					paymentResponseDto;

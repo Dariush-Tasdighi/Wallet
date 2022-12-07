@@ -12,9 +12,7 @@ public static class UserWalletsService : object
 	public static Domain.UserWallet
 		CreateOrUpdateUserWallet
 		(Data.DatabaseContext databaseContext,
-		long userId, long walletId, bool paymentFeatureIsEnabled,
-		bool depositeFeatureIsEnabled, bool withdrawFeatureIsEnabled,
-		bool transferFeatureIsEnabled, string? additionalData)
+		long userId, long walletId, string? additionalData)
 	{
 		var userWallet =
 			databaseContext.UserWallets
@@ -30,11 +28,6 @@ public static class UserWalletsService : object
 					IsActive = true,
 
 					AdditionalData = additionalData,
-
-					PaymentFeatureIsEnabled = paymentFeatureIsEnabled,
-					DepositeFeatureIsEnabled = depositeFeatureIsEnabled,
-					WithdrawFeatureIsEnabled = withdrawFeatureIsEnabled,
-					TransferFeatureIsEnabled = transferFeatureIsEnabled,
 				};
 
 			databaseContext.Add(entity: userWallet);
@@ -42,11 +35,6 @@ public static class UserWalletsService : object
 		else
 		{
 			userWallet.AdditionalData = additionalData;
-
-			userWallet.PaymentFeatureIsEnabled = paymentFeatureIsEnabled;
-			userWallet.DepositeFeatureIsEnabled = depositeFeatureIsEnabled;
-			userWallet.WithdrawFeatureIsEnabled = withdrawFeatureIsEnabled;
-			userWallet.TransferFeatureIsEnabled = transferFeatureIsEnabled;
 		}
 
 		userWallet.UpdateHash();

@@ -22,6 +22,16 @@ public interface ITransaction<T> :
 	/// </summary>
 	decimal Amount { get; }
 
+	/// <summary>
+	/// تسویه شده
+	/// </summary>
+	bool IsCleared { get; }
+
+	/// <summary>
+	/// تاریخی که از آن زمان به بعد امکان برداشت از حساب وجود دارد
+	/// </summary>
+	System.DateTime? WithdrawDateTime { get; }
+
 	System.TimeSpan TransactionDuration { get; }
 
 

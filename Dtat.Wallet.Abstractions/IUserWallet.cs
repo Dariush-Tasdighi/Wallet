@@ -19,15 +19,5 @@ public interface IUserWallet<T> :
 
 
 
-	bool PaymentFeatureIsEnabled { get; }
-
-	bool DepositeFeatureIsEnabled { get; }
-
-	bool WithdrawFeatureIsEnabled { get; }
-
-	bool TransferFeatureIsEnabled { get; }
-
-
-
 	System.DateTime UpdateDateTime { get; }
 }
