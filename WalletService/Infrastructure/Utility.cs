@@ -2,13 +2,21 @@
 
 namespace Infrastructure;
 
-public static class Utility : object
+public class Utility : object, IUtility
 {
 	static Utility()
 	{
 	}
 
-	public static string? GetServerIP(Microsoft.AspNetCore.Http.HttpRequest request)
+	public System.DateTime GetNow()
+	{
+		var result =
+			Dtat.Utility.Now;
+
+		return result;
+	}
+
+	public string? GetServerIP(Microsoft.AspNetCore.Http.HttpRequest request)
 	{
 		System.Net.IPAddress? ip = null;
 

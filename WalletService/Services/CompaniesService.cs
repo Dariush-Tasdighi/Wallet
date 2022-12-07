@@ -22,8 +22,9 @@ public static class CompaniesService : object
 
 		if (company == null)
 		{
-			var errorMessage =
-				$"There is not any company with this token!";
+			var errorMessage = string.Format
+				(format: Resources.Messages.Errors.ThereIsNotAnyItemWithThisToken,
+				arg0: nameof(company));
 
 			result.AddErrorMessages
 				(message: errorMessage);
@@ -33,8 +34,9 @@ public static class CompaniesService : object
 
 		if (company.IsActive == false)
 		{
-			var errorMessage =
-				$"This company is not active!";
+			var errorMessage = string.Format
+				(format: Resources.Messages.Errors.TheItemIsNotActive,
+				arg0: nameof(company));
 
 			result.AddErrorMessages
 				(message: errorMessage);

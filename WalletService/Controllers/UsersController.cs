@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using Azure.Core;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Server.Controllers;
 
@@ -13,14 +10,17 @@ public class UsersController :
 	#region Constructor
 	public UsersController
 		(ILogger<UsersController> logger,
-		Data.DatabaseContext databaseContext) :
+		Data.DatabaseContext databaseContext, Infrastructure.IUtility utility) :
 		base(databaseContext: databaseContext)
 	{
 		Logger = logger;
+		Utility = utility;
 	}
 	#endregion /Constructor
 
 	#region Properties
+	private Infrastructure.IUtility Utility { get; }
+
 	private ILogger<UsersController> Logger { get; }
 	#endregion /Properties
 
@@ -47,8 +47,7 @@ public class UsersController :
 			// بدست آوردن آی‌پی سرور درخواست کننده
 			// **************************************************
 			var serverIP =
-				Infrastructure.Utility
-				.GetServerIP(request: Request);
+				Utility.GetServerIP(request: Request);
 
 			if (serverIP == null)
 			{
@@ -367,7 +366,7 @@ public class UsersController :
 		try
 		{
 			var startTime =
-				System.DateTime.Now;
+				Utility.GetNow();
 
 			var result = new Dtat.Result
 				<Dtos.Users.DepositeResponseDto>();
@@ -376,8 +375,7 @@ public class UsersController :
 			// بدست آوردن آی‌پی سرور درخواست کننده
 			// **************************************************
 			var serverIP =
-				Infrastructure.Utility
-				.GetServerIP(request: Request);
+				Utility.GetServerIP(request: Request);
 
 			if (serverIP == null)
 			{
@@ -594,7 +592,7 @@ public class UsersController :
 				// محاسبه کل زمان پردازش
 				// **************************************************
 				var finishTime =
-					System.DateTime.Now;
+					Utility.GetNow();
 
 				var transactionDuration = finishTime - startTime;
 				// **************************************************
@@ -676,7 +674,7 @@ public class UsersController :
 		try
 		{
 			var startTime =
-				System.DateTime.Now;
+				Utility.GetNow();
 
 			var result = new Dtat.Result
 				<Dtos.Users.PaymentResponseDto>();
@@ -685,8 +683,7 @@ public class UsersController :
 			// بدست آوردن آی‌پی سرور درخواست کننده
 			// **************************************************
 			var serverIP =
-				Infrastructure.Utility
-				.GetServerIP(request: Request);
+				Utility.GetServerIP(request: Request);
 
 			if (serverIP == null)
 			{
@@ -918,7 +915,7 @@ public class UsersController :
 				// محاسبه کل زمان پردازش
 				// **************************************************
 				var finishTime =
-					System.DateTime.Now;
+					Utility.GetNow();
 
 				var transactionDuration = finishTime - startTime;
 				// **************************************************
