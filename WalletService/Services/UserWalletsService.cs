@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Infrastructure;
+using System.Linq;
 
 namespace Server.Services;
 
@@ -62,7 +63,7 @@ public static class UserWalletsService : object
 		if (userWallet == null)
 		{
 			var errorMessage =
-				$"This user does not have any access to this wallet!";
+				Resources.Messages.Errors.TheUserDoesNotHaveAccessToThisWallet;
 
 			result.AddErrorMessages
 				(message: errorMessage);
@@ -76,7 +77,7 @@ public static class UserWalletsService : object
 		if (hashValidation == false)
 		{
 			var errorMessage =
-				$"There is inconsitency data in user wallet!";
+				Resources.Messages.Errors.InconsitencyDataForUserWallet;
 
 			result.AddErrorMessages
 				(message: errorMessage);
@@ -87,7 +88,7 @@ public static class UserWalletsService : object
 		if (userWallet.IsActive == false)
 		{
 			var errorMessage =
-				$"Access of this user to the wallet is not active!";
+				Resources.Messages.Errors.TheUserAccessToThisWalletIsNotActive;
 
 			result.AddErrorMessages
 				(message: errorMessage);
@@ -114,18 +115,21 @@ public static class UserWalletsService : object
 		// بررسی معتبر بودن مقدار مانده کاربر
 		// در کیف پول بر اساس هش موجود در رکورد
 		// **************************************************
-		var hashValidation =
-			userWallet.CheckHashValidation();
+		// نکته مهم: نیازی به دستورات ذیل نیست، این دستورات
+		// در دستورات قبلی چک می‌شود
+		// **************************************************
+		//var hashValidation =
+		//	userWallet.CheckHashValidation();
 
-		if (hashValidation == false)
-		{
-			var errorMessage =
-				$"There is inconsitency data (Type 1) in user wallet balance!";
+		//if (hashValidation == false)
+		//{
+		//	var errorMessage =
+		//		$"There is inconsitency data (Type 1) in user wallet balance!";
 
-			result.AddErrorMessages(message: errorMessage);
+		//	result.AddErrorMessages(message: errorMessage);
 
-			return result;
-		}
+		//	return result;
+		//}
 		// **************************************************
 
 		// **************************************************
@@ -142,7 +146,7 @@ public static class UserWalletsService : object
 		if (balance != userWallet.Balance)
 		{
 			var errorMessage =
-				$"There is inconsitency data (Type 2) in user wallet balance!";
+				Resources.Messages.Errors.InconsitencyDataForUserBalance;
 
 			result.AddErrorMessages(message: errorMessage);
 
@@ -156,4 +160,54 @@ public static class UserWalletsService : object
 		return result;
 	}
 	#endregion /GetUserBalanceWithCheckingDataConsistency()
+
+	#region GetUserWithdrawBalance()
+	public static Dtat.Result<decimal> GetUserWithdrawBalance
+		(Data.DatabaseContext databaseContext,
+		System.Guid walletToken, string cellPhoneNumber, IUtility utility)
+	{
+		var result =
+			new Dtat.Result<decimal>();
+
+		var now =
+			utility.GetNow();
+
+		if (now != now.Date)
+		{
+			now =
+				now.Date.AddDays(value: 1);
+		}
+
+		// همه خروج و برداشت مبالغ
+		var allAntiDeposite =
+			databaseContext.Transactions
+			.Where(current => current.Amount < 0)
+			.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
+			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
+			.Sum(current => current.Amount);
+
+		// همه مبالغ قابل برداشت
+		var allDeposite =
+			databaseContext.Transactions
+			.Where(current => current.Amount > 0)
+			.Where(current => current.WithdrawDateTime != null && current.WithdrawDateTime <= now)
+			.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
+			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
+			.Sum(current => current.Amount);
+
+		// کل مبالغ قابل برداشت
+		var withdrawBalance =
+			allDeposite - allAntiDeposite;
+
+		if (withdrawBalance < 0)
+		{
+			withdrawBalance = 0;
+		}
+
+		result.Data =
+			withdrawBalance;
+
+		return result;
+	}
+	#endregion /GetUserWithdrawBalance()
 }

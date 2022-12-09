@@ -4,23 +4,15 @@ public class Response : object
 {
 	#region Constructor
 	public Response
-		(decimal balance, decimal withdrawBalance, long transactionId) : base()
+		(decimal balance, decimal withdrawBalance) : base()
 	{
 		Balance = balance;
-		TransactionId = transactionId;
 		WithdrawBalance = withdrawBalance;
 
 	}
 	#endregion /Constructor
 
 	#region Properties
-
-	#region TransactionId
-	/// <summary>
-	/// شناسه تراکنش
-	/// </summary>
-	public long TransactionId { get; }
-	#endregion /TransactionId
 
 	#region Balance
 	/// <summary>

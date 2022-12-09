@@ -78,42 +78,49 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 			new System.Text.StringBuilder();
 
 		stringBuilder.Append
-			($"{nameof(InsertDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: InsertDateTime)}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(InsertDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: InsertDateTime)}");
 
 		stringBuilder.Append
-			($"{nameof(UserId)}:{UserId}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(WalletId)}:{WalletId}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(UserId)}:{UserId}");
 
 		stringBuilder.Append
-			($"{nameof(IsActive)}:{IsActive}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(Balance)}:{Dtat.ConvertForHashing.FromDecimal(value: Balance)}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(WalletId)}:{WalletId}");
 
 		stringBuilder.Append
-			($"{nameof(UpdateDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: UpdateDateTime)}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(Description)}:{Dtat.ConvertForHashing.FromString(value: Description)}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(IsActive)}:{IsActive}");
 
 		stringBuilder.Append
-			($"{nameof(AdditionalData)}:{Dtat.ConvertForHashing.FromString(value: AdditionalData)}");
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(Balance)}:{Dtat.ConvertForHashing.FromDecimal(value: Balance)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(UpdateDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: UpdateDateTime)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(Description)}:{Dtat.ConvertForHashing.FromString(value: Description)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(AdditionalData)}:{Dtat.ConvertForHashing.FromString(value: AdditionalData)}");
 
 		var text =
 			stringBuilder.ToString();

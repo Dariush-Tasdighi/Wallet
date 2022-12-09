@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Domain;
+using System.Linq;
 
 namespace Server.Services;
 
@@ -50,7 +51,8 @@ public static class UsersService : object
 	#endregion /CreateOrUpdateUser()
 
 	#region CheckAndGetUserByCellPhoneNumber()
-	public static Dtat.Result<Domain.User> CheckAndGetUserByCellPhoneNumber
+	public static Dtat.Result<Domain.User>
+		CheckAndGetUserByCellPhoneNumber
 		(Data.DatabaseContext databaseContext, string cellPhoneNumber)
 	{
 		var result =
@@ -64,7 +66,7 @@ public static class UsersService : object
 		if (user == null)
 		{
 			var errorMessage =
-				$"There is not any user with this cell phone number!";
+				Resources.Messages.Errors.NoUserWithThisCellPhoneNumber;
 
 			result.AddErrorMessages
 				(message: errorMessage);
@@ -78,7 +80,7 @@ public static class UsersService : object
 		if (hashValidation == false)
 		{
 			var errorMessage =
-				$"There is inconsitency data in user!";
+				Resources.Messages.Errors.InconsitencyDataForUser;
 
 			result.AddErrorMessages
 				(message: errorMessage);
@@ -86,11 +88,11 @@ public static class UsersService : object
 			return result;
 		}
 
-		
 		if (user.IsActive == false)
 		{
-			var errorMessage =
-				$"This user is not active!";
+			var errorMessage = string.Format
+				(format: Resources.Messages.Errors.TheItemIsNotActive,
+				arg0: nameof(user));
 
 			result.AddErrorMessages
 				(message: errorMessage);

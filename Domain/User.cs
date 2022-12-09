@@ -107,47 +107,55 @@ public class User : Seedwork.Entity, Dtat.Wallet.Abstractions.IUser<long>
 			new System.Text.StringBuilder();
 
 		stringBuilder.Append
-			($"{nameof(InsertDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: InsertDateTime)}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(InsertDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: InsertDateTime)}");
 
 		stringBuilder.Append
-			($"{nameof(IsActive)}:{IsActive}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(IsVerified)}:{IsVerified}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(IsActive)}:{IsActive}");
 
 		stringBuilder.Append
-			($"{nameof(UpdateDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: UpdateDateTime)}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(DisplayName)}:{Dtat.ConvertForHashing.FromString(value: DisplayName)}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(IsVerified)}:{IsVerified}");
 
 		stringBuilder.Append
-			($"{nameof(CellPhoneNumber)}:{Dtat.ConvertForHashing.FromString(value: CellPhoneNumber)}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(Description)}:{Dtat.ConvertForHashing.FromString(value: Description)}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(UpdateDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: UpdateDateTime)}");
 
 		stringBuilder.Append
-			($"{nameof(EmailAddress)}:{Dtat.ConvertForHashing.FromString(value: EmailAddress)}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(NationalCode)}:{Dtat.ConvertForHashing.FromString(value: NationalCode)}");
+			(value: $"{nameof(DisplayName)}:{Dtat.ConvertForHashing.FromString(value: DisplayName)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(CellPhoneNumber)}:{Dtat.ConvertForHashing.FromString(value: CellPhoneNumber)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(Description)}:{Dtat.ConvertForHashing.FromString(value: Description)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(EmailAddress)}:{Dtat.ConvertForHashing.FromString(value: EmailAddress)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(NationalCode)}:{Dtat.ConvertForHashing.FromString(value: NationalCode)}");
 
 		var text =
 			stringBuilder.ToString();

@@ -24,7 +24,7 @@ public static class CompanyWalletsService : object
 		if (companyWallet == null)
 		{
 			var errorMessage =
-				$"This company does not have any access to this wallet!";
+				Resources.Messages.Errors.TheCompanyDoesNotHaveAccessToThisWallet;
 
 			result.AddErrorMessages
 				(message: errorMessage);
@@ -35,7 +35,7 @@ public static class CompanyWalletsService : object
 		if (companyWallet.IsActive == false)
 		{
 			var errorMessage =
-				$"The access of company to this wallet is disabled!";
+				Resources.Messages.Errors.TheCompanyAccessToThisWalletIsNotActive;
 
 			result.AddErrorMessages
 				(message: errorMessage);
@@ -43,7 +43,8 @@ public static class CompanyWalletsService : object
 			return result;
 		}
 
-		result.Data = companyWallet;
+		result.Data =
+			companyWallet;
 
 		return result;
 	}

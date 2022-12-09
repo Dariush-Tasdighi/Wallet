@@ -84,7 +84,7 @@ internal class WalletConfiguration : object,
 				PaymentFeatureIsEnabled = true,
 				DepositeFeatureIsEnabled = true,
 				WithdrawFeatureIsEnabled = true,
-				//TransferFeatureIsEnabled = true,
+				TransferFeatureIsEnabled = false,
 
 				Id = SeedData.Constant.Id.Wallet,
 			};

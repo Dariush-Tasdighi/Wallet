@@ -8,10 +8,10 @@ public static class ValidIPsService : object
 	{
 	}
 
-	#region CheckAndGetCompanyByToken()
+	#region CheckServerIPByCompanyToken()
 	public static Dtat.Result CheckServerIPByCompanyToken
 		(Data.DatabaseContext databaseContext, string serverIP, System.Guid companyToken,
-		System.Guid? walletToken, string? cellPhoneNumber)
+		System.Guid? walletToken, string? cellPhoneNumber, Infrastructure.IUtility utility)
 	{
 		var result =
 			new Dtat.Result();
@@ -43,17 +43,20 @@ public static class ValidIPsService : object
 			databaseContext.SaveChanges();
 			// **************************************************
 
-			var errorMessage =
-				$"This server IP {serverIP} is not defined for this company!";
+			// **************************************************
+			var errorMessage = string.Format
+				(format: Resources.Messages.Errors.ThisIPIsNotDefinedForThisCompany
+				, arg0: serverIP);
 
 			result.AddErrorMessages
 				(message: errorMessage);
 
 			return result;
+			// **************************************************
 		}
 
 		var now =
-			Dtat.Utility.Now;
+			utility.GetNow();
 
 		validIP.TotalRequestCount++;
 
@@ -86,8 +89,9 @@ public static class ValidIPsService : object
 
 		if (validIP.IsActive == false)
 		{
-			var errorMessage =
-				$"This server IP {serverIP} is not active for this company!";
+			var errorMessage = string.Format
+				(format: Resources.Messages.Errors.ThisIPIsNotActive
+				, arg0: serverIP);
 
 			result.AddErrorMessages
 				(message: errorMessage);
@@ -97,5 +101,5 @@ public static class ValidIPsService : object
 
 		return result;
 	}
-	#endregion /CheckAndGetCompanyByToken()
+	#endregion /CheckServerIPByCompanyToken()
 }

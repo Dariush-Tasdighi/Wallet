@@ -136,79 +136,97 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 			new System.Text.StringBuilder();
 
 		stringBuilder.Append
-			($"{nameof(InsertDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: InsertDateTime)}");
-
-		stringBuilder.Append('|');
-
-		stringBuilder.Append($"{nameof(UserId)}:{UserId}");
-
-		stringBuilder.Append('|');
-
-		stringBuilder.Append($"{nameof(WalletId)}:{WalletId}");
-
-		stringBuilder.Append('|');
-
-		stringBuilder.Append($"{nameof(PartyUserId)}:{PartyUserId}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(InsertDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: InsertDateTime)}");
 
 		stringBuilder.Append
-			($"{nameof(Amount)}:{Dtat.ConvertForHashing.FromDecimal(value: Amount)}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(IsCleared)}:{IsCleared}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(UserId)}:{UserId}");
 
 		stringBuilder.Append
-			($"{nameof(WithdrawDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: WithdrawDateTime)}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(TransactionDuration)}:{TransactionDuration}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(WalletId)}:{WalletId}");
 
 		stringBuilder.Append
-			($"{nameof(PaymentReferenceCode)}:{Dtat.ConvertForHashing.FromString(value: PaymentReferenceCode)}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(DepositeOrWithdrawProviderName)}:{Dtat.ConvertForHashing.FromString(value: DepositeOrWithdrawProviderName)}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(PartyUserId)}:{PartyUserId}");
 
 		stringBuilder.Append
-			($"{nameof(DepositeOrWithdrawReferenceCode)}:{Dtat.ConvertForHashing.FromString(value: DepositeOrWithdrawReferenceCode)}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(UserIP)}:{Dtat.ConvertForHashing.FromString(value: UserIP)}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(Amount)}:{Dtat.ConvertForHashing.FromDecimal(value: Amount)}");
 
 		stringBuilder.Append
-			($"{nameof(ServerIP)}:{Dtat.ConvertForHashing.FromString(value: ServerIP)}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(AdditionalData)}:{Dtat.ConvertForHashing.FromString(value: AdditionalData)}");
-
-		stringBuilder.Append('|');
+			(value: $"{nameof(IsCleared)}:{IsCleared}");
 
 		stringBuilder.Append
-			($"{nameof(UserDescription)}:{Dtat.ConvertForHashing.FromString(value: UserDescription)}");
-
-		stringBuilder.Append('|');
+			(value: Dtat.ConvertForHashing.Separator());
 
 		stringBuilder.Append
-			($"{nameof(SystemicDescription)}:{Dtat.ConvertForHashing.FromString(value: SystemicDescription)}");
+			(value: $"{nameof(WithdrawDateTime)}:{Dtat.ConvertForHashing.FromDateTime(value: WithdrawDateTime)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(TransactionDuration)}:{TransactionDuration}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(PaymentReferenceCode)}:{Dtat.ConvertForHashing.FromString(value: PaymentReferenceCode)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(DepositeOrWithdrawProviderName)}:{Dtat.ConvertForHashing.FromString(value: DepositeOrWithdrawProviderName)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(DepositeOrWithdrawReferenceCode)}:{Dtat.ConvertForHashing.FromString(value: DepositeOrWithdrawReferenceCode)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(UserIP)}:{Dtat.ConvertForHashing.FromString(value: UserIP)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(ServerIP)}:{Dtat.ConvertForHashing.FromString(value: ServerIP)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(AdditionalData)}:{Dtat.ConvertForHashing.FromString(value: AdditionalData)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(UserDescription)}:{Dtat.ConvertForHashing.FromString(value: UserDescription)}");
+
+		stringBuilder.Append
+			(value: Dtat.ConvertForHashing.Separator());
+
+		stringBuilder.Append
+			(value: $"{nameof(SystemicDescription)}:{Dtat.ConvertForHashing.FromString(value: SystemicDescription)}");
 
 		var text =
 			stringBuilder.ToString();

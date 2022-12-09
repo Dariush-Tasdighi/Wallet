@@ -22,8 +22,9 @@ public static class WalletsService : object
 
 		if (wallet == null)
 		{
-			var errorMessage =
-				$"There is not any wallet with this token!";
+			var errorMessage = string.Format
+				(format: Resources.Messages.Errors.ThereIsNotAnyItemWithThisToken,
+				arg0: nameof(wallet));
 
 			result.AddErrorMessages
 				(message: errorMessage);
@@ -33,8 +34,9 @@ public static class WalletsService : object
 
 		if (wallet.IsActive == false)
 		{
-			var errorMessage =
-				$"This wallet is not active!";
+			var errorMessage = string.Format
+				(format: Resources.Messages.Errors.TheItemIsNotActive,
+				arg0: nameof(wallet));
 
 			result.AddErrorMessages
 				(message: errorMessage);

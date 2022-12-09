@@ -8,6 +8,11 @@ public static class ConvertForHashing : object
 	{
 	}
 
+	public static string Separator()
+	{
+		return "|";
+	}
+
 	public static string FromString(string? value)
 	{
 		if (string.IsNullOrWhiteSpace(value))

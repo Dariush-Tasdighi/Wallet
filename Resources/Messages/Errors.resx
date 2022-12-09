@@ -117,10 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InconsitencyDataForUser" xml:space="preserve">
+    <value>There is some inconsitency error for this user!</value>
+  </data>
+  <data name="InconsitencyDataForUserBalance" xml:space="preserve">
+    <value>There is some inconsitency error for this user balance!</value>
+  </data>
+  <data name="InconsitencyDataForUserWallet" xml:space="preserve">
+    <value>There is some inconsitency error for this user wallet!</value>
+  </data>
+  <data name="NoUserWithThisCellPhoneNumber" xml:space="preserve">
+    <value>There is not any user with this cell phone number!</value>
+  </data>
+  <data name="TheCompanyAccessToThisWalletIsNotActive" xml:space="preserve">
+    <value>The company access to this wallet is not active!</value>
+  </data>
+  <data name="TheCompanyDoesNotHaveAccessToThisWallet" xml:space="preserve">
+    <value>The company does not have access to this wallet!</value>
+  </data>
   <data name="TheItemIsNotActive" xml:space="preserve">
     <value>The {0} is not active!</value>
   </data>
+  <data name="TheItemIsNull" xml:space="preserve">
+    <value>The {0} is null!</value>
+  </data>
   <data name="ThereIsNotAnyItemWithThisToken" xml:space="preserve">
     <value>There is not any {0} with this token!</value>
+  </data>
+  <data name="TheUserAccessToThisWalletIsNotActive" xml:space="preserve">
+    <value>The user access to this wallet is not active!</value>
+  </data>
+  <data name="TheUserDoesNotHaveAccessToThisWallet" xml:space="preserve">
+    <value>The user does not have access to this wallet!</value>
+  </data>
+  <data name="ThisIPIsNotActive" xml:space="preserve">
+    <value>This server IP {0} is not active for this company!</value>
+  </data>
+  <data name="ThisIPIsNotDefinedForThisCompany" xml:space="preserve">
+    <value>This server IP {0} is not defined for this company!</value>
   </data>
 </root>

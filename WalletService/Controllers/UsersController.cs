@@ -25,23 +25,23 @@ public class UsersController :
 	#endregion /Properties
 
 	#region Action: GetBalance()
-	[Microsoft.AspNetCore.Mvc.HttpPost
-		(template: "[action]")]
+	[Microsoft.AspNetCore.Mvc.HttpPost(template: "[action]")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(Dtat.Result<decimal>),
+		(type: typeof(Dtat.Result<Dtos.Users.GetBalanceResponseDto>),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(string),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
 	public Microsoft.AspNetCore.Mvc.ActionResult
+		<Dtat.Result<Dtos.Users.GetBalanceResponseDto>>
 		GetBalance(Dtos.Users.GetBalanceRequestDto request)
 	{
 		try
 		{
 			var result =
-				new Dtat.Result<decimal>();
+				new Dtat.Result<Dtos.Users.GetBalanceResponseDto>();
 
 			// **************************************************
 			// بدست آوردن آی‌پی سرور درخواست کننده
@@ -51,8 +51,23 @@ public class UsersController :
 
 			if (serverIP == null)
 			{
-				var errorMessage =
-					$"Server IP is null!";
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(serverIP));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			if (request == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(request));
 
 				result.AddErrorMessages
 					(message: errorMessage);
@@ -93,8 +108,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (company == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.Company)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(company));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -110,7 +126,7 @@ public class UsersController :
 					Services.ValidIPsService.CheckServerIPByCompanyToken
 					(databaseContext: DatabaseContext, serverIP: serverIP,
 					companyToken: request.CompanyToken, walletToken: request.WalletToken,
-					cellPhoneNumber: request.User.CellPhoneNumber);
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
 
 				if (validIPResult.IsSuccess == false)
 				{
@@ -127,7 +143,7 @@ public class UsersController :
 
 				if (walletResult.IsSuccess == false)
 				{
-					return Ok(value: companyResult);
+					return Ok(value: walletResult);
 				}
 
 				var wallet =
@@ -136,8 +152,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (wallet == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.Wallet)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(wallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -164,8 +181,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (companyWallet == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.CompanyWallet)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(companyWallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -193,8 +211,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (user == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.User)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(user));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -207,7 +226,8 @@ public class UsersController :
 				// بررسی دسترسی کاربر به کیف پول مربوطه
 				// **************************************************
 				var userWalletResult =
-					Services.UserWalletsService.CheckAndGetUserWallet(databaseContext: DatabaseContext,
+					Services.UserWalletsService
+					.CheckAndGetUserWallet(databaseContext: DatabaseContext,
 					cellPhoneNumber: request.User.CellPhoneNumber, walletToken: request.WalletToken);
 
 				if (userWalletResult.IsSuccess == false)
@@ -221,8 +241,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (userWallet == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.UserWallet)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(userWallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -235,20 +256,38 @@ public class UsersController :
 				// بدست آوردن مانده کیف پول کاربر
 				// با احتساب چک کردن معتبر بودن آن
 				// **************************************************
-				var balanceResult =
+				var userBalanceResult =
 					Services.UserWalletsService.GetUserBalanceWithCheckingDataConsistency
 					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
 					cellPhoneNumber: request.User.CellPhoneNumber, userWallet: userWallet);
 
-				if (balanceResult.IsSuccess == false)
+				if (userBalanceResult.IsSuccess == false)
 				{
-					return Ok(value: balanceResult);
+					return Ok(value: userBalanceResult);
 				}
 				// **************************************************
 
 				// **************************************************
-				result.Data =
-					balanceResult.Data;
+				// بدست آوردن مانده قابل برداشت
+				// **************************************************
+				var userWithdrawBalance =
+					Services.UserWalletsService.GetUserWithdrawBalance
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+				if (userWithdrawBalance.IsSuccess == false)
+				{
+					return Ok(value: userWithdrawBalance);
+				}
+				// **************************************************
+
+				// **************************************************
+				var data =
+					new Dtos.Users.GetBalanceResponseDto
+					(balance: userBalanceResult.Data,
+					withdrawBalance: userWithdrawBalance.Data);
+
+				result.Data = data;
 
 				return Ok(value: result);
 				// **************************************************
@@ -438,7 +477,7 @@ public class UsersController :
 					Services.ValidIPsService.CheckServerIPByCompanyToken
 					(databaseContext: DatabaseContext, serverIP: serverIP,
 					companyToken: request.CompanyToken, walletToken: request.WalletToken,
-					cellPhoneNumber: request.User.CellPhoneNumber);
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
 
 				if (validIPResult.IsSuccess == false)
 				{
@@ -455,7 +494,7 @@ public class UsersController :
 
 				if (walletResult.IsSuccess == false)
 				{
-					return Ok(value: companyResult);
+					return Ok(value: walletResult);
 				}
 
 				var wallet =
@@ -746,7 +785,7 @@ public class UsersController :
 					Services.ValidIPsService.CheckServerIPByCompanyToken
 					(databaseContext: DatabaseContext, serverIP: serverIP,
 					companyToken: request.CompanyToken, walletToken: request.WalletToken,
-					cellPhoneNumber: request.User.CellPhoneNumber);
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
 
 				if (validIPResult.IsSuccess == false)
 				{
@@ -763,7 +802,7 @@ public class UsersController :
 
 				if (walletResult.IsSuccess == false)
 				{
-					return Ok(value: companyResult);
+					return Ok(value: walletResult);
 				}
 
 				var wallet =
