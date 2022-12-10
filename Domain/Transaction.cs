@@ -1,10 +1,13 @@
-﻿namespace Domain;
+﻿using Dtat.Wallet.Abstractions.SeedWork;
 
-public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransaction<long>
+namespace Domain;
+
+public class Transaction :
+	Seedwork.Entity, Dtat.Wallet.Abstractions.ITransaction<long>
 {
 	#region Constructor
 	public Transaction(long userId, long walletId,
-		decimal amount, string userIP, string serverIP) : base()
+		decimal amount, string serverIP, string userIP) : base()
 	{
 		Amount = amount;
 		UserId = userId;
@@ -59,6 +62,12 @@ public class Transaction : Seedwork.Entity, Dtat.Wallet.Abstractions.ITransactio
 	/// </summary>
 	public bool IsCleared { get; set; }
 	#endregion /IsCleared
+
+	#region Type
+	public TransactionType Type { get; set; }
+	#endregion /Type
+
+
 
 	#region WithdrawDateTime
 	public System.DateTime? WithdrawDateTime { get; set; }

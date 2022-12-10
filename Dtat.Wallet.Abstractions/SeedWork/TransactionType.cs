@@ -3,9 +3,9 @@
 public enum TransactionType : int
 {
 	/// <summary>
-	/// پرداخت از طریق کیف پول برای خرید
+	/// تعریف نشده
 	/// </summary>
-	Payment = 0,
+	Undefined = 0,
 
 	/// <summary>
 	/// واریز به کیف پول از حساب بانکی
@@ -13,12 +13,22 @@ public enum TransactionType : int
 	Deposite = 1,
 
 	/// <summary>
+	/// پرداخت از طریق کیف پول برای خرید
+	/// </summary>
+	Payment = 2,
+
+	/// <summary>
+	/// برگشت به کیف پول
+	/// </summary>
+	Refund = 3,
+
+	/// <summary>
 	/// برداشت از کیف پول و واریز به حساب بانکی
 	/// </summary>
-	Withdraw = 2,
+	Withdraw = 4,
 
 	/// <summary>
 	/// انتقال به غیر
 	/// </summary>
-	Transfer = 3,
+	Transfer = 5,
 }

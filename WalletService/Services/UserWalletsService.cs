@@ -170,13 +170,7 @@ public static class UserWalletsService : object
 			new Dtat.Result<decimal>();
 
 		var now =
-			utility.GetNow();
-
-		if (now != now.Date)
-		{
-			now =
-				now.Date.AddDays(value: 1);
-		}
+			utility.GetNow().Date.AddDays(value: 1);
 
 		// همه خروج و برداشت مبالغ
 		var allAntiDeposite =
@@ -196,8 +190,9 @@ public static class UserWalletsService : object
 			.Sum(current => current.Amount);
 
 		// کل مبالغ قابل برداشت
+		// منفی است باید از بعلاوه استفاده شود allAntiDeposite باید دقت داشته باشیم که چون
 		var withdrawBalance =
-			allDeposite - allAntiDeposite;
+			allDeposite + allAntiDeposite;
 
 		if (withdrawBalance < 0)
 		{
