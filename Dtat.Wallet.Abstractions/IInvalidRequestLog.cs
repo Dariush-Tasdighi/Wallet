@@ -1,6 +1,7 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
-public interface IInvalidRequestLog<T> where T : struct
+public interface IInvalidRequestLog<T> :
+	SeedWork.IEntity<T> where T : struct
 {
 	string ServerIP { get; }
 

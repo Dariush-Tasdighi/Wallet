@@ -1,7 +1,8 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface IUserWallet<T> :
-	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T>, SeedWork.IHashing<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasUpdateDateTime,
+	SeedWork.IHasIsActive, SeedWork.IHashing where T : struct
 {
 	T UserId { get; }
 
@@ -16,8 +17,4 @@ public interface IUserWallet<T> :
 	string? Description { get; }
 
 	string? AdditionalData { get; }
-
-
-
-	System.DateTime UpdateDateTime { get; }
 }

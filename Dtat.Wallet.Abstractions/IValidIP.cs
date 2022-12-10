@@ -1,7 +1,8 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface IValidIP<T> :
-	SeedWork.IHasIsActive<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasUpdateDateTime,
+	SeedWork.IHasIsActive where T : struct
 {
 	T CompanyId { get; }
 
@@ -30,8 +31,6 @@ public interface IValidIP<T> :
 	int PreviousDay6RequestCount { get; }
 
 
-
-	System.DateTime UpdateDateTime { get; }
 
 	System.DateTime? LastRequestDateTime { get; }
 }

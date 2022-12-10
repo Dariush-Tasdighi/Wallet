@@ -1,17 +1,14 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface ICompany<T> :
-	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T>, SeedWork.IHasToken<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasUpdateDateTime,
+	SeedWork.IHasIsActive, SeedWork.IHasToken where T : struct
 {
 	string Name { get; }
 
 	string? Description { get; }
 
 	string? AdditionalData { get; }
-
-
-
-	System.DateTime UpdateDateTime { get; }
 
 
 

@@ -81,6 +81,8 @@ public class ValidIP : Seedwork.Entity, Dtat.Wallet.Abstractions.IValidIP<long>
 
 
 	#region UpdateDateTime
+	[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(databaseGeneratedOption:
+		System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
 	public System.DateTime UpdateDateTime { get; private set; }
 	#endregion /UpdateDateTime
 

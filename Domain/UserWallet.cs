@@ -1,6 +1,7 @@
 ﻿namespace Domain;
 
-public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<long>
+public class UserWallet :
+	Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<long>
 {
 	#region Constructor
 	public UserWallet(long userId, long walletId) : base()
@@ -45,6 +46,8 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 	#endregion /Balance
 
 	#region UpdateDateTime
+	[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(databaseGeneratedOption:
+		System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
 	public System.DateTime UpdateDateTime { get; private set; }
 	#endregion /UpdateDateTime
 
@@ -125,7 +128,7 @@ public class UserWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IUserWallet<
 		var text =
 			stringBuilder.ToString();
 
-		string result =
+		var result =
 			Dtat.Utility.GetSha256(text: text);
 
 		return result;

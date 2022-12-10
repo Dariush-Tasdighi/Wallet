@@ -1,7 +1,8 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface ICompanyWallet<T> :
-	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasUpdateDateTime,
+	SeedWork.IHasIsActive where T : struct
 {
 	T WalletId { get; }
 
@@ -16,8 +17,4 @@ public interface ICompanyWallet<T> :
 	string? Description { get; }
 
 	string? AdditionalData { get; }
-
-
-
-	System.DateTime UpdateDateTime { get; }
 }

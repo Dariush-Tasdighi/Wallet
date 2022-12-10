@@ -1,6 +1,6 @@
 ﻿namespace Dtat.Wallet.Abstractions.SeedWork;
 
-public interface IHasToken<T>
+public interface IHasToken
 {
 	System.Guid Token { get; }
 

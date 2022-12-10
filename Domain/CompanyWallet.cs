@@ -1,6 +1,7 @@
 ﻿namespace Domain;
 
-public class CompanyWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompanyWallet<long>
+public class CompanyWallet :
+	Seedwork.Entity, Dtat.Wallet.Abstractions.ICompanyWallet<long>
 {
 	#region Constructor
 	public CompanyWallet(long companyId, long walletId) : base()
@@ -45,6 +46,8 @@ public class CompanyWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompanyW
 	#endregion /IsActive
 
 	#region UpdateDateTime
+	[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(databaseGeneratedOption:
+		System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
 	public System.DateTime UpdateDateTime { get; private set; }
 	#endregion /UpdateDateTime
 
@@ -63,10 +66,4 @@ public class CompanyWallet : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompanyW
 	#endregion /AdditionalData
 
 	#endregion /Properties
-
-	#region Methods
-
-
-
-	#endregion /Methods
 }

@@ -1,7 +1,8 @@
 ﻿namespace Dtat.Wallet.Abstractions;
 
 public interface IWallet<T> :
-	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasUpdateDateTime,
+	SeedWork.IHasIsActive where T : struct
 {
 	/// <summary>
 	/// این فیلد الزامی است و در کل سامانه باید منحصر به فرد باشد
@@ -16,6 +17,8 @@ public interface IWallet<T> :
 
 
 
+	bool RefundFeatureIsEnabled { get; }
+
 	bool PaymentFeatureIsEnabled { get; }
 
 	bool DepositeFeatureIsEnabled { get; }
@@ -23,10 +26,6 @@ public interface IWallet<T> :
 	bool WithdrawFeatureIsEnabled { get; }
 
 	bool TransferFeatureIsEnabled { get; }
-
-
-
-	System.DateTime UpdateDateTime { get; }
 
 
 

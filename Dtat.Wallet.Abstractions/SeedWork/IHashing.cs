@@ -1,6 +1,6 @@
 ﻿namespace Dtat.Wallet.Abstractions.SeedWork;
 
-public interface IHashing<T>
+public interface IHashing
 {
 	string? Hash { get; }
 

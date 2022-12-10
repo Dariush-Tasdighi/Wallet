@@ -3,7 +3,7 @@
 namespace Dtat.Wallet.Abstractions;
 
 public interface ITransaction<T> :
-	SeedWork.IEntity<T>, SeedWork.IHashing<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHashing where T : struct
 {
 	T UserId { get; }
 

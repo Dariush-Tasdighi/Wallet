@@ -6,27 +6,30 @@ public abstract class Entity : object,
 	#region Constructor
 	public Entity() : base()
 	{
-		InsertDateTime = Utility.Now;
+		InsertDateTime =
+			Dtat.Utility.Now;
 	}
 	#endregion /Constructor
 
 	#region Properties
 
-	#region Id Property
+	#region Id
 	/// <summary>
-	/// For Seed Data
+	/// شناسه رکورد - شناسه اطلاعات
 	/// </summary>
-	[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated
-		(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
-	//public long Id { get; private set; }
+	[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(databaseGeneratedOption:
+		System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 	public long Id { get; set; }
-	#endregion /Id Property
+	#endregion /Id
 
-	#region InsertDateTime Property
-	[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated
-		(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
+	#region InsertDateTime
+	/// <summary>
+	/// زمان ثبت (درج) اطلاعات
+	/// </summary>
+	[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(databaseGeneratedOption:
+		System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
 	public System.DateTime InsertDateTime { get; private set; }
-	#endregion /InsertDateTime Property
+	#endregion /InsertDateTime
 
 	#endregion /Properties
 }

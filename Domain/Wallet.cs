@@ -1,6 +1,7 @@
 ﻿namespace Domain;
 
-public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
+public class Wallet :
+	Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 {
 	#region Constructor
 	public Wallet(string name) : base()
@@ -49,19 +50,25 @@ public class Wallet : Seedwork.Entity, Dtat.Wallet.Abstractions.IWallet<long>
 
 
 
-	#region IsActive
-	public bool IsActive { get; set; }
-	#endregion /IsActive
-
 	#region Token
 	public System.Guid Token { get; private set; }
 	#endregion /Token
 
+	#region IsActive
+	public bool IsActive { get; set; }
+	#endregion /IsActive
+
 	#region UpdateDateTime
+	[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(databaseGeneratedOption:
+		System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
 	public System.DateTime UpdateDateTime { get; private set; }
 	#endregion /UpdateDateTime
 
 
+
+	#region RefundFeatureIsEnabled
+	public bool RefundFeatureIsEnabled { get; set; }
+	#endregion /RefundFeatureIsEnabled
 
 	#region PaymentFeatureIsEnabled
 	public bool PaymentFeatureIsEnabled { get; set; }

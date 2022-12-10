@@ -1,6 +1,4 @@
-﻿using Dtat.Wallet.Abstractions.SeedWork;
-
-namespace Domain;
+﻿namespace Domain;
 
 public class Transaction :
 	Seedwork.Entity, Dtat.Wallet.Abstractions.ITransaction<long>
@@ -64,7 +62,7 @@ public class Transaction :
 	#endregion /IsCleared
 
 	#region Type
-	public TransactionType Type { get; set; }
+	public Dtat.Wallet.Abstractions.SeedWork.TransactionType Type { get; set; }
 	#endregion /Type
 
 

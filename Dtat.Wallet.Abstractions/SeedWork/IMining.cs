@@ -1,6 +1,6 @@
 ﻿namespace Dtat.Wallet.Abstractions.SeedWork;
 
-public interface IMining<T> : IHashing<T>
+public interface IMining : IHashing
 {
 	int Nonce { get; }
 

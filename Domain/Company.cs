@@ -1,6 +1,7 @@
 ﻿namespace Domain;
 
-public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
+public class Company :
+	Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 {
 	#region Constructor
 	public Company(string name) : base()
@@ -20,15 +21,17 @@ public class Company : Seedwork.Entity, Dtat.Wallet.Abstractions.ICompany<long>
 
 	#region Properties
 
-	#region IsActive
-	public bool IsActive { get; set; }
-	#endregion /IsActive
-
 	#region Token
 	public System.Guid Token { get; private set; }
 	#endregion /Token
 
+	#region IsActive
+	public bool IsActive { get; set; }
+	#endregion /IsActive
+
 	#region UpdateDateTime
+	[System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(databaseGeneratedOption:
+		System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
 	public System.DateTime UpdateDateTime { get; private set; }
 	#endregion /UpdateDateTime
 

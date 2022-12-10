@@ -1,6 +1,7 @@
 ﻿namespace Domain;
 
-public class InvalidRequestLog : Seedwork.Entity, Dtat.Wallet.Abstractions.IInvalidRequestLog<long>
+public class InvalidRequestLog :
+	Seedwork.Entity, Dtat.Wallet.Abstractions.IInvalidRequestLog<long>
 {
 	#region Constructor
 	public InvalidRequestLog(string serverIP) : base()

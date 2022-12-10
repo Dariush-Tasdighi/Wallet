@@ -4,8 +4,13 @@
 /// شخص حقیقی / حقوقی
 /// </summary>
 public interface IUser<T> :
-	SeedWork.IEntity<T>, SeedWork.IHasIsActive<T>, SeedWork.IHashing<T> where T : struct
+	SeedWork.IEntity<T>, SeedWork.IHasUpdateDateTime,
+	SeedWork.IHasIsActive, SeedWork.IHashing where T : struct
 {
+	bool IsVerified { get; }
+
+
+
 	/// <summary>
 	/// این فیلد الزامی است
 	/// </summary>
@@ -23,12 +28,6 @@ public interface IUser<T> :
 	string? EmailAddress { get; }
 
 	string? NationalCode { get; }
-
-
-
-	bool IsVerified { get; }
-
-	System.DateTime UpdateDateTime { get; }
 
 
 
