@@ -61,6 +61,15 @@ namespace Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} feature is not enabled for this {1}!.
+        /// </summary>
+        public static string FeatureIsNotEnabled {
+            get {
+                return ResourceManager.GetString("FeatureIsNotEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is some inconsitency error for this user!.
         /// </summary>
         public static string InconsitencyDataForUser {
@@ -88,11 +97,29 @@ namespace Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is not active in this {1}!.
+        /// </summary>
+        public static string ItemIsNotActiveIn {
+            get {
+                return ResourceManager.GetString("ItemIsNotActiveIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is not any user with this cell phone number!.
         /// </summary>
         public static string NoUserWithThisCellPhoneNumber {
             get {
                 return ResourceManager.GetString("NoUserWithThisCellPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The amount value is more than user {0} value!.
+        /// </summary>
+        public static string TheAmountValueIsMore {
+            get {
+                return ResourceManager.GetString("TheAmountValueIsMore", resourceCulture);
             }
         }
         

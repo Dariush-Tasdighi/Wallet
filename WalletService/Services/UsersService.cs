@@ -91,7 +91,7 @@ public static class UsersService : object
 		{
 			var errorMessage = string.Format
 				(format: Resources.Messages.Errors.TheItemIsNotActive,
-				arg0: nameof(user));
+				arg0: nameof(Domain.User));
 
 			result.AddErrorMessages
 				(message: errorMessage);

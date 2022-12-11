@@ -420,8 +420,9 @@ public class UsersController :
 
 			if (serverIP == null)
 			{
-				var errorMessage =
-					$"Server IP is null!";
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(serverIP));
 
 				result.AddErrorMessages
 					(message: errorMessage);
@@ -462,8 +463,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (company == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.Company)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(Domain.Company));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -505,8 +507,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (wallet == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.Wallet)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(Domain.Wallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -516,8 +519,9 @@ public class UsersController :
 
 				if (wallet.DepositeFeatureIsEnabled == false)
 				{
-					var errorMessage =
-						$"Deposite feature is not enabled for this wallet!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.FeatureIsNotEnabled,
+						arg0: nameof(Deposite), arg1: nameof(wallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -544,8 +548,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (companyWallet == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.CompanyWallet)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(Domain.CompanyWallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -569,8 +574,9 @@ public class UsersController :
 
 				if (user.IsActive == false)
 				{
-					var errorMessage =
-						$"User is not active!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNotActive,
+						arg0: nameof(Domain.User));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -590,8 +596,9 @@ public class UsersController :
 
 				if (userWallet.IsActive == false)
 				{
-					var errorMessage =
-						$"User is not active in this wallet!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.ItemIsNotActiveIn,
+						arg0: nameof(Domain.User), arg1: nameof(Domain.Wallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -730,8 +737,9 @@ public class UsersController :
 
 			if (serverIP == null)
 			{
-				var errorMessage =
-					$"Server IP is null!";
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(serverIP));
 
 				result.AddErrorMessages
 					(message: errorMessage);
@@ -772,8 +780,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (company == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.Company)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(Domain.Company));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -815,8 +824,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (wallet == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.Wallet)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(Domain.Wallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -826,8 +836,9 @@ public class UsersController :
 
 				if (wallet.PaymentFeatureIsEnabled == false)
 				{
-					var errorMessage =
-						$"Payment feature is not enabled for this wallet!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.FeatureIsNotEnabled,
+						arg0: nameof(Payment), arg1: nameof(Domain.Wallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -854,8 +865,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (companyWallet == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.CompanyWallet)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(Domain.CompanyWallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -883,8 +895,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (user == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.User)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(Domain.User));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -911,8 +924,9 @@ public class UsersController :
 				// بودن null صرفا برای جلوگیری از اخطار
 				if (userWallet == null)
 				{
-					var errorMessage =
-						$"${nameof(Domain.UserWallet)} is null!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(Domain.UserWallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -941,8 +955,9 @@ public class UsersController :
 				// **************************************************
 				if (request.Amount > userWallet.Balance)
 				{
-					var errorMessage =
-						$"The amount value is more than user balance value!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheAmountValueIsMore,
+						arg0: nameof(Domain.UserWallet.Balance));
 
 					result.AddErrorMessages(message: errorMessage);
 
@@ -1172,8 +1187,9 @@ public class UsersController :
 
 				if (wallet.WithdrawFeatureIsEnabled == false)
 				{
-					var errorMessage =
-						$"Withdraw feature is not enabled for this wallet!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.FeatureIsNotEnabled,
+						arg0: nameof(Withdraw), arg1: nameof(Domain.Wallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -1310,8 +1326,9 @@ public class UsersController :
 				// **************************************************
 				if (request.Amount > userWithdrawBalance)
 				{
-					var errorMessage =
-						$"The amount value is more than user withdraw balance!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheAmountValueIsMore,
+						arg0: $"{nameof(Withdraw)} {nameof(Domain.UserWallet.Balance)}");
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -1541,8 +1558,9 @@ public class UsersController :
 				// فعال است Refund امکان
 				if (wallet.RefundFeatureIsEnabled == false)
 				{
-					var errorMessage =
-						$"Refund feature is not enabled for this wallet!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.FeatureIsNotEnabled,
+						arg0: nameof(Refund), arg1: nameof(Domain.Wallet));
 
 					result.AddErrorMessages
 						(message: errorMessage);
@@ -1677,8 +1695,9 @@ public class UsersController :
 				// **************************************************
 				if (request.Amount > userRefundBalance)
 				{
-					var errorMessage =
-						$"The amount value is more than user refund balance!";
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheAmountValueIsMore,
+						arg0: $"{nameof(Refund)} {nameof(Domain.UserWallet.Balance)}");
 
 					result.AddErrorMessages
 						(message: errorMessage);
