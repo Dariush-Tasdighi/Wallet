@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Xunit;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tests;
 
 public class TestGetBalance
 {
+	#region Constructor(s)
 	public TestGetBalance() : base()
 	{
 		var options =
@@ -19,10 +21,14 @@ public class TestGetBalance
 		DatabaseContext.Database.EnsureDeleted();
 		DatabaseContext.Database.EnsureCreated();
 	}
+	#endregion /Constructor(s)
 
+	#region Property(ies)
 	public Data.DatabaseContext DatabaseContext { get; }
+	#endregion /Property(ies)
 
-	[Fact]
+	#region TestServerIP()
+	[Xunit.Fact]
 	public void TestServerIP()
 	{
 		// **************************************************
@@ -74,8 +80,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestServerIP()
 
-	[Fact]
+	#region TestRequestIsNotNull()
+	[Xunit.Fact]
 	public void TestRequestIsNotNull()
 	{
 		// **************************************************
@@ -127,8 +135,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestRequestIsNotNull()
 
-	[Fact]
+	#region TestCompanyExists()
+	[Xunit.Fact]
 	public void TestCompanyExists()
 	{
 		// **************************************************
@@ -183,8 +193,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestCompanyExists()
 
-	[Fact]
+	#region TestCompanyIsActive()
+	[Xunit.Fact]
 	public void TestCompanyIsActive()
 	{
 		// **************************************************
@@ -258,8 +270,10 @@ public class TestGetBalance
 
 		Assert.Equal(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestCompanyIsActive()
 
-	[Fact]
+	#region TestCompanyServerIP()
+	[Xunit.Fact]
 	public void TestCompanyServerIP()
 	{
 		// **************************************************
@@ -336,8 +350,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestCompanyServerIP()
 
-	[Fact]
+	#region TestCompanyServerIPIsActive()
+	[Xunit.Fact]
 	public void TestCompanyServerIPIsActive()
 	{
 		// **************************************************
@@ -425,8 +441,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestCompanyServerIPIsActive()
 
-	[Fact]
+	#region TestWallet()
+	[Xunit.Fact]
 	public void TestWallet()
 	{
 		// **************************************************
@@ -515,8 +533,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestWallet()
 
-	[Fact]
+	#region TestWalletIsActive()
+	[Xunit.Fact]
 	public void TestWalletIsActive()
 	{
 		// **************************************************
@@ -619,8 +639,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestWalletIsActive()
 
-	[Fact]
+	#region TestCompanyWallet()
+	[Xunit.Fact]
 	public void TestCompanyWallet()
 	{
 		// **************************************************
@@ -722,8 +744,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestCompanyWallet()
 
-	[Fact]
+	#region TestCompanyWalletIsActive()
+	[Xunit.Fact]
 	public void TestCompanyWalletIsActive()
 	{
 		// **************************************************
@@ -835,8 +859,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestCompanyWalletIsActive()
 
-	[Fact]
+	#region TestUser()
+	[Xunit.Fact]
 	public void TestUser()
 	{
 		// **************************************************
@@ -950,8 +976,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestUser()
 
-	[Fact]
+	#region TestUserDataConsistency()
+	[Xunit.Fact]
 	public void TestUserDataConsistency()
 	{
 		// **************************************************
@@ -1083,8 +1111,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestUserDataConsistency()
 
-	[Fact]
+	#region TestUserIsActive()
+	[Xunit.Fact]
 	public void TestUserIsActive()
 	{
 		// **************************************************
@@ -1215,8 +1245,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestUserIsActive()
 
-	[Fact]
+	#region TestUserWallet()
+	[Xunit.Fact]
 	public void TestUserWallet()
 	{
 		// **************************************************
@@ -1346,8 +1378,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestUserWallet()
 
-	[Fact]
+	#region TestUserWalletDataConsistency()
+	[Xunit.Fact]
 	public void TestUserWalletDataConsistency()
 	{
 		// **************************************************
@@ -1492,8 +1526,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestUserWalletDataConsistency()
 
-	[Fact]
+	#region TestUserWalletIsActive()
+	[Xunit.Fact]
 	public void TestUserWalletIsActive()
 	{
 		// **************************************************
@@ -1636,8 +1672,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestUserWalletIsActive()
 
-	[Fact]
+	#region TestUserBalanceWithCheckingDataConsistency()
+	[Xunit.Fact]
 	public void TestUserBalanceWithCheckingDataConsistency()
 	{
 		// **************************************************
@@ -1780,8 +1818,10 @@ public class TestGetBalance
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
 	}
+	#endregion /TestUserBalanceWithCheckingDataConsistency()
 
-	[Fact]
+	#region TestUserBalance()
+	[Xunit.Fact]
 	public void TestUserBalance()
 	{
 		// **************************************************
@@ -2362,4 +2402,5 @@ public class TestGetBalance
 		// **************************************************
 		// **************************************************
 	}
+	#endregion /TestUserBalance()
 }
