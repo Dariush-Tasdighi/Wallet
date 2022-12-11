@@ -1240,7 +1240,7 @@ public class TestGetBalance
 
 		var errorMessage = string.Format
 			(format: Resources.Messages.Errors.TheItemIsNotActive,
-			arg0: "user");
+			arg0: nameof(Domain.User));
 
 		Assert.Equal
 			(expected: errorMessage, actual: value.ErrorMessages[0]);
