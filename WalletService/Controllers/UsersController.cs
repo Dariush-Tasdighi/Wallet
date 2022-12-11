@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Linq;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Controllers;
 
@@ -1763,4 +1765,137 @@ public class UsersController :
 		}
 	}
 	#endregion /Action: Refund()
+
+	#region Action: GetTransactionByIdAsync()
+	[Microsoft.AspNetCore.Mvc.HttpGet(template: "{id}/transaction")]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(Dtos.Users.GetTransactionResponseDto),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(string),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(string),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
+	public async System.Threading.Tasks.Task
+		<Microsoft.AspNetCore.Mvc.ActionResult<Dtos.Users.GetTransactionResponseDto>>
+		GetTransactionByPaymentReferenceCodeAsync(long id)
+	{
+		try
+		{
+			var item =
+				await
+				DatabaseContext.Transactions
+				.AsNoTracking()
+				.Where(current => current.Id == id)
+				.Select(current => new Dtos.Users.GetTransactionResponseDto
+				{
+					Type = current.Type,
+					UserIP = current.UserIP,
+					Amount = current.Amount,
+					UserId = current.UserId,
+					WalletId = current.WalletId,
+					IsCleared = current.IsCleared,
+					PartyUserId = current.PartyUserId,
+					WithdrawDate = current.WithdrawDate,
+					AdditionalData = current.AdditionalData,
+					InsertDateTime = current.InsertDateTime,
+					UserDescription = current.UserDescription,
+					SystemicDescription = current.SystemicDescription,
+					PaymentReferenceCode = current.PaymentReferenceCode,
+					DepositeOrWithdrawProviderName = current.DepositeOrWithdrawProviderName,
+					DepositeOrWithdrawReferenceCode = current.DepositeOrWithdrawReferenceCode,
+				})
+				.FirstOrDefaultAsync();
+
+			if (item == null)
+			{
+				return NotFound(value: Infrastructure.Constant.Message.NotFound);
+			}
+
+			return Ok(value: item);
+		}
+		catch (System.Exception ex)
+		{
+			var applicationError =
+				new Infrastructure.ApplicationError
+				(code: Infrastructure.Constant.ErrorCode.Root_UsersController_GetTransactionById,
+				message: ex.Message, innerException: ex);
+
+			Logger.LogError
+				(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
+
+			return StatusCode(statusCode: Microsoft.AspNetCore
+				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
+		}
+	}
+	#endregion /Action: GetTransactionByIdAsync()
+
+	#region Action: GetUserTransactionsByCellPhoneNumberAsync()
+	[Microsoft.AspNetCore.Mvc.HttpPost(template: "transactions/cellPhoneNumber")]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(System.Collections.Generic.IEnumerable<Dtos.Users.GetTransactionResponseDto>),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(string),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
+	public async System.Threading.Tasks.Task
+		<Microsoft.AspNetCore.Mvc.ActionResult
+		<System.Collections.Generic.IEnumerable<Dtos.Users.GetTransactionResponseDto>>>
+		GetUserTransactionsByCellPhoneNumberAsync
+		(Dtos.Users.GetTransactionRequestDto request)
+	{
+		try
+		{
+			var items =
+				await
+				DatabaseContext.Transactions
+				.AsNoTracking()
+				.Where(current => current.User != null && current.User.CellPhoneNumber == request.CellPhoneNumber)
+				.OrderBy(current => current.InsertDateTime)
+				.Skip(count: request.Skip)
+				.Take(count: request.PageSize)
+				.Select(current => new Dtos.Users.GetTransactionResponseDto
+				{
+					Type = current.Type,
+					UserIP = current.UserIP,
+					Amount = current.Amount,
+					UserId = current.UserId,
+					WalletId = current.WalletId,
+					IsCleared = current.IsCleared,
+					PartyUserId = current.PartyUserId,
+					WithdrawDate = current.WithdrawDate,
+					AdditionalData = current.AdditionalData,
+					InsertDateTime = current.InsertDateTime,
+					UserDescription = current.UserDescription,
+					SystemicDescription = current.SystemicDescription,
+					PaymentReferenceCode = current.PaymentReferenceCode,
+					DepositeOrWithdrawProviderName = current.DepositeOrWithdrawProviderName,
+					DepositeOrWithdrawReferenceCode = current.DepositeOrWithdrawReferenceCode,
+				})
+				.ToListAsync()
+				;
+
+			return Ok(value: items);
+		}
+		catch (System.Exception ex)
+		{
+			var applicationError =
+				new Infrastructure.ApplicationError
+				(code: Infrastructure.Constant.ErrorCode.Root_UsersController_GetUserTransactionsByCellPhoneNumber,
+				message: ex.Message, innerException: ex);
+
+			Logger.LogError
+				(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
+
+			return StatusCode(statusCode: Microsoft.AspNetCore
+				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
+		}
+	}
+	#endregion /Action: GetUserTransactionsByCellPhoneNumberAsync()
 }
