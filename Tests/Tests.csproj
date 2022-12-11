@@ -8,13 +8,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="TestUserControllers.txt" />
-	  <None Remove="UserWalletTest.txt" />
+		<None Remove="TestUserControllers.txt" />
+		<None Remove="UserWalletTest.txt" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Include="TestUserControllers.txt" />
-	  <Compile Include="UserWalletTest.txt" />
+		<Compile Include="TestUserControllers.txt" />
+		<Compile Include="UserWalletTest.txt" />
 	</ItemGroup>
 
 	<ItemGroup>

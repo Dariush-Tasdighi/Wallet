@@ -44,5 +44,20 @@ internal class TransactionConfiguration : object,
 		// **************************************************
 		// **************************************************
 		// **************************************************
+
+		// **************************************************
+		// **************************************************
+		// **************************************************
+		builder
+			.HasMany(current => current.SubTransactions)
+			.WithOne(other => other.ParentTransaction)
+			.IsRequired(required: false)
+			.HasForeignKey(other => other.ParentTransactionId)
+			.OnDelete(deleteBehavior:
+				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
+			;
+		// **************************************************
+		// **************************************************
+		// **************************************************
 	}
 }

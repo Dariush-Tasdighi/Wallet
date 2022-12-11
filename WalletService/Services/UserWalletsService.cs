@@ -1,5 +1,5 @@
-﻿using Infrastructure;
-using System.Linq;
+﻿using System.Linq;
+using Infrastructure;
 
 namespace Server.Services;
 

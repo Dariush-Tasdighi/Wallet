@@ -12,10 +12,23 @@ public class Transaction :
 		UserIP = userIP;
 		ServerIP = serverIP;
 		WalletId = walletId;
+
+		SubTransactions =
+			new System.Collections.Generic.List<Transaction>();
 	}
 	#endregion /Constructor
 
 	#region Properties
+
+	#region ParentTransactionId
+	public long? ParentTransactionId { get; set; }
+	#endregion ParentTransactionId
+
+	#region ParentTransaction
+	public Transaction? ParentTransaction { get; set; }
+	#endregion ParentTransaction
+
+
 
 	#region UserId
 	public long UserId { get; private set; }
@@ -148,6 +161,13 @@ public class Transaction :
 		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
 	public string? SystemicDescription { get; set; }
 	#endregion /SystemicDescription
+
+
+
+	#region SubTransactions
+	[System.Text.Json.Serialization.JsonIgnore]
+	public virtual System.Collections.Generic.IList<Transaction>? SubTransactions { get; set; }
+	#endregion SubTransactions
 
 	#endregion /Properties
 
