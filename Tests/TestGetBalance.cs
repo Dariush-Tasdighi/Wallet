@@ -1888,8 +1888,14 @@ public class TestGetBalance
 
 		// **************************************************
 		Domain.Transaction transaction;
+		System.DateTime? withdrawDate = null;
 
 		// (1)
+		withdrawDate =
+			new System.DateTime
+			(year: 2022, month: 1, day: 1,
+			hour: 1, minute: 0, second: 0);
+
 		transaction =
 			new Domain.Transaction
 			(userId: user.Id, walletId: wallet.Id,
@@ -1898,34 +1904,39 @@ public class TestGetBalance
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500001",
 				Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite,
-
-				WithdrawDateTime =
-					new System.DateTime
-					(year: 2022, month: 1, day: 1,
-					hour: 1, minute: 0, second: 0),
 			};
+
+		transaction.UpdateWithdrawDate(value: withdrawDate);
 
 		transaction.UpdateHash();
 
 		DatabaseContext.Add(entity: transaction);
 
 		// (2)
+		withdrawDate = null;
+
 		transaction =
 			new Domain.Transaction
 			(userId: user.Id, walletId: wallet.Id,
 			amount: -5, serverIP: serverIP, userIP: userIP)
 			{
-				WithdrawDateTime = null,
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500002",
 				Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Payment,
 			};
+
+		transaction.UpdateWithdrawDate(value: withdrawDate);
 
 		transaction.UpdateHash();
 
 		DatabaseContext.Add(entity: transaction);
 
 		// (3)
+		withdrawDate =
+			new System.DateTime
+			(year: 2022, month: 1, day: 3,
+			hour: 1, minute: 0, second: 0);
+
 		transaction =
 			new Domain.Transaction
 			(userId: user.Id, walletId: wallet.Id,
@@ -1934,50 +1945,58 @@ public class TestGetBalance
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500003",
 				Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite,
-
-				WithdrawDateTime =
-					new System.DateTime
-					(year: 2022, month: 1, day: 3,
-					hour: 1, minute: 0, second: 0),
 			};
+
+		transaction.UpdateWithdrawDate(value: withdrawDate);
 
 		transaction.UpdateHash();
 
 		DatabaseContext.Add(entity: transaction);
 
 		// (4)
+		withdrawDate = null;
+
 		transaction =
 			new Domain.Transaction
 			(userId: user.Id, walletId: wallet.Id,
 			amount: -10, serverIP: serverIP, userIP: userIP)
 			{
-				WithdrawDateTime = null,
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500004",
 				Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Payment,
 			};
+
+		transaction.UpdateWithdrawDate(value: withdrawDate);
 
 		transaction.UpdateHash();
 
 		DatabaseContext.Add(entity: transaction);
 
 		// (5)
+		withdrawDate = null;
+
 		transaction =
 			new Domain.Transaction
 			(userId: user.Id, walletId: wallet.Id,
 			amount: 30, serverIP: serverIP, userIP: userIP)
 			{
-				WithdrawDateTime = null,
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500005",
 				Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite,
 			};
+
+		transaction.UpdateWithdrawDate(value: withdrawDate);
 
 		transaction.UpdateHash();
 
 		DatabaseContext.Add(entity: transaction);
 
 		// (6)
+		withdrawDate =
+			new System.DateTime
+			(year: 2022, month: 1, day: 5,
+			hour: 1, minute: 0, second: 0);
+
 		transaction =
 			new Domain.Transaction
 			(userId: user.Id, walletId: wallet.Id,
@@ -1986,34 +2005,39 @@ public class TestGetBalance
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500006",
 				Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite,
-
-				WithdrawDateTime =
-					new System.DateTime
-					(year: 2022, month: 1, day: 5,
-					hour: 1, minute: 0, second: 0),
 			};
+
+		transaction.UpdateWithdrawDate(value: withdrawDate);
 
 		transaction.UpdateHash();
 
 		DatabaseContext.Add(entity: transaction);
 
 		// (7)
+		withdrawDate = null;
+
 		transaction =
 			new Domain.Transaction
 			(userId: user.Id, walletId: wallet.Id,
 			amount: -15, serverIP: serverIP, userIP: userIP)
 			{
-				WithdrawDateTime = null,
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500007",
 				Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Payment,
 			};
+
+		transaction.UpdateWithdrawDate(value: withdrawDate);
 
 		transaction.UpdateHash();
 
 		DatabaseContext.Add(entity: transaction);
 
 		// (8)
+		withdrawDate =
+			new System.DateTime
+			(year: 2022, month: 1, day: 7,
+			hour: 1, minute: 0, second: 0);
+
 		transaction =
 			new Domain.Transaction
 			(userId: user.Id, walletId: wallet.Id,
@@ -2022,34 +2046,39 @@ public class TestGetBalance
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500008",
 				Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite,
-
-				WithdrawDateTime =
-					new System.DateTime
-					(year: 2022, month: 1, day: 7,
-					hour: 1, minute: 0, second: 0),
 			};
+
+		transaction.UpdateWithdrawDate(value: withdrawDate);
 
 		transaction.UpdateHash();
 
 		DatabaseContext.Add(entity: transaction);
 
 		// (9)
+		withdrawDate = null;
+
 		transaction =
 			new Domain.Transaction
 			(userId: user.Id, walletId: wallet.Id,
 			amount: 60, serverIP: serverIP, userIP: userIP)
 			{
-				WithdrawDateTime = null,
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500009",
 				Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite,
 			};
+
+		transaction.UpdateWithdrawDate(value: withdrawDate);
 
 		transaction.UpdateHash();
 
 		DatabaseContext.Add(entity: transaction);
 
 		// (10)
+		withdrawDate =
+			new System.DateTime
+			(year: 2022, month: 1, day: 9,
+			hour: 1, minute: 0, second: 0);
+
 		transaction =
 			new Domain.Transaction
 			(userId: user.Id, walletId: wallet.Id,
@@ -2058,12 +2087,9 @@ public class TestGetBalance
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500010",
 				Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite,
-
-				WithdrawDateTime =
-					new System.DateTime
-					(year: 2022, month: 1, day: 9,
-					hour: 1, minute: 0, second: 0),
 			};
+
+		transaction.UpdateWithdrawDate(value: withdrawDate);
 
 		transaction.UpdateHash();
 

@@ -170,7 +170,7 @@ public static class UserWalletsService : object
 			new Dtat.Result<decimal>();
 
 		var now =
-			utility.GetNow().Date.AddDays(value: 1);
+			utility.GetNow().Date;
 
 		// همه خروج و برداشت مبالغ
 		var allAntiDeposite =
@@ -180,11 +180,11 @@ public static class UserWalletsService : object
 			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
 			.Sum(current => current.Amount);
 
-		// همه مبالغ قابل برداشت
+		// همه مبالغ قابل برداشت تا تاریخ مذکور
 		var allDeposite =
 			databaseContext.Transactions
 			.Where(current => current.Amount > 0)
-			.Where(current => current.WithdrawDateTime != null && current.WithdrawDateTime <= now)
+			.Where(current => current.WithdrawDate != null && current.WithdrawDate <= now)
 			.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
 			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
 			.Sum(current => current.Amount);

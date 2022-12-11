@@ -270,14 +270,14 @@ public class UsersController :
 				// **************************************************
 				// بدست آوردن مانده قابل برداشت
 				// **************************************************
-				var userWithdrawBalance =
+				var userWithdrawBalanceResult =
 					Services.UserWalletsService.GetUserWithdrawBalance
 					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
 					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
 
-				if (userWithdrawBalance.IsSuccess == false)
+				if (userWithdrawBalanceResult.IsSuccess == false)
 				{
-					return Ok(value: userWithdrawBalance);
+					return Ok(value: userWithdrawBalanceResult);
 				}
 				// **************************************************
 
@@ -285,7 +285,7 @@ public class UsersController :
 				var data =
 					new Dtos.Users.GetBalanceResponseDto
 					(balance: userBalanceResult.Data,
-					withdrawBalance: userWithdrawBalance.Data);
+					withdrawBalance: userWithdrawBalanceResult.Data);
 
 				result.Data = data;
 
@@ -1021,4 +1021,372 @@ public class UsersController :
 		}
 	}
 	#endregion /Action: Payment()
+
+	#region Action: Withdraw()
+	/// <summary>
+	/// تعریف نمی‌کنیم Async به دلیل مسائل امنیتی و هم‌زمانی این تابع را
+	/// </summary>
+	[Microsoft.AspNetCore.Mvc.HttpPost(template: "[action]")]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(Dtat.Result<Dtos.Users.WithdrawResponseDto>),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(string),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
+	public Microsoft.AspNetCore.Mvc.ActionResult Withdraw(Dtos.Users.WithdrawRequestDto request)
+	{
+		try
+		{
+			var startTime =
+				Utility.GetNow();
+
+			var result = new Dtat.Result
+				<Dtos.Users.WithdrawResponseDto>();
+
+			// **************************************************
+			// بدست آوردن آی‌پی سرور درخواست کننده
+			// **************************************************
+			var serverIP =
+				Utility.GetServerIP(request: Request);
+
+			if (serverIP == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(serverIP));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			if (request == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(request));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی معتبر بودن فیلدهای ارسال شده
+			// **************************************************
+			var validateEntityResult =
+				Dtat.Utility.ValidateEntity(entity: request);
+
+			if (validateEntityResult.IsSuccess == false)
+			{
+				return Ok(value: validateEntityResult);
+			}
+			// **************************************************
+
+			lock (Locker)
+			{
+				// **************************************************
+				// بررسی شرکت بر اساس توکن
+				// **************************************************
+				var companyResult =
+					Services.CompaniesService.CheckAndGetCompanyByToken
+					(databaseContext: DatabaseContext, token: request.CompanyToken);
+
+				if (companyResult.IsSuccess == false)
+				{
+					return Ok(value: companyResult);
+				}
+
+				var company =
+					companyResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (company == null)
+				{
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(company));
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی مجاز بودن آی‌پی سرور درخواست کننده
+				// **************************************************
+				var validIPResult =
+					Services.ValidIPsService.CheckServerIPByCompanyToken
+					(databaseContext: DatabaseContext, serverIP: serverIP,
+					companyToken: request.CompanyToken, walletToken: request.WalletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+				if (validIPResult.IsSuccess == false)
+				{
+					return Ok(value: validIPResult);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی کیف پول بر اساس توکن
+				// **************************************************
+				var walletResult =
+					Services.WalletsService.CheckAndGetWalletByToken
+					(databaseContext: DatabaseContext, token: request.WalletToken);
+
+				if (walletResult.IsSuccess == false)
+				{
+					return Ok(value: walletResult);
+				}
+
+				var wallet =
+					walletResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (wallet == null)
+				{
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(wallet));
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+
+				if (wallet.WithdrawFeatureIsEnabled == false)
+				{
+					var errorMessage =
+						$"Withdraw feature is not enabled for this wallet!";
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی دسترسی شرکت به کیف پول مربوطه، بر اساس  توکن‌های آن‌ها
+				// **************************************************
+				var companyWalletResult =
+					Services.CompanyWalletsService.CheckAndGetCompanyWalletByTokens
+					(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WalletToken);
+
+				if (companyWalletResult.IsSuccess == false)
+				{
+					return Ok(value: companyWalletResult);
+				}
+
+				var companyWallet =
+					companyWalletResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (companyWallet == null)
+				{
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(companyWallet));
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی کاربر
+				// **************************************************
+				var userResult =
+					Services.UsersService.CheckAndGetUserByCellPhoneNumber
+					(databaseContext: DatabaseContext,
+					cellPhoneNumber: request.User.CellPhoneNumber);
+
+				if (userResult.IsSuccess == false)
+				{
+					return Ok(value: userResult);
+				}
+
+				var user =
+					userResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (user == null)
+				{
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(user));
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی دسترسی کاربر به کیف پول مربوطه
+				// **************************************************
+				var userWalletResult =
+					Services.UserWalletsService.CheckAndGetUserWallet(databaseContext: DatabaseContext,
+					cellPhoneNumber: request.User.CellPhoneNumber, walletToken: request.WalletToken);
+
+				if (userWalletResult.IsSuccess == false)
+				{
+					return Ok(value: userWalletResult);
+				}
+
+				var userWallet =
+					userWalletResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (userWallet == null)
+				{
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(userWallet));
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بدست آوردن مانده کیف پول کاربر
+				// با احتساب چک کردن معتبر بودن آن
+				// **************************************************
+				var userBalanceResult =
+					Services.UserWalletsService.GetUserBalanceWithCheckingDataConsistency
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber, userWallet: userWallet);
+
+				if (userBalanceResult.IsSuccess == false)
+				{
+					return Ok(value: userBalanceResult);
+				}
+
+				var userBalance =
+					userBalanceResult.Data;
+				// **************************************************
+
+				// **************************************************
+				// بدست آوردن مانده قابل برداشت
+				// **************************************************
+				var userWithdrawBalanceResult =
+					Services.UserWalletsService.GetUserWithdrawBalance
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+				if (userWithdrawBalanceResult.IsSuccess == false)
+				{
+					return Ok(value: userWithdrawBalanceResult);
+				}
+
+				var userWithdrawBalance =
+					userWithdrawBalanceResult.Data;
+				// **************************************************
+
+				// **************************************************
+				// کاهش مانده حساب کاربر در کیف پول جاری
+				// **************************************************
+				if (request.Amount > userWithdrawBalance)
+				{
+					var errorMessage =
+						$"The amount value is more than user withdraw balance!";
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+
+				userWallet.Balance -= request.Amount;
+
+				userWallet.UpdateHash();
+				// **************************************************
+
+				// **************************************************
+				// محاسبه کل زمان پردازش
+				// **************************************************
+				var finishTime =
+					Utility.GetNow();
+
+				var transactionDuration = finishTime - startTime;
+				// **************************************************
+
+				// **************************************************
+				var transactionAmount =
+					(-1) * request.Amount;
+
+				var transaction =
+					new Domain.Transaction
+					(userId: user.Id, walletId: wallet.Id,
+					amount: transactionAmount, userIP: request.User.IP, serverIP: serverIP)
+					{
+						ServerIP = serverIP,
+						UserIP = request.User.IP,
+
+						TransactionDuration = transactionDuration,
+
+						PaymentReferenceCode = null,
+						DepositeOrWithdrawProviderName = null,
+						DepositeOrWithdrawReferenceCode = null,
+
+						AdditionalData = request.AdditionalData,
+						UserDescription = request.UserDescription,
+						SystemicDescription = request.SystemicDescription,
+
+						Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw,
+					};
+
+				transaction.UpdateHash();
+
+				DatabaseContext.Add(entity: transaction);
+				// **************************************************
+
+				// **************************************************
+				// ذخیره تغییرات در بانک اطلاعاتی
+				// **************************************************
+				DatabaseContext.SaveChanges();
+				// **************************************************
+
+				// **************************************************
+				var data =
+					new Dtos.Users.WithdrawResponseDto(balance: userBalance,
+					withdrawBalance: userWithdrawBalance, transactionId: transaction.Id);
+
+				result.Data = data;
+
+				return Ok(value: result);
+				// **************************************************
+			}
+		}
+		catch (System.Exception ex)
+		{
+			var applicationError =
+				new Infrastructure.ApplicationError
+				(code: Infrastructure.Constant.ErrorCode.Root_UsersController_Withdraw,
+				message: ex.Message, innerException: ex);
+
+			Logger.LogError
+				(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
+
+			return StatusCode(statusCode: Microsoft.AspNetCore
+				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
+		}
+	}
+	#endregion /Action: Withdraw()
 }
