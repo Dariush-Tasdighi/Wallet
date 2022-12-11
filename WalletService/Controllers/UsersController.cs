@@ -653,6 +653,8 @@ public class UsersController :
 
 						DepositeOrWithdrawProviderName = request.ProviderName,
 						DepositeOrWithdrawReferenceCode = request.ReferenceCode,
+
+						Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite,
 					};
 
 				transaction.UpdateHash();
@@ -980,6 +982,8 @@ public class UsersController :
 						AdditionalData = request.AdditionalData,
 						UserDescription = request.UserDescription,
 						SystemicDescription = request.SystemicDescription,
+
+						Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Payment,
 					};
 
 				transaction.UpdateHash();
@@ -1389,4 +1393,374 @@ public class UsersController :
 		}
 	}
 	#endregion /Action: Withdraw()
+
+	#region Action: Refund()
+	/// <summary>
+	/// تعریف نمی‌کنیم Async به دلیل مسائل امنیتی و هم‌زمانی این تابع را
+	/// </summary>
+	[Microsoft.AspNetCore.Mvc.HttpPost(template: "[action]")]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(Dtat.Result<Dtos.Users.RefundResponseDto>),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
+
+	[Microsoft.AspNetCore.Mvc.ProducesResponseType
+		(type: typeof(string),
+		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
+	public Microsoft.AspNetCore.Mvc.ActionResult Refund(Dtos.Users.RefundRequestDto request)
+	{
+		try
+		{
+			var startTime =
+				Utility.GetNow();
+
+			var result = new Dtat.Result
+				<Dtos.Users.RefundResponseDto>();
+
+			// **************************************************
+			// بدست آوردن آی‌پی سرور درخواست کننده
+			// **************************************************
+			var serverIP =
+				Utility.GetServerIP(request: Request);
+
+			if (serverIP == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(serverIP));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			if (request == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(request));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی معتبر بودن فیلدهای ارسال شده
+			// **************************************************
+			var validateEntityResult =
+				Dtat.Utility.ValidateEntity(entity: request);
+
+			if (validateEntityResult.IsSuccess == false)
+			{
+				return Ok(value: validateEntityResult);
+			}
+			// **************************************************
+
+			lock (Locker)
+			{
+				// **************************************************
+				// بررسی شرکت بر اساس توکن
+				// **************************************************
+				var companyResult =
+					Services.CompaniesService.CheckAndGetCompanyByToken
+					(databaseContext: DatabaseContext, token: request.CompanyToken);
+
+				if (companyResult.IsSuccess == false)
+				{
+					return Ok(value: companyResult);
+				}
+
+				var company =
+					companyResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (company == null)
+				{
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(company));
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی مجاز بودن آی‌پی سرور درخواست کننده
+				// **************************************************
+				var validIPResult =
+					Services.ValidIPsService.CheckServerIPByCompanyToken
+					(databaseContext: DatabaseContext, serverIP: serverIP,
+					companyToken: request.CompanyToken, walletToken: request.WalletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+				if (validIPResult.IsSuccess == false)
+				{
+					return Ok(value: validIPResult);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی کیف پول بر اساس توکن
+				// **************************************************
+				var walletResult =
+					Services.WalletsService.CheckAndGetWalletByToken
+					(databaseContext: DatabaseContext, token: request.WalletToken);
+
+				if (walletResult.IsSuccess == false)
+				{
+					return Ok(value: walletResult);
+				}
+
+				var wallet =
+					walletResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (wallet == null)
+				{
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(wallet));
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+
+				// فعال است Refund امکان
+				if (wallet.RefundFeatureIsEnabled == false)
+				{
+					var errorMessage =
+						$"Refund feature is not enabled for this wallet!";
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی دسترسی شرکت به کیف پول مربوطه، بر اساس توکن‌های آن‌ها
+				// **************************************************
+				var companyWalletResult =
+					Services.CompanyWalletsService.CheckAndGetCompanyWalletByTokens
+					(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WalletToken);
+
+				if (companyWalletResult.IsSuccess == false)
+				{
+					return Ok(value: companyWalletResult);
+				}
+
+				var companyWallet =
+					companyWalletResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (companyWallet == null)
+				{
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(companyWallet));
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی کاربر
+				// **************************************************
+				var userResult =
+					Services.UsersService.CheckAndGetUserByCellPhoneNumber
+					(databaseContext: DatabaseContext,
+					cellPhoneNumber: request.User.CellPhoneNumber);
+
+				if (userResult.IsSuccess == false)
+				{
+					return Ok(value: userResult);
+				}
+
+				var user =
+					userResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (user == null)
+				{
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(user));
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بررسی دسترسی کاربر به کیف پول مربوطه
+				// **************************************************
+				var userWalletResult =
+					Services.UserWalletsService.CheckAndGetUserWallet(databaseContext: DatabaseContext,
+					cellPhoneNumber: request.User.CellPhoneNumber, walletToken: request.WalletToken);
+
+				if (userWalletResult.IsSuccess == false)
+				{
+					return Ok(value: userWalletResult);
+				}
+
+				var userWallet =
+					userWalletResult.Data;
+
+				// بودن null صرفا برای جلوگیری از اخطار
+				if (userWallet == null)
+				{
+					var errorMessage = string.Format
+						(format: Resources.Messages.Errors.TheItemIsNull,
+						arg0: nameof(userWallet));
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+				// **************************************************
+
+				// **************************************************
+				// بدست آوردن مانده کیف پول کاربر
+				// با احتساب چک کردن معتبر بودن آن
+				// **************************************************
+				var userBalanceResult =
+					Services.UserWalletsService.GetUserBalanceWithCheckingDataConsistency
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber, userWallet: userWallet);
+
+				if (userBalanceResult.IsSuccess == false)
+				{
+					return Ok(value: userBalanceResult);
+				}
+
+				var userBalance =
+					userBalanceResult.Data;
+				// **************************************************
+
+				// **************************************************
+				// Refund بدست آوردن مبلغ قابل
+				// **************************************************
+				var userRefundableBalanceResult =
+					Services.UserWalletsService.GetUserRefundableBalance
+					(databaseContext: DatabaseContext, transactionId: request.TransactionId,
+					walletToken: request.WalletToken, cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+				if (userRefundableBalanceResult.IsSuccess == false)
+				{
+					return Ok(value: userRefundableBalanceResult);
+				}
+
+				var userRefundBalance =
+					userRefundableBalanceResult.Data;
+				// **************************************************
+
+				// **************************************************
+				if (request.Amount > userRefundBalance)
+				{
+					var errorMessage =
+						$"The amount value is more than user refund balance!";
+
+					result.AddErrorMessages
+						(message: errorMessage);
+
+					return Ok(value: result);
+				}
+
+				userWallet.Balance += request.Amount;
+
+				userWallet.UpdateHash();
+				// **************************************************
+
+				// **************************************************
+				// ذخیره تغییرات در بانک اطلاعاتی
+				// **************************************************
+				DatabaseContext.SaveChanges();
+				// **************************************************
+
+				// **************************************************
+				// محاسبه کل زمان پردازش
+				// **************************************************
+				var finishTime =
+					Utility.GetNow();
+
+				var transactionDuration = finishTime - startTime;
+				// **************************************************
+
+				// **************************************************
+				var transaction =
+					new Domain.Transaction
+					(userId: user.Id, walletId: wallet.Id,
+					amount: request.Amount, userIP: request.User.IP, serverIP: serverIP)
+					{
+						ServerIP = serverIP,
+						UserIP = request.User.IP,
+						TransactionDuration = transactionDuration,
+
+						PaymentReferenceCode = null,
+						DepositeOrWithdrawProviderName = null,
+						DepositeOrWithdrawReferenceCode = null,
+						ParentTransactionId = request.TransactionId,
+
+						AdditionalData = request.AdditionalData,
+						UserDescription = request.UserDescription,
+						SystemicDescription = request.SystemicDescription,
+
+						Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Refund,
+					};
+
+				transaction.UpdateHash();
+
+				DatabaseContext.Add(entity: transaction);
+				// **************************************************
+
+				// **************************************************
+				// ذخیره تغییرات در بانک اطلاعاتی
+				// **************************************************
+				DatabaseContext.SaveChanges();
+				// **************************************************
+
+				// **************************************************
+				var data =
+					new Dtos.Users.RefundResponseDto
+					(balance: userWallet.Balance, withdrawBalance: 0, transactionId: transaction.Id);
+
+				result.Data = data;
+
+				return Ok(value: result);
+				// **************************************************
+			}
+		}
+		catch (System.Exception ex)
+		{
+			var applicationError =
+				new Infrastructure.ApplicationError
+				(code: Infrastructure.Constant.ErrorCode.Root_UsersController_Refund,
+				message: ex.Message, innerException: ex);
+
+			Logger.LogError
+				(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
+
+			return StatusCode(statusCode: Microsoft.AspNetCore
+				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
+		}
+	}
+	#endregion /Action: Refund()
 }

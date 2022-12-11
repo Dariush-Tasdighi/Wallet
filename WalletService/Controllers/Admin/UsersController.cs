@@ -37,10 +37,7 @@ public class UsersController : Infrastructure.ControllerBaseWithDatabaseContext
 	{
 		try
 		{
-			System.Collections.Generic
-				.IEnumerable<Domain.User> items;
-
-			items =
+			var items =
 				await
 				DatabaseContext.Users
 				.AsNoTracking()

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Infrastructure;
 
 namespace Server.Services;
 
@@ -164,7 +163,7 @@ public static class UserWalletsService : object
 	#region GetUserWithdrawBalance()
 	public static Dtat.Result<decimal> GetUserWithdrawBalance
 		(Data.DatabaseContext databaseContext,
-		System.Guid walletToken, string cellPhoneNumber, IUtility utility)
+		System.Guid walletToken, string cellPhoneNumber, Infrastructure.IUtility utility)
 	{
 		var result =
 			new Dtat.Result<decimal>();
@@ -205,4 +204,51 @@ public static class UserWalletsService : object
 		return result;
 	}
 	#endregion /GetUserWithdrawBalance()
+
+	#region CheckUserRefundBalance()
+	public static Dtat.Result<decimal> GetUserRefundableBalance
+		(Data.DatabaseContext databaseContext, long transactionId,
+		System.Guid walletToken, string cellPhoneNumber, Infrastructure.IUtility utility)
+	{
+		var result =
+			new Dtat.Result<decimal>();
+
+		var now =
+			utility.GetNow().Date;
+
+		var foundedPayment =
+			databaseContext.Transactions
+			.Where(current => current.Id == transactionId)
+			.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Payment)
+			.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
+			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
+			.FirstOrDefault();
+
+		if (foundedPayment == null)
+		{
+			var errorMessage = string.Format
+				(format: Resources.Messages.Errors.TheItemIsNull,
+				arg0: nameof(foundedPayment));
+
+			result.AddErrorMessages(message: errorMessage);
+
+			return result;
+		}
+
+		var allRefunds =
+			databaseContext.Transactions
+			.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
+			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
+			.Where(current => current.ParentTransactionId == transactionId)
+			.Sum(current => current.Amount);
+
+		// Payment مبلغ باقی مانده از تراکنش
+		var balance =
+			(foundedPayment.Amount * - 1) + (allRefunds * - 1);
+
+		result.Data = balance;
+
+		return result;
+	}
+	#endregion /CheckUserRefundBalance()
 }

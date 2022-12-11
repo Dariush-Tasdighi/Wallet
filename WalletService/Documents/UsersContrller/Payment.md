@@ -19,7 +19,7 @@ Allows the user to pay from her wallet
         "ip": "192.168.1.110"
     },
     "amount": 8,
-    "waletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
+    "walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
     "companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
     "referenceCode": "2030405060",
     "userDescription": null,
@@ -79,7 +79,7 @@ curl --location --request POST 'https://localhost:7087/api/users/payment' \
         "ip": "192.168.1.110"
     },
     "amount": 8,
-    "waletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
+    "walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
     "companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
     "referenceCode": "2030405060",
     "userDescription": null,

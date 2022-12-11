@@ -19,7 +19,7 @@ It allows the user to see the balance of his wallet
    "ip": "192.168.1.110",        
     "cellPhoneNumber": "o9391818607"
 	},
-	  "waletToken": "d630496e-3f91-4127-9dbc-f03b14ecd6d2", 
+	  "walletToken": "d630496e-3f91-4127-9dbc-f03b14ecd6d2", 
   "companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728"
 }
 
@@ -71,7 +71,7 @@ curl --location --request POST 'https://localhost:7087/api/users/getbalance' \
    "ip": "192.168.1.110",        
     "cellPhoneNumber": "o939181860"
 	},
-	  "waletToken": "d630496e-3f91-4127-9dbc-f03b14ecd6d2", 
+	  "walletToken": "d630496e-3f91-4127-9dbc-f03b14ecd6d2", 
   "companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728"
 }
 '

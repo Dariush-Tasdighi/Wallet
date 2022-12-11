@@ -36,7 +36,7 @@ Allow the user to increase their wallet balance
     "transferFeatureIsEnabled": true
   },
   "amount": 10,
-  "waletToken": "d630496e-3f91-4127-9dbc-f03b14ecd6d2", 
+  "walletToken": "d630496e-3f91-4127-9dbc-f03b14ecd6d2", 
   "companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
   "providerName": "ایران کیش",
   "referenceCode": "1020304050",
@@ -107,7 +107,7 @@ curl --location --request POST 'https://localhost:7087/api/users/deposite' \
     "transferFeatureIsEnabled": true
   },
   "amount": 10,
-  "waletToken": "d630496e-3f91-4127-9dbc-f03b14ecd6d2", 
+  "walletToken": "d630496e-3f91-4127-9dbc-f03b14ecd6d2", 
   "companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
   "providerName": "ایران کیش",
   "referenceCode": "1020304050",
