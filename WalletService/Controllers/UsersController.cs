@@ -1755,7 +1755,7 @@ public class UsersController :
 	#endregion /Action: Refund()
 
 	#region Action: GetTransaction()
-	[Microsoft.AspNetCore.Mvc.HttpPost(template: "transaction")]
+	[Microsoft.AspNetCore.Mvc.HttpPost(template: "[action]")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(Dtat.Result<Dtos.Users.GetTransactionResponseDto>),
@@ -1766,7 +1766,7 @@ public class UsersController :
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
 	public async System.Threading.Tasks.Task
 		<Microsoft.AspNetCore.Mvc.ActionResult<Dtat.Result<Dtos.Users.GetTransactionResponseDto>>>
-		GetTransactionAsync(Dtos.Users.GetTransactionRequestDto request)
+		GetTransaction(Dtos.Users.GetTransactionRequestDto request)
 	{
 		try
 		{
@@ -1774,34 +1774,233 @@ public class UsersController :
 				<Dtos.Users.GetTransactionResponseDto>();
 
 			// **************************************************
-			var foundedWalletId =
-				await
-				DatabaseContext.CompanyWallets
-				.Where(current => current.Wallet != null && current.Wallet.Token == request.WalletToken)
-				.Where(current => current.Company != null && current.Company.Token == request.CompanyToken)
-				.Select(current => current.WalletId)
-				.FirstOrDefaultAsync();
+			// بدست آوردن آی‌پی سرور درخواست کننده
+			// **************************************************
+			var serverIP =
+				Utility.GetServerIP(request: Request);
 
-			if (foundedWalletId <= 0)
+			if (serverIP == null)
 			{
-				var errorMessage =
-					Resources.Messages.Errors.TheCompanyDoesNotHaveAccessToThisWallet;
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(serverIP));
 
 				result.AddErrorMessages
 					(message: errorMessage);
 
-				return result;
+				return Ok(value: result);
 			}
 			// **************************************************
 
 			// **************************************************
+			if (request == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(request));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی معتبر بودن فیلدهای ارسال شده
+			// **************************************************
+			var validateEntityResult =
+				Dtat.Utility.ValidateEntity(entity: request);
+
+			if (validateEntityResult.IsSuccess == false)
+			{
+				return Ok(value: validateEntityResult);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی شرکت بر اساس توکن
+			// **************************************************
+			var companyResult =
+				Services.CompaniesService.CheckAndGetCompanyByToken
+				(databaseContext: DatabaseContext, token: request.CompanyToken);
+
+			if (companyResult.IsSuccess == false)
+			{
+				return Ok(value: companyResult);
+			}
+
+			var company =
+				companyResult.Data;
+
+			// بودن null صرفا برای جلوگیری از اخطار
+			if (company == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(company));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی مجاز بودن آی‌پی سرور درخواست کننده
+			// **************************************************
+			var validIPResult =
+				Services.ValidIPsService.CheckServerIPByCompanyToken
+				(databaseContext: DatabaseContext, serverIP: serverIP,
+				companyToken: request.CompanyToken, walletToken: request.WalletToken,
+				cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+			if (validIPResult.IsSuccess == false)
+			{
+				return Ok(value: validIPResult);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی کیف پول بر اساس توکن
+			// **************************************************
+			var walletResult =
+				Services.WalletsService.CheckAndGetWalletByToken
+				(databaseContext: DatabaseContext, token: request.WalletToken);
+
+			if (walletResult.IsSuccess == false)
+			{
+				return Ok(value: walletResult);
+			}
+
+			var wallet =
+				walletResult.Data;
+
+			// بودن null صرفا برای جلوگیری از اخطار
+			if (wallet == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(wallet));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی دسترسی شرکت به کیف پول مربوطه، بر اساس توکن‌های آن‌ها
+			// **************************************************
+			var companyWalletResult =
+				Services.CompanyWalletsService.CheckAndGetCompanyWalletByTokens
+				(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WalletToken);
+
+			if (companyWalletResult.IsSuccess == false)
+			{
+				return Ok(value: companyWalletResult);
+			}
+
+			var companyWallet =
+				companyWalletResult.Data;
+
+			// بودن null صرفا برای جلوگیری از اخطار
+			if (companyWallet == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(companyWallet));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی کاربر
+			// **************************************************
+			var userResult =
+				Services.UsersService.CheckAndGetUserByCellPhoneNumber
+				(databaseContext: DatabaseContext,
+				cellPhoneNumber: request.User.CellPhoneNumber);
+
+			if (userResult.IsSuccess == false)
+			{
+				return Ok(value: userResult);
+			}
+
+			var user =
+				userResult.Data;
+
+			// بودن null صرفا برای جلوگیری از اخطار
+			if (user == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(user));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی دسترسی کاربر به کیف پول مربوطه
+			// **************************************************
+			var userWalletResult =
+				Services.UserWalletsService.CheckAndGetUserWallet(databaseContext: DatabaseContext,
+				cellPhoneNumber: request.User.CellPhoneNumber, walletToken: request.WalletToken);
+
+			if (userWalletResult.IsSuccess == false)
+			{
+				return Ok(value: userWalletResult);
+			}
+
+			var userWallet =
+				userWalletResult.Data;
+
+			// بودن null صرفا برای جلوگیری از اخطار
+			if (userWallet == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(userWallet));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بدست آوردن مانده کیف پول کاربر
+			// با احتساب چک کردن معتبر بودن آن
+			// **************************************************
+			var userBalanceResult =
+				Services.UserWalletsService.GetUserBalanceWithCheckingDataConsistency
+				(databaseContext: DatabaseContext, walletToken: request.WalletToken,
+				cellPhoneNumber: request.User.CellPhoneNumber, userWallet: userWallet);
+
+			if (userBalanceResult.IsSuccess == false)
+			{
+				return Ok(value: userBalanceResult);
+			}
+			// **************************************************
+
 			// **************************************************
 			var foundedItem =
 				await
 				DatabaseContext.Transactions
 				.AsNoTracking()
 				.Where(current => current.Id == request.TransactionId)
-				.Where(current => current.WalletId == foundedWalletId)
+				.Where(current => current.WalletId == wallet.Id)
 				.Where(current => current.User != null && current.User.CellPhoneNumber == request.User.CellPhoneNumber)
 				.Select(current => new Dtos.Users.GetTransactionResponseDto
 				{
@@ -1821,7 +2020,6 @@ public class UsersController :
 					DepositeOrWithdrawReferenceCode = current.DepositeOrWithdrawReferenceCode,
 				})
 				.FirstOrDefaultAsync();
-			// **************************************************
 			// **************************************************
 
 			// **************************************************
@@ -1859,7 +2057,7 @@ public class UsersController :
 	#endregion /Action: GetTransaction()
 
 	#region Action: GetTransactions()
-	[Microsoft.AspNetCore.Mvc.HttpPost(template: "transactions")]
+	[Microsoft.AspNetCore.Mvc.HttpPost(template: "[action]")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(Dtat.Result<Dtos.Users.GetTransactionsResponseDto>),
@@ -1871,7 +2069,7 @@ public class UsersController :
 	public async System.Threading.Tasks.Task
 		<Microsoft.AspNetCore.Mvc.ActionResult
 		<Dtat.Result<Dtos.Users.GetTransactionsResponseDto>>>
-		GetTransactionsAsync(Dtos.Users.GetTransactionsRequestDto request)
+		GetTransactions(Dtos.Users.GetTransactionsRequestDto request)
 	{
 		try
 		{
@@ -1879,23 +2077,223 @@ public class UsersController :
 				<Dtos.Users.GetTransactionsResponseDto>();
 
 			// **************************************************
-			var foundedWalletId =
-				await
-				DatabaseContext.CompanyWallets
-				.Where(current => current.Wallet != null && current.Wallet.Token == request.WalletToken)
-				.Where(current => current.Company != null && current.Company.Token == request.CompanyToken)
-				.Select(current => current.WalletId)
-				.FirstOrDefaultAsync();
+			// بدست آوردن آی‌پی سرور درخواست کننده
+			// **************************************************
+			var serverIP =
+				Utility.GetServerIP(request: Request);
 
-			if (foundedWalletId <= 0)
+			if (serverIP == null)
 			{
-				var errorMessage =
-					Resources.Messages.Errors.TheCompanyDoesNotHaveAccessToThisWallet;
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(serverIP));
 
 				result.AddErrorMessages
 					(message: errorMessage);
 
-				return result;
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			if (request == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(request));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی معتبر بودن فیلدهای ارسال شده
+			// **************************************************
+			var validateEntityResult =
+				Dtat.Utility.ValidateEntity(entity: request);
+
+			if (validateEntityResult.IsSuccess == false)
+			{
+				return Ok(value: validateEntityResult);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی شرکت بر اساس توکن
+			// **************************************************
+			var companyResult =
+				Services.CompaniesService.CheckAndGetCompanyByToken
+				(databaseContext: DatabaseContext, token: request.CompanyToken);
+
+			if (companyResult.IsSuccess == false)
+			{
+				return Ok(value: companyResult);
+			}
+
+			var company =
+				companyResult.Data;
+
+			// بودن null صرفا برای جلوگیری از اخطار
+			if (company == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(company));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی مجاز بودن آی‌پی سرور درخواست کننده
+			// **************************************************
+			var validIPResult =
+				Services.ValidIPsService.CheckServerIPByCompanyToken
+				(databaseContext: DatabaseContext, serverIP: serverIP,
+				companyToken: request.CompanyToken, walletToken: request.WalletToken,
+				cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+			if (validIPResult.IsSuccess == false)
+			{
+				return Ok(value: validIPResult);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی کیف پول بر اساس توکن
+			// **************************************************
+			var walletResult =
+				Services.WalletsService.CheckAndGetWalletByToken
+				(databaseContext: DatabaseContext, token: request.WalletToken);
+
+			if (walletResult.IsSuccess == false)
+			{
+				return Ok(value: walletResult);
+			}
+
+			var wallet =
+				walletResult.Data;
+
+			// بودن null صرفا برای جلوگیری از اخطار
+			if (wallet == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(wallet));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی دسترسی شرکت به کیف پول مربوطه، بر اساس توکن‌های آن‌ها
+			// **************************************************
+			var companyWalletResult =
+				Services.CompanyWalletsService.CheckAndGetCompanyWalletByTokens
+				(databaseContext: DatabaseContext, companyToken: request.CompanyToken, walletToken: request.WalletToken);
+
+			if (companyWalletResult.IsSuccess == false)
+			{
+				return Ok(value: companyWalletResult);
+			}
+
+			var companyWallet =
+				companyWalletResult.Data;
+
+			// بودن null صرفا برای جلوگیری از اخطار
+			if (companyWallet == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(companyWallet));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی کاربر
+			// **************************************************
+			var userResult =
+				Services.UsersService.CheckAndGetUserByCellPhoneNumber
+				(databaseContext: DatabaseContext,
+				cellPhoneNumber: request.User.CellPhoneNumber);
+
+			if (userResult.IsSuccess == false)
+			{
+				return Ok(value: userResult);
+			}
+
+			var user =
+				userResult.Data;
+
+			// بودن null صرفا برای جلوگیری از اخطار
+			if (user == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(user));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بررسی دسترسی کاربر به کیف پول مربوطه
+			// **************************************************
+			var userWalletResult =
+				Services.UserWalletsService.CheckAndGetUserWallet(databaseContext: DatabaseContext,
+				cellPhoneNumber: request.User.CellPhoneNumber, walletToken: request.WalletToken);
+
+			if (userWalletResult.IsSuccess == false)
+			{
+				return Ok(value: userWalletResult);
+			}
+
+			var userWallet =
+				userWalletResult.Data;
+
+			// بودن null صرفا برای جلوگیری از اخطار
+			if (userWallet == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(userWallet));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			// بدست آوردن مانده کیف پول کاربر
+			// با احتساب چک کردن معتبر بودن آن
+			// **************************************************
+			var userBalanceResult =
+				Services.UserWalletsService.GetUserBalanceWithCheckingDataConsistency
+				(databaseContext: DatabaseContext, walletToken: request.WalletToken,
+				cellPhoneNumber: request.User.CellPhoneNumber, userWallet: userWallet);
+
+			if (userBalanceResult.IsSuccess == false)
+			{
+				return Ok(value: userBalanceResult);
 			}
 			// **************************************************
 
@@ -1903,7 +2301,7 @@ public class UsersController :
 			var query =
 				DatabaseContext.Transactions.AsQueryable()
 				.AsNoTracking()
-				.Where(current => current.WalletId == foundedWalletId)
+				.Where(current => current.WalletId == wallet.Id)
 				.Where(current => current.User != null && current.User.CellPhoneNumber == request.User.CellPhoneNumber)
 				;
 			// **************************************************
