@@ -212,6 +212,67 @@ public static System.Guid Company =
 **************************************************
 
 **************************************************
+*** Withdraw *************************************
+**************************************************
+{
+	"user": {
+		"ip": "192.168.1.110",
+		"cellPhoneNumber": "09123456789"
+	},
+	"amount": 100,
+	"walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
+	"companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
+	"userDescription": null,
+	"systemicDescription": null,
+	"additionalData": null
+}
+
+**************************************************
+
+**************************************************
+{
+	"data": {
+		"transactionId": 2,
+		"balance": 100000.00,
+		"withdrawBalance": 0.00
+	},
+	"isSuccess": true,
+	"errorMessages": [],
+	"successMessages": []
+}
+**************************************************
+
+**************************************************
+*** Refund ***************************************
+**************************************************
+{
+    "user": {
+		"ip": "192.168.1.110",
+		"cellPhoneNumber": "09123456789"
+	},
+    "amount": 1,
+	"walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
+	"companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
+    "withdrawDurationInDays": 0,
+    "systemicDescription": null,
+    "additionalData": null
+}
+**************************************************
+
+**************************************************
+{
+    "data": {
+        "transactionId": 2,
+        "balance": 100000.00,
+        "withdrawBalance": 0.00
+    },
+    "isSuccess": true,
+    "errorMessages": [],
+    "successMessages": []
+}
+**************************************************
+
+**************************************************
 https://localhost:7087/api/users/GetBalance/D630496E-3F91-4127-9DBC-F03B14ECD6D2/09121087461
 **************************************************
 
