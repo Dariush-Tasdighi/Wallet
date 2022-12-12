@@ -628,10 +628,22 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
+				// بدست آوردن مانده قابل برداشت
+				// **************************************************
+				var userWithdrawBalanceResult =
+					Services.UserWalletsService.GetUserWithdrawBalance
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+				var userWithdrawBalance =
+					userWithdrawBalanceResult.Data;
+				// **************************************************
+
+				// **************************************************
 				// TODO
 				var depositeResponseDto =
-					new Dtos.Users.DepositeResponseDto
-					(balance: userWallet.Balance, withdrawBalance: 0, transactionId: transaction.Id);
+					new Dtos.Users.DepositeResponseDto(balance: userWallet.Balance,
+					withdrawBalance: userWithdrawBalance, transactionId: transaction.Id);
 
 				result.Data =
 					depositeResponseDto;
@@ -969,10 +981,22 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
+				// بدست آوردن مانده قابل برداشت
+				// **************************************************
+				var userWithdrawBalanceResult =
+					Services.UserWalletsService.GetUserWithdrawBalance
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+				var userWithdrawBalance =
+					userWithdrawBalanceResult.Data;
+				// **************************************************
+
+				// **************************************************
 				// TODO
 				var paymentResponseDto =
 					new Dtos.Users.PaymentResponseDto(balance: userWallet.Balance,
-					withdrawBalance: 0, transactionId: transaction.Id);
+					withdrawBalance: userWithdrawBalance, transactionId: transaction.Id);
 
 				result.Data =
 					paymentResponseDto;
@@ -1342,8 +1366,20 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
+				// بدست آوردن مانده قابل برداشت
+				// **************************************************
+				userWithdrawBalanceResult =
+					Services.UserWalletsService.GetUserWithdrawBalance
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+				userWithdrawBalance =
+					userWithdrawBalanceResult.Data;
+				// **************************************************
+
+				// **************************************************
 				var data =
-					new Dtos.Users.WithdrawResponseDto(balance: userBalance,
+					new Dtos.Users.WithdrawResponseDto(balance: userWallet.Balance,
 					withdrawBalance: userWithdrawBalance, transactionId: transaction.Id);
 
 				result.Data = data;
@@ -1728,9 +1764,21 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
+				// بدست آوردن مانده قابل برداشت
+				// **************************************************
+				var userWithdrawBalanceResult =
+					Services.UserWalletsService.GetUserWithdrawBalance
+					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
+					cellPhoneNumber: request.User.CellPhoneNumber, utility: Utility);
+
+				var userWithdrawBalance =
+					userWithdrawBalanceResult.Data;
+				// **************************************************
+
+				// **************************************************
 				var data =
-					new Dtos.Users.RefundResponseDto
-					(balance: userWallet.Balance, withdrawBalance: 0, transactionId: transaction.Id);
+					new Dtos.Users.RefundResponseDto(balance: userWallet.Balance,
+					withdrawBalance: userWithdrawBalance, transactionId: transaction.Id);
 
 				result.Data = data;
 
