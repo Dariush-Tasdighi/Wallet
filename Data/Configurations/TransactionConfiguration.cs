@@ -49,7 +49,7 @@ internal class TransactionConfiguration : object,
 		// **************************************************
 		// **************************************************
 		builder
-			.HasMany(current => current.SubTransactions)
+			.HasMany(current => current.Children)
 			.WithOne(other => other.ParentTransaction)
 			.IsRequired(required: false)
 			.HasForeignKey(other => other.ParentTransactionId)

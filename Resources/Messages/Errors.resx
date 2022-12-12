@@ -136,7 +136,7 @@
     <value>There is not any user with this cell phone number!</value>
   </data>
   <data name="TheAmountValueIsMore" xml:space="preserve">
-    <value>The amount value is more than user {0} value!</value>
+    <value>The amount value is more than {0} value!</value>
   </data>
   <data name="TheCompanyAccessToThisWalletIsNotActive" xml:space="preserve">
     <value>The company access to this wallet is not active!</value>

@@ -115,7 +115,7 @@ namespace Resources.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The amount value is more than user {0} value!.
+        ///   Looks up a localized string similar to The amount value is more than {0} value!.
         /// </summary>
         public static string TheAmountValueIsMore {
             get {

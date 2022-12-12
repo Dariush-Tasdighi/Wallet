@@ -14,6 +14,11 @@ public interface ITransaction<T> :
 	/// </summary>
 	T? PartyUserId { get; }
 
+	/// <summary>
+	/// تراکنش پرداخت مرتبط را مشخص می‌کند ،Refund در زمان
+	/// </summary>
+	T? ParentTransactionId { get; }
+
 
 
 	/// <summary>
@@ -46,6 +51,8 @@ public interface ITransaction<T> :
 
 	string ServerIP { get; }
 
+	string CellPhoneNumber { get; }
+
 
 
 	string? AdditionalData { get; }
@@ -61,4 +68,9 @@ public interface ITransaction<T> :
 	string? DepositeOrWithdrawProviderName { get; }
 
 	string? DepositeOrWithdrawReferenceCode { get; }
+
+
+
+	// صرفا در جهت اطلاع
+	//System.Collections.Generic.IList<ITransaction<T>> Children { get; }
 }

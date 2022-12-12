@@ -14,16 +14,9 @@ public class GetTransactionResponseDto : object
 	public long UserId { get; set; }
 	#endregion /UserId
 
-
 	#region WalletId
 	public long WalletId { get; set; }
 	#endregion /WalletId
-
-
-	#region PartyUserId
-	public long? PartyUserId { get; set; }
-	#endregion /PartyUserId
-
 
 	#region Amount
 	public decimal Amount { get; set; }
@@ -35,8 +28,6 @@ public class GetTransactionResponseDto : object
 	/// </summary>
 	public bool IsCleared { get; set; }
 	#endregion /IsCleared
-
-
 
 	#region Type
 	public Dtat.Wallet.Abstractions.SeedWork.TransactionType Type { get; set; }
@@ -71,10 +62,6 @@ public class GetTransactionResponseDto : object
 	#region UserIP
 	public string? UserIP { get; set; }
 	#endregion /UserIP
-
-	#region ServerIP
-	//public string? ServerIP { get; set; }
-	#endregion /ServerIP
 
 	#region AdditionalData
 	public string? AdditionalData { get; set; }

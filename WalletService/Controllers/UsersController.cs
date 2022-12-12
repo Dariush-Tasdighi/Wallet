@@ -311,84 +311,6 @@ public class UsersController :
 	}
 	#endregion /Action: GetBalance()
 
-	//#region Action: GetLastTransactionsAsync()
-	//[Microsoft.AspNetCore.Mvc.HttpGet
-	//	(template: "[action]/{walletToken}/{cellPhoneNumber}/{count}")]
-
-	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
-	//	(type: typeof(Domain.Wallet),
-	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
-
-	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
-	//	(type: typeof(string),
-	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
-
-	//[Microsoft.AspNetCore.Mvc.ProducesResponseType
-	//	(type: typeof(string),
-	//	statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
-	//public async System.Threading.Tasks.Task
-	//	<Microsoft.AspNetCore.Mvc.ActionResult<System.Collections.Generic.IList<Domain.Transaction>>>
-	//	GetLastTransactionsAsync(System.Guid walletToken, string cellPhoneNumber, int count)
-	//{
-	//	try
-	//	{
-	//		//var foundedUserWallet =
-	//		//	await
-	//		//	DatabaseContext.UserWallets
-	//		//	.AsNoTracking()
-	//		//	.Where(current => current.IsActive)
-
-	//		//	.Where(current => current.Wallet != null && current.Wallet.IsActive)
-	//		//	.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
-
-	//		//	.Where(current => current.User != null && current.User.IsActive)
-	//		//	.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
-	//		//	.FirstOrDefaultAsync();
-
-	//		// فارغ از هر شرایطی، امکان نمایش تراکنش‌های کاربر
-	//		// بر روی کیف پول باید امکان‌پذیر باشد
-	//		var foundedUserWallet =
-	//			await
-	//			DatabaseContext.UserWallets
-	//			.AsNoTracking()
-	//			.Where(current => current.Wallet != null && current.Wallet.Token == walletToken)
-	//			.Where(current => current.User != null && current.User.CellPhoneNumber == cellPhoneNumber)
-	//			.FirstOrDefaultAsync();
-
-	//		if (foundedUserWallet == null)
-	//		{
-	//			return NotFound(value: null);
-	//		}
-
-	//		var transactions =
-	//			await
-	//			DatabaseContext.Transactions
-	//			.AsNoTracking()
-	//			.Where(current => current.UserId == foundedUserWallet.UserId)
-	//			.Where(current => current.WalletId == foundedUserWallet.WalletId)
-	//			.Skip(count: 0)
-	//			.Take(count: count)
-	//			.ToListAsync()
-	//			;
-
-	//		return Ok(value: transactions);
-	//	}
-	//	catch (System.Exception ex)
-	//	{
-	//		var applicationError =
-	//			new Infrastructure.ApplicationError
-	//			(code: Infrastructure.Constant.ErrorCode.Root_UsersController_GetLastTransactionsAsync,
-	//			message: ex.Message, innerException: ex);
-
-	//		Logger.LogError
-	//			(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
-
-	//		return StatusCode(statusCode: Microsoft.AspNetCore
-	//			.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
-	//	}
-	//}
-	//#endregion /Action: GetLastTransactions()
-
 	#region Action: Deposite()
 	/// <summary>
 	/// تعریف نمی‌کنیم Async به دلیل مسائل امنیتی و هم‌زمانی این تابع را
@@ -423,6 +345,20 @@ public class UsersController :
 				var errorMessage = string.Format
 					(format: Resources.Messages.Errors.TheItemIsNull,
 					arg0: nameof(serverIP));
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			// **************************************************
+			if (request == null)
+			{
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(request));
 
 				result.AddErrorMessages
 					(message: errorMessage);
@@ -649,7 +585,8 @@ public class UsersController :
 				var transaction =
 					new Domain.Transaction
 					(userId: user.Id, walletId: wallet.Id,
-					amount: request.Amount, userIP: request.User.IP, serverIP: serverIP)
+					amount: request.Amount, serverIP: serverIP,
+					userIP: request.User.IP, cellPhoneNumber: request.User.CellPhoneNumber)
 					{
 						ServerIP = serverIP,
 						UserIP = request.User.IP,
@@ -665,6 +602,19 @@ public class UsersController :
 
 						Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite,
 					};
+
+				if (request.WithdrawDurationInDays.HasValue == false)
+				{
+					transaction.UpdateWithdrawDate(value: null);
+				}
+				else
+				{
+					var now =
+						Utility.GetNow().AddDays
+						(value: request.WithdrawDurationInDays.Value);
+
+					transaction.UpdateWithdrawDate(value: now);
+				}
 
 				transaction.UpdateHash();
 
@@ -939,25 +889,28 @@ public class UsersController :
 				// بدست آوردن مانده کیف پول کاربر
 				// با احتساب چک کردن معتبر بودن آن
 				// **************************************************
-				var balanceResult =
+				var userBalanceResult =
 					Services.UserWalletsService.GetUserBalanceWithCheckingDataConsistency
 					(databaseContext: DatabaseContext, walletToken: request.WalletToken,
 					cellPhoneNumber: request.User.CellPhoneNumber, userWallet: userWallet);
 
-				if (balanceResult.IsSuccess == false)
+				if (userBalanceResult.IsSuccess == false)
 				{
-					return Ok(value: balanceResult);
+					return Ok(value: userBalanceResult);
 				}
+
+				var userBalance =
+					userBalanceResult.Data;
 				// **************************************************
 
 				// **************************************************
 				// کاهش مانده حساب کاربر در کیف پول جاری
 				// **************************************************
-				if (request.Amount > userWallet.Balance)
+				if (request.Amount > userBalance)
 				{
 					var errorMessage = string.Format
 						(format: Resources.Messages.Errors.TheAmountValueIsMore,
-						arg0: nameof(Domain.UserWallet.Balance));
+						arg0: nameof(userBalance));
 
 					result.AddErrorMessages(message: errorMessage);
 
@@ -985,7 +938,8 @@ public class UsersController :
 				var transaction =
 					new Domain.Transaction
 					(userId: user.Id, walletId: wallet.Id,
-					amount: transactionAmount, userIP: request.User.IP, serverIP: serverIP)
+					amount: transactionAmount, serverIP: serverIP,
+					userIP: request.User.IP, cellPhoneNumber: request.User.CellPhoneNumber)
 					{
 						ServerIP = serverIP,
 						UserIP = request.User.IP,
@@ -1017,8 +971,8 @@ public class UsersController :
 				// **************************************************
 				// TODO
 				var paymentResponseDto =
-					new Dtos.Users.PaymentResponseDto
-					(balance: userWallet.Balance, withdrawBalance: 0, transactionId: transaction.Id);
+					new Dtos.Users.PaymentResponseDto(balance: userWallet.Balance,
+					withdrawBalance: 0, transactionId: transaction.Id);
 
 				result.Data =
 					paymentResponseDto;
@@ -1357,7 +1311,8 @@ public class UsersController :
 				var transaction =
 					new Domain.Transaction
 					(userId: user.Id, walletId: wallet.Id,
-					amount: transactionAmount, userIP: request.User.IP, serverIP: serverIP)
+					amount: transactionAmount, serverIP: serverIP,
+					userIP: request.User.IP, cellPhoneNumber: request.User.CellPhoneNumber)
 					{
 						ServerIP = serverIP,
 						UserIP = request.User.IP,
@@ -1726,18 +1681,11 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
-				System.DateTime? withdrawDate = null;
-
-				if (request.WithdrawDurationInDays.HasValue)
-				{
-					withdrawDate =
-						Utility.GetNow().AddDays(value: request.WithdrawDurationInDays.Value);
-				};
-
 				var transaction =
 					new Domain.Transaction
 					(userId: user.Id, walletId: wallet.Id,
-					amount: request.Amount, userIP: request.User.IP, serverIP: serverIP)
+					amount: request.Amount, serverIP: serverIP,
+					userIP: request.User.IP, cellPhoneNumber: request.User.CellPhoneNumber)
 					{
 						ServerIP = serverIP,
 						UserIP = request.User.IP,
@@ -1755,7 +1703,18 @@ public class UsersController :
 						Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Refund,
 					};
 
-				transaction.UpdateWithdrawDate(value: withdrawDate);
+				if (request.WithdrawDurationInDays.HasValue == false)
+				{
+					transaction.UpdateWithdrawDate(value: null);
+				}
+				else
+				{
+					var now =
+						Utility.GetNow().AddDays
+						(value: request.WithdrawDurationInDays.Value);
+
+					transaction.UpdateWithdrawDate(value: now);
+				}
 
 				transaction.UpdateHash();
 
@@ -1805,13 +1764,9 @@ public class UsersController :
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(string),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
-
-	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(string),
-		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
 	public async System.Threading.Tasks.Task
 		<Microsoft.AspNetCore.Mvc.ActionResult<Dtat.Result<Dtos.Users.GetTransactionResponseDto>>>
-		GetTransactionByPaymentReferenceCodeAsync(Dtos.Users.GetTransactionRequestDto request)
+		GetTransactionAsync(Dtos.Users.GetTransactionRequestDto request)
 	{
 		try
 		{
@@ -1856,7 +1811,6 @@ public class UsersController :
 					UserId = current.UserId,
 					WalletId = current.WalletId,
 					IsCleared = current.IsCleared,
-					PartyUserId = current.PartyUserId,
 					WithdrawDate = current.WithdrawDate,
 					AdditionalData = current.AdditionalData,
 					InsertDateTime = current.InsertDateTime,
@@ -1955,7 +1909,6 @@ public class UsersController :
 			// **************************************************
 
 			// **************************************************
-			// **************************************************
 			var foundedItems =
 				await
 				query
@@ -1970,7 +1923,6 @@ public class UsersController :
 					UserId = current.UserId,
 					WalletId = current.WalletId,
 					IsCleared = current.IsCleared,
-					PartyUserId = current.PartyUserId,
 					WithdrawDate = current.WithdrawDate,
 					AdditionalData = current.AdditionalData,
 					InsertDateTime = current.InsertDateTime,
@@ -2014,6 +1966,7 @@ public class UsersController :
 				foundedItems
 				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
 				.Sum(current => current.Amount);
+			// **************************************************
 			// **************************************************
 			// **************************************************
 

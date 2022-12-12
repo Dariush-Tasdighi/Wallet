@@ -5,15 +5,16 @@ public class Transaction :
 {
 	#region Constructor
 	public Transaction(long userId, long walletId,
-		decimal amount, string serverIP, string userIP) : base()
+		decimal amount, string serverIP, string userIP, string cellPhoneNumber) : base()
 	{
 		Amount = amount;
 		UserId = userId;
 		UserIP = userIP;
 		ServerIP = serverIP;
 		WalletId = walletId;
+		CellPhoneNumber = cellPhoneNumber;
 
-		SubTransactions =
+		Children =
 			new System.Collections.Generic.List<Transaction>();
 	}
 	#endregion /Constructor
@@ -85,8 +86,7 @@ public class Transaction :
 	#region WithdrawDate
 	public System.DateTime? WithdrawDate { get; private set; }
 
-	public void UpdateWithdrawDate
-		(System.DateTime? value)
+	public void UpdateWithdrawDate(System.DateTime? value)
 	{
 		if (value.HasValue == false)
 		{
@@ -156,6 +156,15 @@ public class Transaction :
 	public string? UserDescription { get; set; }
 	#endregion /UserDescription
 
+	#region CellPhoneNumber
+	[System.ComponentModel.DataAnnotations.Required
+		(AllowEmptyStrings = false)]
+
+	[System.ComponentModel.DataAnnotations.MaxLength
+		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.CellPhoneNumber)]
+	public string CellPhoneNumber { get; set; }
+	#endregion /CellPhoneNumber
+
 	#region SystemicDescription
 	[System.ComponentModel.DataAnnotations.MaxLength
 		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.Description)]
@@ -164,10 +173,10 @@ public class Transaction :
 
 
 
-	#region SubTransactions
+	#region Children
 	[System.Text.Json.Serialization.JsonIgnore]
-	public virtual System.Collections.Generic.IList<Transaction> SubTransactions { get; set; }
-	#endregion SubTransactions
+	public virtual System.Collections.Generic.IList<Transaction> Children { get; private set; }
+	#endregion Children
 
 	#endregion /Properties
 

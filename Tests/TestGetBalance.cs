@@ -1938,8 +1938,8 @@ public class TestGetBalance
 
 		transaction =
 			new Domain.Transaction
-			(userId: user.Id, walletId: wallet.Id,
-			amount: 10, serverIP: serverIP, userIP: userIP)
+			(userId: user.Id, walletId: wallet.Id, amount: 10,
+			serverIP: serverIP, userIP: userIP, cellPhoneNumber: cellPhoneNumber)
 			{
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500001",
@@ -1957,8 +1957,8 @@ public class TestGetBalance
 
 		transaction =
 			new Domain.Transaction
-			(userId: user.Id, walletId: wallet.Id,
-			amount: -5, serverIP: serverIP, userIP: userIP)
+			(userId: user.Id, walletId: wallet.Id, amount: -5,
+			serverIP: serverIP, userIP: userIP, cellPhoneNumber: cellPhoneNumber)
 			{
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500002",
@@ -1979,8 +1979,8 @@ public class TestGetBalance
 
 		transaction =
 			new Domain.Transaction
-			(userId: user.Id, walletId: wallet.Id,
-			amount: 20, serverIP: serverIP, userIP: userIP)
+			(userId: user.Id, walletId: wallet.Id, amount: 20,
+			serverIP: serverIP, userIP: userIP, cellPhoneNumber: cellPhoneNumber)
 			{
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500003",
@@ -1998,8 +1998,8 @@ public class TestGetBalance
 
 		transaction =
 			new Domain.Transaction
-			(userId: user.Id, walletId: wallet.Id,
-			amount: -10, serverIP: serverIP, userIP: userIP)
+			(userId: user.Id, walletId: wallet.Id, amount: -10,
+			serverIP: serverIP, userIP: userIP, cellPhoneNumber: cellPhoneNumber)
 			{
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500004",
@@ -2017,8 +2017,8 @@ public class TestGetBalance
 
 		transaction =
 			new Domain.Transaction
-			(userId: user.Id, walletId: wallet.Id,
-			amount: 30, serverIP: serverIP, userIP: userIP)
+			(userId: user.Id, walletId: wallet.Id, amount: 30,
+			serverIP: serverIP, userIP: userIP, cellPhoneNumber: cellPhoneNumber)
 			{
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500005",
@@ -2039,8 +2039,8 @@ public class TestGetBalance
 
 		transaction =
 			new Domain.Transaction
-			(userId: user.Id, walletId: wallet.Id,
-			amount: 40, serverIP: serverIP, userIP: userIP)
+			(userId: user.Id, walletId: wallet.Id, amount: 40,
+			serverIP: serverIP, userIP: userIP, cellPhoneNumber: cellPhoneNumber)
 			{
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500006",
@@ -2058,8 +2058,8 @@ public class TestGetBalance
 
 		transaction =
 			new Domain.Transaction
-			(userId: user.Id, walletId: wallet.Id,
-			amount: -15, serverIP: serverIP, userIP: userIP)
+			(userId: user.Id, walletId: wallet.Id, amount: -15,
+			serverIP: serverIP, userIP: userIP, cellPhoneNumber: cellPhoneNumber)
 			{
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500007",
@@ -2080,8 +2080,8 @@ public class TestGetBalance
 
 		transaction =
 			new Domain.Transaction
-			(userId: user.Id, walletId: wallet.Id,
-			amount: 50, serverIP: serverIP, userIP: userIP)
+			(userId: user.Id, walletId: wallet.Id, amount: 50,
+			serverIP: serverIP, userIP: userIP, cellPhoneNumber: cellPhoneNumber)
 			{
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500008",
@@ -2099,8 +2099,8 @@ public class TestGetBalance
 
 		transaction =
 			new Domain.Transaction
-			(userId: user.Id, walletId: wallet.Id,
-			amount: 60, serverIP: serverIP, userIP: userIP)
+			(userId: user.Id, walletId: wallet.Id, amount: 60,
+			serverIP: serverIP, userIP: userIP, cellPhoneNumber: cellPhoneNumber)
 			{
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500009",
@@ -2121,8 +2121,8 @@ public class TestGetBalance
 
 		transaction =
 			new Domain.Transaction
-			(userId: user.Id, walletId: wallet.Id,
-			amount: 70, serverIP: serverIP, userIP: userIP)
+			(userId: user.Id, walletId: wallet.Id, amount: 70,
+			serverIP: serverIP, userIP: userIP, cellPhoneNumber: cellPhoneNumber)
 			{
 				DepositeOrWithdrawProviderName = "Iran Kish",
 				DepositeOrWithdrawReferenceCode = "1234500010",
