@@ -1726,6 +1726,14 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
+				System.DateTime? withdrawDate = null;
+
+				if (request.WithdrawDurationInDays.HasValue)
+				{
+					withdrawDate =
+						Utility.GetNow().AddDays(value: request.WithdrawDurationInDays.Value);
+				};
+
 				var transaction =
 					new Domain.Transaction
 					(userId: user.Id, walletId: wallet.Id,
@@ -1746,6 +1754,8 @@ public class UsersController :
 
 						Type = Dtat.Wallet.Abstractions.SeedWork.TransactionType.Refund,
 					};
+
+				transaction.UpdateWithdrawDate(value: withdrawDate);
 
 				transaction.UpdateHash();
 
@@ -1785,11 +1795,11 @@ public class UsersController :
 	}
 	#endregion /Action: Refund()
 
-	#region Action: GetTransactionByIdAsync()
-	[Microsoft.AspNetCore.Mvc.HttpGet(template: "{id}/transaction")]
+	#region Action: GetTransaction()
+	[Microsoft.AspNetCore.Mvc.HttpPost(template: "transaction")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(Dtos.Users.GetTransactionResponseDto),
+		(type: typeof(Dtat.Result<Dtos.Users.GetTransactionResponseDto>),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
@@ -1800,16 +1810,44 @@ public class UsersController :
 		(type: typeof(string),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound)]
 	public async System.Threading.Tasks.Task
-		<Microsoft.AspNetCore.Mvc.ActionResult<Dtos.Users.GetTransactionResponseDto>>
-		GetTransactionByPaymentReferenceCodeAsync(long id)
+		<Microsoft.AspNetCore.Mvc.ActionResult<Dtat.Result<Dtos.Users.GetTransactionResponseDto>>>
+		GetTransactionByPaymentReferenceCodeAsync(Dtos.Users.GetTransactionRequestDto request)
 	{
 		try
 		{
-			var item =
+			var result = new Dtat.Result
+				<Dtos.Users.GetTransactionResponseDto>();
+
+			// **************************************************
+			var foundedWalletId =
+				await
+				DatabaseContext.CompanyWallets
+				.Where(current => current.Wallet != null && current.Wallet.Token == request.WalletToken)
+				.Where(current => current.Company != null && current.Company.Token == request.CompanyToken)
+				.Select(current => current.WalletId)
+				.FirstOrDefaultAsync();
+
+			if (foundedWalletId <= 0)
+			{
+				var errorMessage =
+					Resources.Messages.Errors.TheCompanyDoesNotHaveAccessToThisWallet;
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return result;
+			}
+			// **************************************************
+
+			// **************************************************
+			// **************************************************
+			var foundedItem =
 				await
 				DatabaseContext.Transactions
 				.AsNoTracking()
-				.Where(current => current.Id == id)
+				.Where(current => current.Id == request.TransactionId)
+				.Where(current => current.WalletId == foundedWalletId)
+				.Where(current => current.User != null && current.User.CellPhoneNumber == request.User.CellPhoneNumber)
 				.Select(current => new Dtos.Users.GetTransactionResponseDto
 				{
 					Type = current.Type,
@@ -1829,13 +1867,26 @@ public class UsersController :
 					DepositeOrWithdrawReferenceCode = current.DepositeOrWithdrawReferenceCode,
 				})
 				.FirstOrDefaultAsync();
+			// **************************************************
+			// **************************************************
 
-			if (item == null)
+			// **************************************************
+			if (foundedItem == null)
 			{
-				return NotFound(value: Infrastructure.Constant.Message.NotFound);
-			}
+				var errorMessage = string.Format
+					(format: Resources.Messages.Errors.TheItemIsNull,
+					arg0: nameof(Domain.Transaction));
 
-			return Ok(value: item);
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return Ok(value: result);
+			}
+			// **************************************************
+
+			result.Data = foundedItem;
+
+			return Ok(value: result);
 		}
 		catch (System.Exception ex)
 		{
@@ -1851,13 +1902,13 @@ public class UsersController :
 				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
 		}
 	}
-	#endregion /Action: GetTransactionByIdAsync()
+	#endregion /Action: GetTransaction()
 
-	#region Action: GetUserTransactionsByCellPhoneNumberAsync()
-	[Microsoft.AspNetCore.Mvc.HttpPost(template: "transactions/cellPhoneNumber")]
+	#region Action: GetTransactions()
+	[Microsoft.AspNetCore.Mvc.HttpPost(template: "transactions")]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
-		(type: typeof(System.Collections.Generic.IEnumerable<Dtos.Users.GetTransactionResponseDto>),
+		(type: typeof(Dtat.Result<Dtos.Users.GetTransactionsResponseDto>),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status200OK)]
 
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
@@ -1865,17 +1916,49 @@ public class UsersController :
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
 	public async System.Threading.Tasks.Task
 		<Microsoft.AspNetCore.Mvc.ActionResult
-		<System.Collections.Generic.IEnumerable<Dtos.Users.GetTransactionResponseDto>>>
-		GetUserTransactionsByCellPhoneNumberAsync
-		(Dtos.Users.GetTransactionRequestDto request)
+		<Dtat.Result<Dtos.Users.GetTransactionsResponseDto>>>
+		GetTransactionsAsync(Dtos.Users.GetTransactionsRequestDto request)
 	{
 		try
 		{
-			var items =
+			var result = new Dtat.Result
+				<Dtos.Users.GetTransactionsResponseDto>();
+
+			// **************************************************
+			var foundedWalletId =
 				await
-				DatabaseContext.Transactions
+				DatabaseContext.CompanyWallets
+				.Where(current => current.Wallet != null && current.Wallet.Token == request.WalletToken)
+				.Where(current => current.Company != null && current.Company.Token == request.CompanyToken)
+				.Select(current => current.WalletId)
+				.FirstOrDefaultAsync();
+
+			if (foundedWalletId <= 0)
+			{
+				var errorMessage =
+					Resources.Messages.Errors.TheCompanyDoesNotHaveAccessToThisWallet;
+
+				result.AddErrorMessages
+					(message: errorMessage);
+
+				return result;
+			}
+			// **************************************************
+
+			// **************************************************
+			var query =
+				DatabaseContext.Transactions.AsQueryable()
 				.AsNoTracking()
-				.Where(current => current.User != null && current.User.CellPhoneNumber == request.CellPhoneNumber)
+				.Where(current => current.WalletId == foundedWalletId)
+				.Where(current => current.User != null && current.User.CellPhoneNumber == request.User.CellPhoneNumber)
+				;
+			// **************************************************
+
+			// **************************************************
+			// **************************************************
+			var foundedItems =
+				await
+				query
 				.OrderBy(current => current.InsertDateTime)
 				.Skip(count: request.Skip)
 				.Take(count: request.PageSize)
@@ -1899,14 +1982,59 @@ public class UsersController :
 				})
 				.ToListAsync()
 				;
+			// **************************************************
 
-			return Ok(value: items);
+			// **************************************************
+			var totalCount =
+				await
+				query.CountAsync();
+			// **************************************************
+
+			// **************************************************
+			var depositeTotalAmount =
+				await
+				query
+				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
+				.SumAsync(current => current.Amount);
+
+			var withdrawTotalAmount =
+				await
+				query
+				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
+				.SumAsync(current => current.Amount);
+			// **************************************************
+
+			// **************************************************
+			var depositeCurrentItemsTotalAmount =
+				foundedItems
+				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
+				.Sum(current => current.Amount);
+
+			var withdrawCurrentItemsTotalAmount =
+				foundedItems
+				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
+				.Sum(current => current.Amount);
+			// **************************************************
+			// **************************************************
+
+			result.Data =
+				new Dtos.Users.GetTransactionsResponseDto
+				{
+					Items = foundedItems,
+					TotalCount = totalCount,
+					DepositeTotalAmount = depositeTotalAmount,
+					WithdrawTotalAmount = withdrawTotalAmount,
+					DepositeCurrentItemsTotalAmount = depositeCurrentItemsTotalAmount,
+					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount,
+				};
+
+			return Ok(value: result);
 		}
 		catch (System.Exception ex)
 		{
 			var applicationError =
 				new Infrastructure.ApplicationError
-				(code: Infrastructure.Constant.ErrorCode.Root_UsersController_GetUserTransactionsByCellPhoneNumber,
+				(code: Infrastructure.Constant.ErrorCode.Root_UsersController_GetUserTransactions,
 				message: ex.Message, innerException: ex);
 
 			Logger.LogError
@@ -1916,5 +2044,5 @@ public class UsersController :
 				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
 		}
 	}
-	#endregion /Action: GetUserTransactionsByCellPhoneNumberAsync()
+	#endregion /Action: GetTransactions()
 }

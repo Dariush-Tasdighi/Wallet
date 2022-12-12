@@ -55,7 +55,7 @@ public static class Constant : object
 
 		public const long Root_UsersController_GetTransactionById = UsersController + 107;
 
-		public const long Root_UsersController_GetUserTransactionsByCellPhoneNumber = UsersController + 108;
+		public const long Root_UsersController_GetUserTransactions = UsersController + 108;
 		// **********
 
 		// **********

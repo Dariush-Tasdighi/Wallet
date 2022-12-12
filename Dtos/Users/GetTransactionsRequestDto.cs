@@ -1,13 +1,15 @@
 ﻿namespace Dtos.Users;
 
-public class GetTransactionRequestDto : object
+public class GetTransactionsRequestDto : Base.Pagination
 {
 	#region Constructor
-	public GetTransactionRequestDto() : base()
+	public GetTransactionsRequestDto() : base()
 	{
 		User = new();
 	}
 	#endregion /Constructor
+
+	#region Properties
 
 	#region Properties
 
@@ -18,10 +20,6 @@ public class GetTransactionRequestDto : object
 	[System.ComponentModel.DataAnnotations.Required]
 	public GetTransactionRequestUserDto User { get; set; }
 	#endregion /User
-
-	#region TransactionId
-	public long TransactionId { get; set; }
-	#endregion /TransactionId
 
 	#region WalletToken
 	/// <summary>
@@ -38,6 +36,8 @@ public class GetTransactionRequestDto : object
 	[System.ComponentModel.DataAnnotations.Required]
 	public System.Guid CompanyToken { get; set; }
 	#endregion /CompanyToken
+
+	#endregion /Properties
 
 	#endregion /Properties
 }
