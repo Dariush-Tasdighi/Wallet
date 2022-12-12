@@ -84,7 +84,7 @@ curl --location --request POST 'https://localhost:7087/api/users/withdraw' \
     "amount": 1,
 	"walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
 	"companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
-     "userDescription": null,
+    "userDescription": null,
     "systemicDescription": null,
     "additionalData": null
 }'
