@@ -166,7 +166,7 @@ public class Transaction :
 
 	#region SubTransactions
 	[System.Text.Json.Serialization.JsonIgnore]
-	public virtual System.Collections.Generic.IList<Transaction>? SubTransactions { get; set; }
+	public virtual System.Collections.Generic.IList<Transaction> SubTransactions { get; set; }
 	#endregion SubTransactions
 
 	#endregion /Properties
