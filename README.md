@@ -10,10 +10,11 @@ Hasti Wallet is a simple **multi-company**, **multi-wallet** **multi-user** wall
 
 ## Features
 
+- Refund
+- Transfer
 - Payment
 - Deposite
 - Withdraw
-- Transfer
 
 ## Getting Started
 Make sure you have installed **.NET 7** in your environment. After that, you can run the below commands from the **/WalletService/** directory and get started with the `Hasti wallet` immediately.
@@ -36,7 +37,7 @@ Make sure you have installed **.NET 7** in your environment. After that, you can
 {
         "user": {
                 "ip": "192.168.1.110",
-                "displayName": "علی رضا علوی",
+                "displayName": "Ali Reza Alavi",
                 "cellPhoneNumber": "09123456789",
                 "emailAddress": "AliReza@GMail.com",
                 "nationalCode": "1234512345",
@@ -48,10 +49,10 @@ Make sure you have installed **.NET 7** in your environment. After that, you can
         "amount": 1,
         "walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
         "companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
-        "providerName": "ایران کیش",
+        "providerName": "Iran Kish",
         "referenceCode": "1020304050",
-        "userDescription": "دوست داشتم کیف پولم رو شارژ کنم",
-        "systemicDescription": "شارژ کیف پول",
+        "userDescription": "Something...",
+        "systemicDescription": "Wallet Charged",
         "additionalData": null
 }
 ```
