@@ -1,6 +1,6 @@
 ﻿namespace Dtos.Users.Base;
 
-public class Response : object
+public abstract class Response : object
 {
 	#region Constructor
 	public Response

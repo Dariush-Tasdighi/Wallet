@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "WalletService\Server.csproj", "{E7541E87-0734-4F3D-83E3-37909E980175}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dtos", "Dtos", "{0F92FF37-9BC4-4EA0-90EF-ABD62B86C980}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Transfer Objects", "Data Transfer Objects", "{0F92FF37-9BC4-4EA0-90EF-ABD62B86C980}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dtos", "Dtos\Dtos.csproj", "{9034467C-4E0F-44FD-AF3A-49E9004C1A75}"
 EndProject
