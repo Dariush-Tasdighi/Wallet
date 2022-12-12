@@ -43,4 +43,8 @@
 		<ProjectReference Include="..\WalletService\Server.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Folder Include="Constants\" />
+	</ItemGroup>
+
 </Project>
