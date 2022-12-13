@@ -13,16 +13,16 @@ internal class DepositeRequestBuilder : object
 	private DepositeRequestBuilder() : base()
 	{
 		Amount =
-			Setups.Shared.Amount;
+			Setups.Constants.Shared.Amount;
 
 		ReferenceCode =
 			Helpers.Utility.ReferenceCode;
 
 		ProviderName =
-			Setups.Shared.IranKishProviderName;
+			Setups.Constants.Shared.IranKishProviderName;
 
 		WithdrawDurationInDays =
-			Setups.Shared.WithdrawDurationInDaysNeutralValue;
+			Setups.Constants.Shared.WithdrawDurationInDaysNeutralValue;
 
 		User =
 			DepositeRequestUserBuilder.Create();

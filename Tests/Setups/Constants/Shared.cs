@@ -1,4 +1,4 @@
-﻿namespace Tests.Setups;
+﻿namespace Tests.Setups.Constants;
 
 internal static class Shared : object
 {

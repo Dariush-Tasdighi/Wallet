@@ -3,7 +3,7 @@
 namespace Tests;
 
 [Xunit.Collection
-	(name: Setups.Shared.DatabaseCollection)]
+	(name: Setups.Constants.Shared.DatabaseCollection)]
 public class TestRefund : object
 {
 	#region Constructor(s)
@@ -180,7 +180,7 @@ public class TestRefund : object
 			.WithAmount(amount: depositeAmount)
 			.WithWalletToken(walletToken: hitWallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Token)
-			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Shared.WithdrawDurationInDaysNeutralValue)
+			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Constants.Shared.WithdrawDurationInDaysNeutralValue)
 			.Build();
 
 		depositeRequest.User.CellPhoneNumber = user.CellPhoneNumber;
@@ -220,7 +220,7 @@ public class TestRefund : object
 			.WithAmount(amount: paymentAmount)
 			.Build();
 
-		paymentRequest.User.IP = Setups.Shared.UserIP;
+		paymentRequest.User.IP = Setups.Constants.Shared.UserIP;
 		paymentRequest.User.CellPhoneNumber = user.CellPhoneNumber;
 
 		var payment =
@@ -258,7 +258,7 @@ public class TestRefund : object
 			.WithAmount(amount: refundAmount)
 			.Build();
 
-		refundRequest.User.IP = Setups.Shared.UserIP;
+		refundRequest.User.IP = Setups.Constants.Shared.UserIP;
 		refundRequest.User.CellPhoneNumber = user.CellPhoneNumber;
 
 		var refund =

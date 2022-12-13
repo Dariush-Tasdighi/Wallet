@@ -3,7 +3,7 @@
 namespace Tests;
 
 [Xunit.Collection
-	(name: Setups.Shared.DatabaseCollection)]
+	(name: Setups.Constants.Shared.DatabaseCollection)]
 public class TestDeposite : object
 {
 	#region Constructor(s)
@@ -174,7 +174,7 @@ public class TestDeposite : object
 			.WithAmount(amount: depositeAmount)
 			.WithWalletToken(walletToken: wallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Company.Token)
-			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Shared.WithdrawDurationInDaysNeutralValue)
+			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Constants.Shared.WithdrawDurationInDaysNeutralValue)
 			.Build();
 
 		depositeRequest.User.CellPhoneNumber = user.CellPhoneNumber;

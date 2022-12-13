@@ -13,12 +13,12 @@ internal class RefundRequestBuilder : object
 	private RefundRequestBuilder(long transactionId) : base()
 	{
 		Amount =
-			Setups.Shared.Amount;
+			Setups.Constants.Shared.Amount;
 
 		TransactionId = transactionId;
 
 		WithdrawDurationInDays =
-			Setups.Shared.WithdrawDurationInDaysNeutralValue;
+			Setups.Constants.Shared.WithdrawDurationInDaysNeutralValue;
 
 		User =
 			RefundRequestUserBuilder.Create();
