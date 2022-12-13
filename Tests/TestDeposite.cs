@@ -10,7 +10,7 @@ public class TestDeposite : object
 	{
 		var options =
 			new DbContextOptionsBuilder<Data.DatabaseContext>()
-			.UseInMemoryDatabase(databaseName: "UsersControllerTest")
+			.UseInMemoryDatabase(databaseName: "UsersControllerTest-DepositeScenario")
 			.ConfigureWarnings(current => current.Ignore
 			(Microsoft.EntityFrameworkCore.Diagnostics.InMemoryEventId.TransactionIgnoredWarning))
 			.Options;
@@ -36,6 +36,8 @@ public class TestDeposite : object
 		// **************************************************
 		var wallet =
 			Constants.Wallets.HastiWallet;
+
+		wallet.DepositeFeatureIsEnabled = true;
 
 		wallet.UpdateToken
 			(token: Constants.Wallets.HastiWalletToken);
@@ -89,7 +91,6 @@ public class TestDeposite : object
 
 		DatabaseContext.SaveChanges();
 		// **************************************************
-
 
 		// **************************************************
 		var userWallet = new Domain.UserWallet

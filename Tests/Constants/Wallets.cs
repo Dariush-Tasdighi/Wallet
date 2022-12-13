@@ -8,18 +8,17 @@ internal static class Wallets : object
 
 	// **************************************************
 	public static System.Guid HastiWalletToken =
-		new(g: "D630496E-3F91-4127-9DBC-F03B14ECD6D2");
+		new(g: "55308747-A312-4171-9025-901B3AF4F435");
 
 	public static Domain.Wallet HastiWallet = new(name: "کیف پول هستی")
 	{
-		Id = 1,
 		IsActive = true,
 	};
 	// **************************************************
 
 	// **************************************************
 	public static System.Guid MyTestWalletToken =
-		new(g: "62545A53-85EC-4670-8A24-3F4AD7667B6E");
+		new(g: "8B282AC3-7451-4F95-B5E6-544B738FE19A");
 
 	public static Domain.Wallet MyTestWallet = new(name: "کیف پول تستی من")
 	{
