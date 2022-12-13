@@ -18,7 +18,6 @@ public class TestWithdraw : object
 	protected Data.DatabaseContext DatabaseContext { get; }
 	#endregion /Property(ies)
 
-
 	#region DoWithdraw
 	[Xunit.Theory]
 	[Xunit.InlineData(100_000_000, 100_000_000, 99_999_998, 2)]
