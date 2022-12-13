@@ -1,25 +1,16 @@
 ﻿using Xunit;
-using Microsoft.EntityFrameworkCore;
 
 namespace Tests;
 
+[Xunit.Collection
+	(name: Setups.Shared.DatabaseCollection)]
 public class TestDeposite : object
 {
 	#region Constructor(s)
-	public TestDeposite() : base()
+	public TestDeposite(Helpers.DatabaseFixture databaseFixture) : base()
 	{
-		var options =
-			new DbContextOptionsBuilder<Data.DatabaseContext>()
-			.UseInMemoryDatabase(databaseName: "UsersController-Deposite-Test")
-			.ConfigureWarnings(current => current.Ignore
-			(Microsoft.EntityFrameworkCore.Diagnostics.InMemoryEventId.TransactionIgnoredWarning))
-			.Options;
-
 		DatabaseContext =
-			new Data.DatabaseContext(options: options);
-
-		DatabaseContext.Database.EnsureCreated();
-		DatabaseContext.Database.EnsureCreated();
+			databaseFixture.DatabaseContext;
 	}
 	#endregion /Constructor(s)
 
@@ -34,23 +25,27 @@ public class TestDeposite : object
 		// **************************************************
 		// **************************************************
 		// **************************************************
-		var wallet =
-			Constants.Wallets.HastiWallet;
+		var hitWallet =
+			Setups.Wallet.Hit.Instance;
+
+		var wallet = hitWallet.Wallet;
 
 		wallet.DepositeFeatureIsEnabled = true;
 
-		wallet.UpdateToken
-			(token: Constants.Wallets.HastiWalletToken);
+		wallet.UpdateToken(token: hitWallet.Token);
 
 		DatabaseContext.Add(entity: wallet);
 
 		DatabaseContext.SaveChanges();
 		// **************************************************
-		var company =
-			Constants.Companies.Hit;
 
-		company.UpdateToken
-			(token: Constants.Companies.HitCompanyToken);
+		// **************************************************
+		var hitCompany =
+			Setups.Company.Hit.Instance;
+
+		var company = hitCompany.Company;
+
+		company.UpdateToken(token: hitCompany.Token);
 
 		DatabaseContext.Add(entity: company);
 
@@ -72,7 +67,7 @@ public class TestDeposite : object
 		// **************************************************
 		var validIP =
 			new Domain.ValidIP
-			(companyId: company.Id, serverIP: Constants.Companies.HitIP)
+			(companyId: company.Id, serverIP: hitCompany.IP)
 			{
 				IsActive = true,
 			};
@@ -83,7 +78,10 @@ public class TestDeposite : object
 		// **************************************************
 
 		// **************************************************
-		var user = Constants.Users.Reza;
+		var actor =
+			Setups.Users.Reza.Instance;
+
+		var user = actor.User;
 
 		user.UpdateHash();
 
@@ -106,8 +104,6 @@ public class TestDeposite : object
 
 		DatabaseContext.SaveChanges();
 		// **************************************************
-
-		// **************************************************
 		// **************************************************
 		// **************************************************
 
@@ -123,7 +119,7 @@ public class TestDeposite : object
 
 		mockUtility.Setup(current => current
 			.GetServerIP(Moq.It.IsAny<Microsoft.AspNetCore.Http.HttpRequest>()))
-			.Returns(value: Constants.Companies.HitIP);
+			.Returns(value: hitCompany.IP);
 		// **************************************************
 
 		var usersController =
@@ -133,13 +129,11 @@ public class TestDeposite : object
 		// **************************************************
 		// **************************************************
 		// **************************************************
-		// **************************************************
-		// **************************************************
 		var getBalanceRequest =
 			new Dtos.Users.GetBalanceRequestDto()
 			{
-				WalletToken = Constants.Wallets.HastiWalletToken,
-				CompanyToken = Constants.Companies.HitCompanyToken,
+				WalletToken = hitWallet.Token,
+				CompanyToken = hitCompany.Token,
 			};
 
 		getBalanceRequest.User.CellPhoneNumber = user.CellPhoneNumber;
@@ -170,16 +164,14 @@ public class TestDeposite : object
 		Assert.Equal
 			(expected: 0, actual: getBalanceValue.Data.Balance);
 		// **************************************************
-		// **************************************************
-		// **************************************************
 
 		// **************************************************
 		var depositeRequest =
 			Builders.DepositeRequestBuilder.Create()
-			.WithWalletToken(walletToken: Constants.Wallets.HastiWalletToken)
-			.WithCompanyToken(companyToken: Constants.Companies.HitCompanyToken)
 			.WithAmount(amount: 100_000_000)
-			.WithWithdrawDurationInDays(withdrawDurationInDays: 0)
+			.WithWalletToken(walletToken: wallet.Token)
+			.WithCompanyToken(companyToken: hitCompany.Company.Token)
+			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Shared.WithdrawDurationInDaysNeutralValue)
 			.Build();
 
 		depositeRequest.User.CellPhoneNumber = user.CellPhoneNumber;
@@ -209,6 +201,8 @@ public class TestDeposite : object
 
 		Assert.Equal
 			(expected: depositeRequest.Amount, actual: depositeValue.Data.Balance);
+		// **************************************************
+		// **************************************************
 		// **************************************************
 	}
 	#endregion /DoDeposite()

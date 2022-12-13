@@ -13,13 +13,13 @@ internal class DepositeRequestUserBuilder : object
 	private DepositeRequestUserBuilder() : base()
 	{
 		var actor =
-			Constants.Users.Reza;
+			Setups.Users.Reza.Instance;
 
-		IP = Constants.Users.RezaIP;
-		DisplayName = actor.DisplayName;
-		NationalCode = actor.NationalCode;
-		EmailAddress = actor.EmailAddress;
-		CellPhoneNumber = actor.CellPhoneNumber;
+		IP = actor.IP;
+		DisplayName = actor.User.DisplayName;
+		NationalCode = actor.User.NationalCode;
+		EmailAddress = actor.User.EmailAddress;
+		CellPhoneNumber = actor.User.CellPhoneNumber;
 	}
 	#endregion /Constructor
 

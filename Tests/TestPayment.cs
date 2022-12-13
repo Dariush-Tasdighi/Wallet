@@ -1,252 +1,250 @@
 ﻿using Xunit;
-using Microsoft.EntityFrameworkCore;
 
 namespace Tests;
 
+[Xunit.Collection
+	(name: Setups.Shared.DatabaseCollection)]
 public class TestPayment : object
 {
-	//#region Constructor(s)
-	//public TestPayment() : base()
-	//{
-	//	var options =
-	//		new DbContextOptionsBuilder<Data.DatabaseContext>()
-	//		.UseInMemoryDatabase(databaseName: "UsersController-Payment-Test")
-	//		.ConfigureWarnings(current => current.Ignore
-	//		(Microsoft.EntityFrameworkCore.Diagnostics.InMemoryEventId.TransactionIgnoredWarning))
-	//		.Options;
-
-	//	DatabaseContext =
-	//		new Data.DatabaseContext(options: options);
-
-	//	DatabaseContext.Database.EnsureDeleted();
-	//	DatabaseContext.Database.EnsureCreated();
-	//}
-	//#endregion /Constructor(s)
-
-	//#region Property(ies)
-	//protected Data.DatabaseContext DatabaseContext { get; }
-	//#endregion /Property(ies)
-
-	//#region DoDeposite()
-	//[Xunit.Fact]
-	//public void DoPayment()
-	//{
-	//	// **************************************************
-	//	// **************************************************
-	//	// **************************************************
-	//	var wallet =
-	//		Constants.Wallets.HastiWallet;
-
-	//	wallet.PaymentFeatureIsEnabled = true;
-	//	wallet.DepositeFeatureIsEnabled = true;
-
-	//	wallet.UpdateToken
-	//		(token: Constants.Wallets.HastiWalletToken);
-
-	//	DatabaseContext.Add(entity: wallet);
-
-	//	DatabaseContext.SaveChanges();
-	//	// **************************************************
-	//	var company =
-	//		Constants.Companies.Hit;
-
-	//	company.UpdateToken
-	//		(token: Constants.Companies.HitCompanyToken);
-
-	//	DatabaseContext.Add(entity: company);
-
-	//	DatabaseContext.SaveChanges();
-	//	// **************************************************
-
-	//	// **************************************************
-	//	var companyWallet = new Domain.CompanyWallet
-	//		(companyId: company.Id, walletId: wallet.Id)
-	//	{
-	//		IsActive = true,
-	//	};
+	#region Constructor(s)
+	public TestPayment(Helpers.DatabaseFixture databaseFixture) : base()
+	{
+		DatabaseContext =
+			databaseFixture.DatabaseContext;
+	}
+	#endregion /Constructor(s)
 
-	//	DatabaseContext.Add(entity: companyWallet);
+	#region Property(ies)
+	protected Data.DatabaseContext DatabaseContext { get; }
+	#endregion /Property(ies)
 
-	//	DatabaseContext.SaveChanges();
-	//	// **************************************************
+	#region DoDeposite()
+	[Xunit.Fact]
+	public void DoPayment()
+	{
+		// **************************************************
+		// **************************************************
+		// **************************************************
+		var hitWallet =
+			Setups.Wallet.Hit.Instance;
 
-	//	// **************************************************
-	//	var validIP =
-	//		new Domain.ValidIP
-	//		(companyId: company.Id, serverIP: Constants.Companies.HitIP)
-	//		{
-	//			IsActive = true,
-	//		};
+		var wallet = hitWallet.Wallet;
 
-	//	DatabaseContext.Add(entity: validIP);
+		wallet.PaymentFeatureIsEnabled = true;
+		wallet.DepositeFeatureIsEnabled = true;
 
-	//	DatabaseContext.SaveChanges();
-	//	// **************************************************
+		wallet.UpdateToken
+			(token: hitWallet.Token);
+
+		DatabaseContext.Add(entity: wallet);
+
+		DatabaseContext.SaveChanges();
+		// **************************************************
+
+		// **************************************************
+		var hitCompany =
+			Setups.Company.Hit.Instance;
 
-	//	// **************************************************
-	//	var user = Constants.Users.Reza;
+		var company = hitCompany.Company;
 
-	//	user.UpdateHash();
+		company.UpdateToken
+			(token: hitCompany.Token);
 
-	//	DatabaseContext.Add(entity: user);
+		DatabaseContext.Add(entity: company);
 
-	//	DatabaseContext.SaveChanges();
-	//	// **************************************************
+		DatabaseContext.SaveChanges();
+		// **************************************************
 
-	//	// **************************************************
-	//	var userWallet = new Domain.UserWallet
-	//		(userId: user.Id, walletId: wallet.Id)
-	//	{
-	//		Balance = 0,
-	//		IsActive = true,
-	//	};
+		// **************************************************
+		var companyWallet = new Domain.CompanyWallet
+			(companyId: company.Id, walletId: wallet.Id)
+			{
+				IsActive = true,
+			};
 
-	//	userWallet.UpdateHash();
+		DatabaseContext.Add(entity: companyWallet);
 
-	//	DatabaseContext.Add(entity: userWallet);
+		DatabaseContext.SaveChanges();
+		// **************************************************
 
-	//	DatabaseContext.SaveChanges();
-	//	// **************************************************
+		// **************************************************
+		var validIP =
+			new Domain.ValidIP
+			(companyId: company.Id, serverIP: hitCompany.IP)
+			{
+				IsActive = true,
+			};
 
-	//	// **************************************************
-	//	// **************************************************
-	//	// **************************************************
+		DatabaseContext.Add(entity: validIP);
 
-	//	// **************************************************
-	//	var mockLogger =
-	//		new Moq.Mock<Microsoft.Extensions.Logging.ILogger
-	//		<Server.Controllers.UsersController>>();
-	//	// **************************************************
+		DatabaseContext.SaveChanges();
+		// **************************************************
 
-	//	// **************************************************
-	//	var mockUtility =
-	//		new Moq.Mock<Infrastructure.IUtility>();
+		// **************************************************
+		var actor =
+			Setups.Users.Reza.Instance;
 
-	//	mockUtility.Setup(current => current
-	//		.GetServerIP(Moq.It.IsAny<Microsoft.AspNetCore.Http.HttpRequest>()))
-	//		.Returns(value: Constants.Companies.HitIP);
-	//	// **************************************************
+		var user = actor.User;
 
-	//	var usersController =
-	//		new Server.Controllers.UsersController(logger: mockLogger.Object,
-	//		databaseContext: DatabaseContext, utility: mockUtility.Object);
+		user.UpdateHash();
 
-	//	// **************************************************
-	//	// **************************************************
-	//	// **************************************************
-	//	var getBalanceRequest =
-	//		new Dtos.Users.GetBalanceRequestDto()
-	//		{
-	//			WalletToken = Constants.Wallets.HastiWalletToken,
-	//			CompanyToken = Constants.Companies.HitCompanyToken,
-	//		};
+		DatabaseContext.Add(entity: user);
 
-	//	getBalanceRequest.User.CellPhoneNumber = user.CellPhoneNumber;
+		DatabaseContext.SaveChanges();
+		// **************************************************
 
-	//	var getBalance =
-	//		usersController.GetBalance(request: getBalanceRequest);
+		// **************************************************
+		var userWallet = new Domain.UserWallet
+			(userId: user.Id, walletId: wallet.Id)
+		{
+			Balance = 0,
+			IsActive = true,
+		};
 
-	//	Assert.NotNull(@object: getBalance);
+		userWallet.UpdateHash();
 
-	//	var getBalanceResult =
-	//		getBalance.Result as
-	//		Microsoft.AspNetCore.Mvc.OkObjectResult;
+		DatabaseContext.Add(entity: userWallet);
 
-	//	Assert.NotNull(@object: getBalanceResult);
+		DatabaseContext.SaveChanges();
+		// **************************************************
+		// **************************************************
+		// **************************************************
 
-	//	var getBalanceValue =
-	//		getBalanceResult.Value as
-	//		Dtat.Result<Dtos.Users.GetBalanceResponseDto>;
+		// **************************************************
+		var mockLogger =
+			new Moq.Mock<Microsoft.Extensions.Logging.ILogger
+			<Server.Controllers.UsersController>>();
+		// **************************************************
 
-	//	Assert.NotNull(@object: getBalanceValue);
+		// **************************************************
+		var mockUtility =
+			new Moq.Mock<Infrastructure.IUtility>();
 
-	//	Assert.True(condition: getBalanceValue.IsSuccess);
+		mockUtility.Setup(current => current
+			.GetServerIP(Moq.It.IsAny<Microsoft.AspNetCore.Http.HttpRequest>()))
+			.Returns(value: hitCompany.IP);
+		// **************************************************
 
-	//	Assert.Equal(expected: 0, actual: getBalanceValue.ErrorMessages.Count);
+		var usersController =
+			new Server.Controllers.UsersController(logger: mockLogger.Object,
+			databaseContext: DatabaseContext, utility: mockUtility.Object);
 
-	//	Assert.NotNull(@object: getBalanceValue.Data);
+		// **************************************************
+		// **************************************************
+		// **************************************************
+		var getBalanceRequest =
+			new Dtos.Users.GetBalanceRequestDto()
+			{
+				WalletToken = hitWallet.Token,
+				CompanyToken = hitCompany.Token,
+			};
 
-	//	Assert.Equal
-	//		(expected: 0, actual: getBalanceValue.Data.Balance);
-	//	// **************************************************
+		getBalanceRequest.User.CellPhoneNumber = user.CellPhoneNumber;
 
-	//	// **************************************************
-	//	var depositeRequest =
-	//		Builders.DepositeRequestBuilder.Create()
-	//		.WithWalletToken(walletToken: Constants.Wallets.HastiWalletToken)
-	//		.WithCompanyToken(companyToken: Constants.Companies.HitCompanyToken)
-	//		.WithAmount(amount: Constants.Shared.Amount)
-	//		.WithWithdrawDurationInDays(withdrawDurationInDays: 0)
-	//		.Build();
+		var getBalance =
+			usersController.GetBalance(request: getBalanceRequest);
 
-	//	depositeRequest.User.CellPhoneNumber = user.CellPhoneNumber;
+		Assert.NotNull(@object: getBalance);
 
-	//	var deposite =
-	//		usersController.Deposite(request: depositeRequest);
+		var getBalanceResult =
+			getBalance.Result as
+			Microsoft.AspNetCore.Mvc.OkObjectResult;
 
-	//	Assert.NotNull(@object: deposite);
+		Assert.NotNull(@object: getBalanceResult);
 
-	//	var depositeResult =
-	//		deposite.Result as
-	//		Microsoft.AspNetCore.Mvc.OkObjectResult;
+		var getBalanceValue =
+			getBalanceResult.Value as
+			Dtat.Result<Dtos.Users.GetBalanceResponseDto>;
 
-	//	Assert.NotNull(@object: depositeResult);
+		Assert.NotNull(@object: getBalanceValue);
 
-	//	var depositeValue =
-	//		depositeResult.Value as
-	//		Dtat.Result<Dtos.Users.DepositeResponseDto>;
+		Assert.True(condition: getBalanceValue.IsSuccess);
 
-	//	Assert.NotNull(@object: depositeValue);
+		Assert.Equal(expected: 0, actual: getBalanceValue.ErrorMessages.Count);
 
-	//	Assert.True(condition: depositeValue.IsSuccess);
+		Assert.NotNull(@object: getBalanceValue.Data);
 
-	//	Assert.Equal(expected: 0, actual: depositeValue.ErrorMessages.Count);
+		Assert.Equal
+			(expected: 0, actual: getBalanceValue.Data.Balance);
+		// **************************************************
 
-	//	Assert.NotNull(@object: depositeValue.Data);
+		// **************************************************
+		var depositeRequest =
+			Builders.DepositeRequestBuilder.Create()
+			.WithAmount(amount: 100_000_000)
+			.WithWalletToken(walletToken: hitWallet.Token)
+			.WithCompanyToken(companyToken: hitCompany.Token)
+			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Shared.WithdrawDurationInDaysNeutralValue)
+			.Build();
 
-	//	Assert.Equal
-	//		(expected: depositeRequest.Amount, actual: depositeValue.Data.Balance);
-	//	// **************************************************
+		depositeRequest.User.CellPhoneNumber = user.CellPhoneNumber;
 
-	//	// **************************************************
-	//	var paymentRequest =
-	//		Builders.PaymentRequestBuilder.Create()
-	//		.WithWalletToken(walletToken: Constants.Wallets.HastiWalletToken)
-	//		.WithCompanyToken(companyToken: Constants.Companies.HitCompanyToken)
-	//		.WithAmount(amount: Constants.Shared.Amount)
-	//		.Build();
+		var deposite =
+			usersController.Deposite(request: depositeRequest);
 
-	//	paymentRequest.User.IP = Constants.Shared.UserIP;
-	//	paymentRequest.User.CellPhoneNumber = user.CellPhoneNumber;
+		Assert.NotNull(@object: deposite);
 
-	//	var payment =
-	//		usersController.Payment(request: paymentRequest);
+		var depositeResult =
+			deposite.Result as
+			Microsoft.AspNetCore.Mvc.OkObjectResult;
 
-	//	Assert.NotNull(@object: payment);
+		Assert.NotNull(@object: depositeResult);
 
-	//	var paymentResult =
-	//		payment.Result as
-	//		Microsoft.AspNetCore.Mvc.OkObjectResult;
+		var depositeValue =
+			depositeResult.Value as
+			Dtat.Result<Dtos.Users.DepositeResponseDto>;
 
-	//	Assert.NotNull(@object: paymentResult);
+		Assert.NotNull(@object: depositeValue);
 
-	//	var paymentValue =
-	//		paymentResult.Value as
-	//		Dtat.Result<Dtos.Users.PaymentResponseDto>;
+		Assert.True(condition: depositeValue.IsSuccess);
 
-	//	Assert.NotNull(@object: paymentValue);
+		Assert.Equal(expected: 0, actual: depositeValue.ErrorMessages.Count);
 
-	//	Assert.True(condition: paymentValue.IsSuccess);
+		Assert.NotNull(@object: depositeValue.Data);
 
-	//	Assert.Equal(expected: 0, actual: paymentValue.ErrorMessages.Count);
+		Assert.Equal
+			(expected: depositeRequest.Amount, actual: depositeValue.Data.Balance);
+		// **************************************************
 
-	//	Assert.NotNull(@object: paymentValue.Data);
+		// **************************************************
+		var paymentRequest =
+			Builders.PaymentRequestBuilder.Create()
+			.WithWalletToken(walletToken: hitWallet.Token)
+			.WithCompanyToken(companyToken: hitCompany.Token)
+			.WithAmount(amount: 100_000_000)
+			.Build();
 
-	//	Assert.Equal
-	//		(expected: 0, actual: paymentValue.Data.Balance);
-	//	// **************************************************
-	//	// **************************************************
-	//	// **************************************************
-	//}
-	//#endregion /DoDeposite()
+		paymentRequest.User.IP = Setups.Shared.UserIP;
+		paymentRequest.User.CellPhoneNumber = user.CellPhoneNumber;
+
+		var payment =
+			usersController.Payment(request: paymentRequest);
+
+		Assert.NotNull(@object: payment);
+
+		var paymentResult =
+			payment.Result as
+			Microsoft.AspNetCore.Mvc.OkObjectResult;
+
+		Assert.NotNull(@object: paymentResult);
+
+		var paymentValue =
+			paymentResult.Value as
+			Dtat.Result<Dtos.Users.PaymentResponseDto>;
+
+		Assert.NotNull(@object: paymentValue);
+
+		Assert.True(condition: paymentValue.IsSuccess);
+
+		Assert.Equal(expected: 0, actual: paymentValue.ErrorMessages.Count);
+
+		Assert.NotNull(@object: paymentValue.Data);
+
+		Assert.Equal
+			(expected: 0, actual: paymentValue.Data.Balance);
+		// **************************************************
+		// **************************************************
+		// **************************************************
+	}
+	#endregion /DoDeposite()
 }

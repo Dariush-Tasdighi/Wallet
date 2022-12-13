@@ -13,10 +13,10 @@ internal class PaymentRequestUserBuilder : object
 	private PaymentRequestUserBuilder() : base()
 	{
 		var actor =
-			Constants.Users.Reza;
+			Setups.Users.Reza.Instance;
 
-		IP = Constants.Users.RezaIP;
-		CellPhoneNumber = actor.CellPhoneNumber;
+		IP = actor.IP;
+		CellPhoneNumber = actor.User.CellPhoneNumber;
 	}
 	#endregion /Constructor
 

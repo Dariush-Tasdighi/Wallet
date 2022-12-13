@@ -13,7 +13,7 @@ internal class PaymentRequestBuilder : object
 	private PaymentRequestBuilder() : base()
 	{
 		Amount =
-			Constants.Shared.Amount;
+			Setups.Shared.Amount;
 
 		ReferenceCode =
 			Helpers.Utility.ReferenceCode;

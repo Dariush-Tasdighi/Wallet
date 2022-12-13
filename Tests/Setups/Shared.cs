@@ -1,4 +1,4 @@
-﻿namespace Tests.Constants;
+﻿namespace Tests.Setups;
 
 internal static class Shared : object
 {
@@ -15,4 +15,6 @@ internal static class Shared : object
 	public const string IranKishProviderName = "Iran Kish";
 
 	public const int WithdrawDurationInDaysNeutralValue = 0;
+
+	public const string DatabaseCollection = "Database-Collection";
 }
