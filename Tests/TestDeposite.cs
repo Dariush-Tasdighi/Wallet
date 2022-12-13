@@ -19,8 +19,11 @@ public class TestDeposite : object
 	#endregion /Property(ies)
 
 	#region DoDeposite()
-	[Xunit.Fact]
-	public void DoDeposite()
+	[Xunit.Theory]
+	[Xunit.InlineData(100_000_000, 100_000_000)]
+	[Xunit.InlineData(500_000_000, 500_000_000)]
+	[Xunit.InlineData(250_000_000, 250_000_000)]
+	public void DoDeposite(decimal depositeAmount, decimal expectedBalance)
 	{
 		// **************************************************
 		// **************************************************
@@ -168,7 +171,7 @@ public class TestDeposite : object
 		// **************************************************
 		var depositeRequest =
 			Builders.DepositeRequestBuilder.Create()
-			.WithAmount(amount: 100_000_000)
+			.WithAmount(amount: depositeAmount)
 			.WithWalletToken(walletToken: wallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Company.Token)
 			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Shared.WithdrawDurationInDaysNeutralValue)
@@ -200,7 +203,7 @@ public class TestDeposite : object
 		Assert.NotNull(@object: depositeValue.Data);
 
 		Assert.Equal
-			(expected: depositeRequest.Amount, actual: depositeValue.Data.Balance);
+			(expected: expectedBalance, actual: depositeValue.Data.Balance);
 		// **************************************************
 		// **************************************************
 		// **************************************************

@@ -18,9 +18,12 @@ public class TestPayment : object
 	protected Data.DatabaseContext DatabaseContext { get; }
 	#endregion /Property(ies)
 
-	#region DoDeposite()
-	[Xunit.Fact]
-	public void DoPayment()
+	#region DoPayment()
+	[Xunit.Theory]
+	[Xunit.InlineData(100_000_000, 100_000_000, 0)]
+	[Xunit.InlineData(500_000_000, 400_000_001, 99_999_999)]
+	[Xunit.InlineData(250_000_000, 150_000_000, 100_000_000)]
+	public void DoPayment(decimal depositeAmount, decimal paymentAmount, decimal expectedBalance)
 	{
 		// **************************************************
 		// **************************************************
@@ -171,7 +174,7 @@ public class TestPayment : object
 		// **************************************************
 		var depositeRequest =
 			Builders.DepositeRequestBuilder.Create()
-			.WithAmount(amount: 100_000_000)
+			.WithAmount(amount: depositeAmount)
 			.WithWalletToken(walletToken: hitWallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Token)
 			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Shared.WithdrawDurationInDaysNeutralValue)
@@ -211,7 +214,7 @@ public class TestPayment : object
 			Builders.PaymentRequestBuilder.Create()
 			.WithWalletToken(walletToken: hitWallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Token)
-			.WithAmount(amount: 100_000_000)
+			.WithAmount(amount: paymentAmount)
 			.Build();
 
 		paymentRequest.User.IP = Setups.Shared.UserIP;
@@ -241,10 +244,10 @@ public class TestPayment : object
 		Assert.NotNull(@object: paymentValue.Data);
 
 		Assert.Equal
-			(expected: 0, actual: paymentValue.Data.Balance);
+			(expected: expectedBalance, actual: paymentValue.Data.Balance);
 		// **************************************************
 		// **************************************************
 		// **************************************************
 	}
-	#endregion /DoDeposite()
+	#endregion /DoPayment()
 }
