@@ -10,7 +10,7 @@ public class TestDeposite : object
 	{
 		var options =
 			new DbContextOptionsBuilder<Data.DatabaseContext>()
-			.UseInMemoryDatabase(databaseName: "UsersControllerTest-DepositeScenario")
+			.UseInMemoryDatabase(databaseName: "UsersController-Deposite-Test")
 			.ConfigureWarnings(current => current.Ignore
 			(Microsoft.EntityFrameworkCore.Diagnostics.InMemoryEventId.TransactionIgnoredWarning))
 			.Options;
@@ -18,13 +18,13 @@ public class TestDeposite : object
 		DatabaseContext =
 			new Data.DatabaseContext(options: options);
 
-		DatabaseContext.Database.EnsureDeleted();
+		DatabaseContext.Database.EnsureCreated();
 		DatabaseContext.Database.EnsureCreated();
 	}
 	#endregion /Constructor(s)
 
 	#region Property(ies)
-	public Data.DatabaseContext DatabaseContext { get; }
+	protected Data.DatabaseContext DatabaseContext { get; }
 	#endregion /Property(ies)
 
 	#region DoDeposite()

@@ -12,12 +12,14 @@ internal class DepositeRequestUserBuilder : object
 	#region Constructor
 	private DepositeRequestUserBuilder() : base()
 	{
-		IP = "127.0.0.1";
-		NationalCode = "1234567890";
-		AdditionalData = string.Empty;
-		DisplayName = "Ali Reza Alavi";
-		CellPhoneNumber = "09123456789";
-		EmailAddress = "AliRezaAlavi@Gmail.com";
+		var actor =
+			Constants.Users.Reza;
+
+		IP = Constants.Users.RezaIP;
+		DisplayName = actor.DisplayName;
+		NationalCode = actor.NationalCode;
+		EmailAddress = actor.EmailAddress;
+		CellPhoneNumber = actor.CellPhoneNumber;
 	}
 	#endregion /Constructor
 
@@ -43,10 +45,6 @@ internal class DepositeRequestUserBuilder : object
 	public string? NationalCode { get; set; }
 	#endregion /NationalCode
 
-	#region AdditionalData
-	public string? AdditionalData { get; set; }
-	#endregion /AdditionalData
-
 	#endregion /Properties
 
 	#region Methods()
@@ -60,13 +58,6 @@ internal class DepositeRequestUserBuilder : object
 	internal DepositeRequestUserBuilder WithDisplayName(string displayName)
 	{
 		DisplayName = displayName;
-
-		return this;
-	}
-
-	internal DepositeRequestUserBuilder WithAdditionalData(string additionalData)
-	{
-		AdditionalData = additionalData;
 
 		return this;
 	}
@@ -103,7 +94,6 @@ internal class DepositeRequestUserBuilder : object
 				DisplayName = DisplayName,
 				EmailAddress = EmailAddress,
 				NationalCode = NationalCode,
-				AdditionalData = AdditionalData,
 				CellPhoneNumber = CellPhoneNumber,
 			};
 

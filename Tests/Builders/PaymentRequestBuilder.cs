@@ -1,16 +1,16 @@
 ﻿namespace Tests.Builders;
 
-internal class DepositeRequestBuilder : object
+internal class PaymentRequestBuilder : object
 {
 	#region Create()
-	internal static DepositeRequestBuilder Create()
+	internal static PaymentRequestBuilder Create()
 	{
-		return new DepositeRequestBuilder();
+		return new PaymentRequestBuilder();
 	}
 	#endregion /Create()
 
-	#region Constructor()
-	private DepositeRequestBuilder() : base()
+	#region Constructor(s)
+	private PaymentRequestBuilder() : base()
 	{
 		Amount =
 			Constants.Shared.Amount;
@@ -18,21 +18,15 @@ internal class DepositeRequestBuilder : object
 		ReferenceCode =
 			Helpers.Utility.ReferenceCode;
 
-		ProviderName =
-			Constants.Shared.IranKishProviderName;
-
-		WithdrawDurationInDays =
-			Constants.Shared.WithdrawDurationInDaysNeutralValue;
-
 		User =
-			DepositeRequestUserBuilder.Create();
+			PaymentRequestUserBuilder.Create();
 	}
-	#endregion /Constructor()
+	#endregion /Constructor(s)
 
 	#region Properties
 
 	#region User
-	public DepositeRequestUserBuilder User { get; set; }
+	public PaymentRequestUserBuilder User { get; set; }
 	#endregion /User
 
 	#region Amount
@@ -46,14 +40,6 @@ internal class DepositeRequestBuilder : object
 	#region CompanyToken
 	public System.Guid CompanyToken { get; set; }
 	#endregion /CompanyToken
-
-	#region WithdrawDurationInDays
-	public int? WithdrawDurationInDays { get; set; }
-	#endregion /WithdrawDurationInDays
-
-	#region ProviderName (PSP)
-	public string ProviderName { get; set; }
-	#endregion /ProviderName
 
 	#region ReferenceCode
 	public string ReferenceCode { get; set; }
@@ -74,42 +60,28 @@ internal class DepositeRequestBuilder : object
 	#endregion /Properties
 
 	#region Methods()
-	public DepositeRequestBuilder WithAmount(decimal amount)
+	public PaymentRequestBuilder WithAmount(decimal amount)
 	{
 		Amount = amount;
 
 		return this;
 	}
 
-	public DepositeRequestBuilder WithWithdrawDurationInDays(int? withdrawDurationInDays)
-	{
-		WithdrawDurationInDays = withdrawDurationInDays;
-
-		return this;
-	}
-
-	public DepositeRequestBuilder WithProviderName(string providerName)
-	{
-		ProviderName = providerName;
-
-		return this;
-	}
-
-	public DepositeRequestBuilder WithWalletToken(System.Guid walletToken)
+	public PaymentRequestBuilder WithWalletToken(System.Guid walletToken)
 	{
 		WalletToken = walletToken;
 
 		return this;
 	}
-	
-	public DepositeRequestBuilder WithCompanyToken(System.Guid companyToken)
+
+	public PaymentRequestBuilder WithCompanyToken(System.Guid companyToken)
 	{
 		CompanyToken = companyToken;
 
 		return this;
 	}
 
-	public DepositeRequestBuilder WithReferenceCode(string referenceCode)
+	public PaymentRequestBuilder WithReferenceCode(string referenceCode)
 	{
 		ReferenceCode = referenceCode;
 
@@ -118,23 +90,21 @@ internal class DepositeRequestBuilder : object
 	#endregion /Methods()
 
 	#region Build()
-	internal Dtos.Users.DepositeRequestDto Build()
+	internal Dtos.Users.PaymentRequestDto Build()
 	{
 		var user = User.Build();
 
 		var request =
-			new Dtos.Users.DepositeRequestDto()
+			new Dtos.Users.PaymentRequestDto()
 			{
 				User = user,
 				Amount = Amount,
 				WalletToken = WalletToken,
-				ProviderName = ProviderName,
 				CompanyToken = CompanyToken,
 				ReferenceCode = ReferenceCode,
 				AdditionalData = AdditionalData,
 				UserDescription = UserDescription,
 				SystemicDescription = SystemicDescription,
-				WithdrawDurationInDays = WithdrawDurationInDays,
 			};
 
 		return request;
