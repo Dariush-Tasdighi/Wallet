@@ -2357,6 +2357,47 @@ public class UsersController :
 			// **************************************************
 
 			// **************************************************
+			if (request.Type.HasValue)
+			{
+				query =
+					query
+					.Where(current => current.Type == request.Type.Value);
+			}
+			// **************************************************
+
+			// **************************************************
+			if (request.FromDate.HasValue)
+			{
+				query =
+					query
+					.Where(current => current.InsertDateTime >= request.FromDate.Value.Date);
+			}
+
+			if (request.ToDate.HasValue)
+			{
+				query =
+					query
+					.Where(current => current.InsertDateTime <= request.ToDate.Value.Date);
+			}
+			// **************************************************
+
+			// **************************************************
+			if (request.MinimumAmount.HasValue)
+			{
+				query =
+					query
+					.Where(current => current.Amount >= request.MinimumAmount.Value);
+			}
+
+			if (request.MaximumAmount.HasValue)
+			{
+				query =
+					query
+					.Where(current => current.Amount <= request.MaximumAmount.Value);
+			}
+			// **************************************************
+
+			// **************************************************
 			var foundedItems =
 				await
 				query

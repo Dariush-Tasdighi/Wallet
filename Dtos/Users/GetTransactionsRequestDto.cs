@@ -21,6 +21,14 @@ public class GetTransactionsRequestDto : Base.Pagination
 	public GetTransactionRequestUserDto User { get; set; }
 	#endregion /User
 
+
+
+	#region Type
+	public Dtat.Wallet.Abstractions.SeedWork.TransactionType? Type { get; set; }
+	#endregion /Type
+
+
+
 	#region WalletToken
 	/// <summary>
 	/// توکن کیف پول
@@ -36,6 +44,26 @@ public class GetTransactionsRequestDto : Base.Pagination
 	[System.ComponentModel.DataAnnotations.Required]
 	public System.Guid CompanyToken { get; set; }
 	#endregion /CompanyToken
+
+
+
+	#region ToDate
+	public System.DateTime? ToDate { get; set; }
+	#endregion /ToDate
+
+	#region FromDate
+	public System.DateTime? FromDate { get; set; }
+	#endregion /FromDate
+
+
+
+	#region MinimumAmount
+	public decimal? MinimumAmount { get; set; }
+	#endregion /MinimumAmount
+
+	#region MaximumAmount
+	public decimal? MaximumAmount { get; set; }
+	#endregion /MaximumAmount
 
 	#endregion /Properties
 
