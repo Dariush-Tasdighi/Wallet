@@ -95,6 +95,20 @@ internal class DepositeRequestBuilder : object
 		return this;
 	}
 
+	public DepositeRequestBuilder WithWalletToken(System.Guid walletToken)
+	{
+		WalletToken = walletToken;
+
+		return this;
+	}
+	
+	public DepositeRequestBuilder WithCompanyToken(System.Guid companyToken)
+	{
+		CompanyToken = companyToken;
+
+		return this;
+	}
+
 	public DepositeRequestBuilder WithReferenceCode(string referenceCode)
 	{
 		ReferenceCode = referenceCode;

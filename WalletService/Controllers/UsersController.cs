@@ -324,7 +324,9 @@ public class UsersController :
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(string),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
-	public Microsoft.AspNetCore.Mvc.ActionResult Deposite(Dtos.Users.DepositeRequestDto request)
+	public Microsoft.AspNetCore.Mvc.ActionResult
+		<Dtat.Result<Dtos.Users.DepositeResponseDto>>
+		Deposite(Dtos.Users.DepositeRequestDto request)
 	{
 		try
 		{
@@ -681,7 +683,9 @@ public class UsersController :
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(string),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
-	public Microsoft.AspNetCore.Mvc.ActionResult Payment(Dtos.Users.PaymentRequestDto request)
+	public Microsoft.AspNetCore.Mvc.ActionResult
+		<Dtat.Result<Dtos.Users.PaymentResponseDto>>
+		Payment(Dtos.Users.PaymentRequestDto request)
 	{
 		try
 		{
@@ -1034,7 +1038,9 @@ public class UsersController :
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(string),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
-	public Microsoft.AspNetCore.Mvc.ActionResult Withdraw(Dtos.Users.WithdrawRequestDto request)
+	public Microsoft.AspNetCore.Mvc.ActionResult
+		<Dtat.Result<Dtos.Users.WithdrawResponseDto>>
+		Withdraw(Dtos.Users.WithdrawRequestDto request)
 	{
 		try
 		{
@@ -1417,7 +1423,9 @@ public class UsersController :
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(string),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
-	public Microsoft.AspNetCore.Mvc.ActionResult Refund(Dtos.Users.RefundRequestDto request)
+	public Microsoft.AspNetCore.Mvc.ActionResult
+		<Dtat.Result<Dtos.Users.RefundResponseDto>>
+		Refund(Dtos.Users.RefundRequestDto request)
 	{
 		try
 		{
@@ -1813,7 +1821,8 @@ public class UsersController :
 		(type: typeof(string),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
 	public async System.Threading.Tasks.Task
-		<Microsoft.AspNetCore.Mvc.ActionResult<Dtat.Result<Dtos.Users.GetTransactionResponseDto>>>
+		<Microsoft.AspNetCore.Mvc.ActionResult
+		<Dtat.Result<Dtos.Users.GetTransactionResponseDto>>>
 		GetTransaction(Dtos.Users.GetTransactionRequestDto request)
 	{
 		try
