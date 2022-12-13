@@ -14,6 +14,15 @@ public class GetTransactionResponseDto : object
 	public long UserId { get; set; }
 	#endregion /UserId
 
+	#region DisplayName
+	public string? DisplayName { get; set; }
+	#endregion /DisplayName
+
+	#region CellPhoneNumber
+	public string? CellPhoneNumber { get; set; }
+	#endregion /CellPhoneNumber
+
+
 	#region WalletId
 	public long WalletId { get; set; }
 	#endregion /WalletId

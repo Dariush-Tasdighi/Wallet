@@ -30,6 +30,10 @@ public class TestDeposite : object
 	[Xunit.Fact]
 	public void DoDeposite()
 	{
+		var wallet =
+			Constants.Wallets.HastiWallet;
+
+		wallet.UpdateToken(token: Constants.Wallets.HastiWalletToken);
 	}
 	#endregion /DoDeposite()
 }
