@@ -45,7 +45,6 @@ public class TestPayment : object
 		var hitCompany =
 			Setups.Company.Hit.Instance;
 
-
 		hitCompany.Company.UpdateToken
 			(token: hitCompany.Token);
 
