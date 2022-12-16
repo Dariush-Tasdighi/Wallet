@@ -264,7 +264,7 @@ public class TestRefund : object
 		var refund =
 			usersController.Refund(request: refundRequest);
 
-		Assert.NotNull(@object: payment);
+		Assert.NotNull(@object: refund);
 
 		var refundResult =
 			refund.Result as

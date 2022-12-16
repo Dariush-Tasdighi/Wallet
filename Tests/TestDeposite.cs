@@ -182,7 +182,7 @@ public class TestDeposite : object
 		var deposite =
 			usersController.Deposite(request: depositeRequest);
 
-		Assert.NotNull(@object: getBalance);
+		Assert.NotNull(@object: deposite);
 
 		var depositeResult =
 			deposite.Result as
