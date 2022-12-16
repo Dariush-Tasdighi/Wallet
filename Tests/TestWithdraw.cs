@@ -116,25 +116,6 @@ public class TestWithdraw : object
 		// **************************************************
 
 		// **************************************************
-		var mockLogger =
-			new Moq.Mock<Microsoft.Extensions.Logging.ILogger
-			<Server.Controllers.UsersController>>();
-		// **************************************************
-
-		// **************************************************
-		var mockUtility =
-			new Moq.Mock<Infrastructure.IUtility>();
-
-		mockUtility.Setup(current => current
-			.GetServerIP(Moq.It.IsAny<Microsoft.AspNetCore.Http.HttpRequest>()))
-			.Returns(value: hitCompany.IP);
-		// **************************************************
-
-		var usersController =
-			new Server.Controllers.UsersController(logger: mockLogger.Object,
-			databaseContext: DatabaseContext, utility: mockUtility.Object);
-
-		// **************************************************
 		// **************************************************
 		// **************************************************
 		var getBalanceRequest =
@@ -146,20 +127,10 @@ public class TestWithdraw : object
 
 		getBalanceRequest.User.CellPhoneNumber = user.CellPhoneNumber;
 
-		var getBalance =
-			usersController.GetBalance(request: getBalanceRequest);
-
-		Assert.NotNull(@object: getBalance);
-
-		var getBalanceResult =
-			getBalance.Result as
-			Microsoft.AspNetCore.Mvc.OkObjectResult;
-
-		Assert.NotNull(@object: getBalanceResult);
-
 		var getBalanceValue =
-			getBalanceResult.Value as
-			Dtat.Result<Dtos.Users.GetBalanceResponseDto>;
+			Tasks.UsersControllerTasks.CallGetBalanceApiTask
+			.Create(serverIP: hitCompany.IP, databaseContext: DatabaseContext)
+			.SendRequest(request: getBalanceRequest);
 
 		Assert.NotNull(@object: getBalanceValue);
 
@@ -184,20 +155,10 @@ public class TestWithdraw : object
 
 		depositeRequest.User.CellPhoneNumber = user.CellPhoneNumber;
 
-		var deposite =
-			usersController.Deposite(request: depositeRequest);
-
-		Assert.NotNull(@object: deposite);
-
-		var depositeResult =
-			deposite.Result as
-			Microsoft.AspNetCore.Mvc.OkObjectResult;
-
-		Assert.NotNull(@object: depositeResult);
-
 		var depositeValue =
-			depositeResult.Value as
-			Dtat.Result<Dtos.Users.DepositeResponseDto>;
+			Tasks.UsersControllerTasks.CallDepositeApiTask
+			.Create(serverIP: hitCompany.IP, databaseContext: DatabaseContext)
+			.SendRequest(request: depositeRequest);
 
 		Assert.NotNull(@object: depositeValue);
 
@@ -222,20 +183,10 @@ public class TestWithdraw : object
 		withdrawRequest.User.IP = Setups.Constants.Shared.UserIP;
 		withdrawRequest.User.CellPhoneNumber = user.CellPhoneNumber;
 
-		var withdraw =
-			usersController.Withdraw(request: withdrawRequest);
-
-		Assert.NotNull(@object: withdraw);
-
-		var withdrawResult =
-			withdraw.Result as
-			Microsoft.AspNetCore.Mvc.OkObjectResult;
-
-		Assert.NotNull(@object: withdrawResult);
-
 		var withdrawValue =
-			withdrawResult.Value as
-			Dtat.Result<Dtos.Users.WithdrawResponseDto>;
+			Tasks.UsersControllerTasks.CallWithdrawApiTask
+			.Create(serverIP: hitCompany.IP, databaseContext: DatabaseContext)
+			.SendRequest(request: withdrawRequest);
 
 		Assert.NotNull(@object: withdrawValue);
 
