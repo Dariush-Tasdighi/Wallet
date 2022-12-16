@@ -14,7 +14,7 @@ internal static class Shared : object
 
 	public const string IranKishProviderName = "Iran Kish";
 
-	public const int WithdrawDurationInDaysNeutralValue = 0;
+	public const int WithdrawDurationInDays = 0;
 
 	public const string DatabaseCollection = "Database-Collection";
 }

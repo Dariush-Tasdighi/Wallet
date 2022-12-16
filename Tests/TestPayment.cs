@@ -73,7 +73,7 @@ public class TestPayment : object
 		// **************************************************
 		var validIP =
 			new Domain.ValidIP
-			(companyId: company.Id, serverIP: hitCompany.IP)
+			(companyId: company.Id, serverIP: hitCompany.ServerIP)
 			{
 				IsActive = true,
 			};
@@ -125,7 +125,7 @@ public class TestPayment : object
 
 		mockUtility.Setup(current => current
 			.GetServerIP(Moq.It.IsAny<Microsoft.AspNetCore.Http.HttpRequest>()))
-			.Returns(value: hitCompany.IP);
+			.Returns(value: hitCompany.ServerIP);
 		// **************************************************
 
 		var usersController =
@@ -177,7 +177,7 @@ public class TestPayment : object
 			.WithAmount(amount: depositeAmount)
 			.WithWalletToken(walletToken: hitWallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Token)
-			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Constants.Shared.WithdrawDurationInDaysNeutralValue)
+			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Constants.Shared.WithdrawDurationInDays)
 			.Build();
 
 		depositeRequest.User.CellPhoneNumber = user.CellPhoneNumber;

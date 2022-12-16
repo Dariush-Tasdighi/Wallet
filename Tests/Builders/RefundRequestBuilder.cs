@@ -18,7 +18,7 @@ internal class RefundRequestBuilder : object
 		TransactionId = transactionId;
 
 		WithdrawDurationInDays =
-			Setups.Constants.Shared.WithdrawDurationInDaysNeutralValue;
+			Setups.Constants.Shared.WithdrawDurationInDays;
 
 		User =
 			RefundRequestUserBuilder.Create();

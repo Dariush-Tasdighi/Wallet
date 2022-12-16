@@ -53,6 +53,15 @@ internal class WithdrawRequestBuilder : object
 	#endregion /Properties
 
 	#region Methods()
+	
+	public WithdrawRequestBuilder
+		WithUser(System.Action<WithdrawRequestUserBuilder> action)
+		{
+			action.Invoke(User);
+
+			return this;
+		}
+
 	public WithdrawRequestBuilder WithAmount(decimal amount)
 	{
 		Amount = amount;

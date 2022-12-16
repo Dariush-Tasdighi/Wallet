@@ -29,40 +29,32 @@ public class TestWithdraw : object
 		// **************************************************
 		// **************************************************
 		// **************************************************
-		var hitWallet =
-			Setups.Wallet.Hit.Instance;
+		var hitWallet = Setups.Wallet.Hit.Instance;
 
-		var wallet = hitWallet.Wallet;
+		hitWallet.Wallet.PaymentFeatureIsEnabled = true;
+		hitWallet.Wallet.WithdrawFeatureIsEnabled = true;
+		hitWallet.Wallet.DepositeFeatureIsEnabled = true;
 
-		wallet.PaymentFeatureIsEnabled = true;
-		wallet.WithdrawFeatureIsEnabled = true;
-		wallet.DepositeFeatureIsEnabled = true;
+		hitWallet.Wallet.UpdateToken(token: hitWallet.Token);
 
-		wallet.UpdateToken
-			(token: hitWallet.Token);
-
-		DatabaseContext.Add(entity: wallet);
+		DatabaseContext.Add(entity: hitWallet.Wallet);
 
 		DatabaseContext.SaveChanges();
 		// **************************************************
 
 		// **************************************************
-		var hitCompany =
-			Setups.Company.Hit.Instance;
+		var hitCompany = Setups.Company.Hit.Instance;
 
-		var company = hitCompany.Company;
+		hitCompany.Company.UpdateToken(token: hitCompany.Token);
 
-		company.UpdateToken
-			(token: hitCompany.Token);
-
-		DatabaseContext.Add(entity: company);
+		DatabaseContext.Add(entity: hitCompany.Company);
 
 		DatabaseContext.SaveChanges();
 		// **************************************************
 
 		// **************************************************
 		var companyWallet = new Domain.CompanyWallet
-			(companyId: company.Id, walletId: wallet.Id)
+			(companyId: hitCompany.Company.Id, walletId: hitWallet.Wallet.Id)
 		{
 			IsActive = true,
 		};
@@ -75,7 +67,7 @@ public class TestWithdraw : object
 		// **************************************************
 		var validIP =
 			new Domain.ValidIP
-			(companyId: company.Id, serverIP: hitCompany.IP)
+			(companyId: hitCompany.Company.Id, serverIP: hitCompany.ServerIP)
 			{
 				IsActive = true,
 			};
@@ -89,18 +81,16 @@ public class TestWithdraw : object
 		var actor =
 			Setups.Users.Reza.Instance;
 
-		var user = actor.User;
+		actor.User.UpdateHash();
 
-		user.UpdateHash();
-
-		DatabaseContext.Add(entity: user);
+		DatabaseContext.Add(entity: actor.User);
 
 		DatabaseContext.SaveChanges();
 		// **************************************************
 
 		// **************************************************
 		var userWallet = new Domain.UserWallet
-			(userId: user.Id, walletId: wallet.Id)
+			(userId: actor.User.Id, walletId: hitWallet.Wallet.Id)
 		{
 			Balance = 0,
 			IsActive = true,
@@ -125,11 +115,11 @@ public class TestWithdraw : object
 				CompanyToken = hitCompany.Token,
 			};
 
-		getBalanceRequest.User.CellPhoneNumber = user.CellPhoneNumber;
+		getBalanceRequest.User.CellPhoneNumber = actor.User.CellPhoneNumber;
 
 		var getBalanceValue =
 			Tasks.UsersControllerTasks.CallGetBalanceApiTask
-			.Create(serverIP: hitCompany.IP, databaseContext: DatabaseContext)
+			.Create(serverIP: hitCompany.ServerIP, databaseContext: DatabaseContext)
 			.SendRequest(request: getBalanceRequest);
 
 		Assert.NotNull(@object: getBalanceValue);
@@ -150,14 +140,13 @@ public class TestWithdraw : object
 			.WithAmount(amount: depositeAmount)
 			.WithWalletToken(walletToken: hitWallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Token)
-			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Constants.Shared.WithdrawDurationInDaysNeutralValue)
+			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Constants.Shared.WithdrawDurationInDays)
+			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.User.CellPhoneNumber))
 			.Build();
-
-		depositeRequest.User.CellPhoneNumber = user.CellPhoneNumber;
 
 		var depositeValue =
 			Tasks.UsersControllerTasks.CallDepositeApiTask
-			.Create(serverIP: hitCompany.IP, databaseContext: DatabaseContext)
+			.Create(serverIP: hitCompany.ServerIP, databaseContext: DatabaseContext)
 			.SendRequest(request: depositeRequest);
 
 		Assert.NotNull(@object: depositeValue);
@@ -178,14 +167,13 @@ public class TestWithdraw : object
 			.WithWalletToken(walletToken: hitWallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Token)
 			.WithAmount(amount: withdrawAmount)
+			.WithUser(current => current.WithIP(ip: actor.IP)
+				.WithCellPhoneNumber(cellPhoneNumber: actor.User.CellPhoneNumber))
 			.Build();
-
-		withdrawRequest.User.IP = Setups.Constants.Shared.UserIP;
-		withdrawRequest.User.CellPhoneNumber = user.CellPhoneNumber;
 
 		var withdrawValue =
 			Tasks.UsersControllerTasks.CallWithdrawApiTask
-			.Create(serverIP: hitCompany.IP, databaseContext: DatabaseContext)
+			.Create(serverIP: hitCompany.ServerIP, databaseContext: DatabaseContext)
 			.SendRequest(request: withdrawRequest);
 
 		Assert.NotNull(@object: withdrawValue);
