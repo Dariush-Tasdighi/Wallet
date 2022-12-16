@@ -1,4 +1,6 @@
-﻿namespace Tests.Tasks.UsersControllerTasks;
+﻿using Xunit;
+
+namespace Tests.Tasks.UsersControllerTasks;
 
 public class CallWithdrawApiTask : Base.CallUsersControllerApi
 {
@@ -18,8 +20,7 @@ public class CallWithdrawApiTask : Base.CallUsersControllerApi
 	{
 	}
 
-	public
-		Dtat.Result<Dtos.Users.WithdrawResponseDto>?
+	public Dtat.Result<Dtos.Users.WithdrawResponseDto>?
 		SendRequest(Dtos.Users.WithdrawRequestDto request)
 	{
 		var withdraw =

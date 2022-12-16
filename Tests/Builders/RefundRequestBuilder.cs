@@ -66,6 +66,14 @@ internal class RefundRequestBuilder : object
 	#endregion /Properties
 
 	#region Methods()
+	public RefundRequestBuilder
+		WithUser(System.Action<RefundRequestUserBuilder> action)
+		{
+			action.Invoke(User);
+
+			return this;
+		}
+
 	public RefundRequestBuilder WithAmount(decimal amount)
 	{
 		Amount = amount;

@@ -29,13 +29,15 @@ public class TestWithdraw : object
 		// **************************************************
 		// **************************************************
 		// **************************************************
-		var hitWallet = Setups.Wallet.Hit.Instance;
+		var hitWallet =
+			Setups.Wallet.Hit.Instance;
 
 		hitWallet.Wallet.PaymentFeatureIsEnabled = true;
 		hitWallet.Wallet.WithdrawFeatureIsEnabled = true;
 		hitWallet.Wallet.DepositeFeatureIsEnabled = true;
 
-		hitWallet.Wallet.UpdateToken(token: hitWallet.Token);
+		hitWallet.Wallet.UpdateToken
+			(token: hitWallet.Token);
 
 		DatabaseContext.Add(entity: hitWallet.Wallet);
 
@@ -43,9 +45,11 @@ public class TestWithdraw : object
 		// **************************************************
 
 		// **************************************************
-		var hitCompany = Setups.Company.Hit.Instance;
+		var hitCompany =
+			Setups.Company.Hit.Instance;
 
-		hitCompany.Company.UpdateToken(token: hitCompany.Token);
+		hitCompany.Company.UpdateToken
+			(token: hitCompany.Token);
 
 		DatabaseContext.Add(entity: hitCompany.Company);
 
@@ -140,7 +144,7 @@ public class TestWithdraw : object
 			.WithAmount(amount: depositeAmount)
 			.WithWalletToken(walletToken: hitWallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Token)
-			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Constants.Shared.WithdrawDurationInDays)
+			.WithWithdrawDurationInDays(durationInDays: Setups.Constants.Shared.WithdrawDurationInDays)
 			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.User.CellPhoneNumber))
 			.Build();
 
@@ -164,9 +168,9 @@ public class TestWithdraw : object
 		// **************************************************
 		var withdrawRequest =
 			Builders.WithdrawRequestBuilder.Create()
+			.WithAmount(amount: withdrawAmount)
 			.WithWalletToken(walletToken: hitWallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Token)
-			.WithAmount(amount: withdrawAmount)
 			.WithUser(current => current.WithIP(ip: actor.IP)
 				.WithCellPhoneNumber(cellPhoneNumber: actor.User.CellPhoneNumber))
 			.Build();

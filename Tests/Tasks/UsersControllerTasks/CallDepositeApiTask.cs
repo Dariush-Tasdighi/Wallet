@@ -18,8 +18,7 @@ public class CallDepositeApiTask : Base.CallUsersControllerApi
 	{
 	}
 
-	public
-		Dtat.Result<Dtos.Users.DepositeResponseDto>?
+	public Dtat.Result<Dtos.Users.DepositeResponseDto>?
 		SendRequest(Dtos.Users.DepositeRequestDto request)
 	{
 		var deposite =

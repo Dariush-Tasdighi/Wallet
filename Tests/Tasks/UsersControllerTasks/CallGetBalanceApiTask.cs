@@ -18,8 +18,7 @@ public class CallGetBalanceApiTask : Base.CallUsersControllerApi
 	{
 	}
 
-	public
-		Dtat.Result<Dtos.Users.GetBalanceResponseDto>?
+	public Dtat.Result<Dtos.Users.GetBalanceResponseDto>?
 		SendRequest(Dtos.Users.GetBalanceRequestDto request)
 	{
 		var getBalance =

@@ -89,9 +89,9 @@ internal class DepositeRequestBuilder : object
 		return this;
 	}
 
-	public DepositeRequestBuilder WithWithdrawDurationInDays(int? withdrawDurationInDays)
+	public DepositeRequestBuilder WithWithdrawDurationInDays(int? durationInDays)
 	{
-		WithdrawDurationInDays = withdrawDurationInDays;
+		WithdrawDurationInDays = durationInDays;
 
 		return this;
 	}
