@@ -31,13 +31,11 @@ public class TestDeposite : object
 		var hitWallet =
 			Setups.Wallet.Hit.Instance;
 
-		var wallet = hitWallet.Wallet;
+		hitWallet.Wallet.DepositeFeatureIsEnabled = true;
 
-		wallet.DepositeFeatureIsEnabled = true;
+		hitWallet.Wallet.UpdateToken(token: hitWallet.Token);
 
-		wallet.UpdateToken(token: hitWallet.Token);
-
-		DatabaseContext.Add(entity: wallet);
+		DatabaseContext.Add(entity: hitWallet.Wallet);
 
 		DatabaseContext.SaveChanges();
 		// **************************************************
@@ -46,18 +44,16 @@ public class TestDeposite : object
 		var hitCompany =
 			Setups.Company.Hit.Instance;
 
-		var company = hitCompany.Company;
+		hitCompany.Company.UpdateToken(token: hitCompany.Token);
 
-		company.UpdateToken(token: hitCompany.Token);
-
-		DatabaseContext.Add(entity: company);
+		DatabaseContext.Add(entity: hitCompany.Company);
 
 		DatabaseContext.SaveChanges();
 		// **************************************************
 
 		// **************************************************
 		var companyWallet = new Domain.CompanyWallet
-			(companyId: company.Id, walletId: wallet.Id)
+			(companyId: hitCompany.Company.Id, walletId: hitWallet.Wallet.Id)
 		{
 			IsActive = true,
 		};
@@ -70,7 +66,7 @@ public class TestDeposite : object
 		// **************************************************
 		var validIP =
 			new Domain.ValidIP
-			(companyId: company.Id, serverIP: hitCompany.IP)
+			(companyId: hitCompany.Company.Id, serverIP: hitCompany.ServerIP)
 			{
 				IsActive = true,
 			};
@@ -84,18 +80,16 @@ public class TestDeposite : object
 		var actor =
 			Setups.Users.Reza.Instance;
 
-		var user = actor.User;
+		actor.User.UpdateHash();
 
-		user.UpdateHash();
-
-		DatabaseContext.Add(entity: user);
+		DatabaseContext.Add(entity: actor.User);
 
 		DatabaseContext.SaveChanges();
 		// **************************************************
 
 		// **************************************************
 		var userWallet = new Domain.UserWallet
-			(userId: user.Id, walletId: wallet.Id)
+			(userId: actor.User.Id, walletId: hitWallet.Wallet.Id)
 		{
 			Balance = 0,
 			IsActive = true,
@@ -111,25 +105,6 @@ public class TestDeposite : object
 		// **************************************************
 
 		// **************************************************
-		var mockLogger =
-			new Moq.Mock<Microsoft.Extensions.Logging.ILogger
-			<Server.Controllers.UsersController>>();
-		// **************************************************
-
-		// **************************************************
-		var mockUtility =
-			new Moq.Mock<Infrastructure.IUtility>();
-
-		mockUtility.Setup(current => current
-			.GetServerIP(Moq.It.IsAny<Microsoft.AspNetCore.Http.HttpRequest>()))
-			.Returns(value: hitCompany.IP);
-		// **************************************************
-
-		var usersController =
-			new Server.Controllers.UsersController(logger: mockLogger.Object,
-			databaseContext: DatabaseContext, utility: mockUtility.Object);
-
-		// **************************************************
 		// **************************************************
 		// **************************************************
 		var getBalanceRequest =
@@ -139,22 +114,12 @@ public class TestDeposite : object
 				CompanyToken = hitCompany.Token,
 			};
 
-		getBalanceRequest.User.CellPhoneNumber = user.CellPhoneNumber;
-
-		var getBalance =
-			usersController.GetBalance(request: getBalanceRequest);
-
-		Assert.NotNull(@object: getBalance);
-
-		var getBalanceResult =
-			getBalance.Result as
-			Microsoft.AspNetCore.Mvc.OkObjectResult;
-
-		Assert.NotNull(@object: getBalanceResult);
+		getBalanceRequest.User.CellPhoneNumber = actor.User.CellPhoneNumber;
 
 		var getBalanceValue =
-			getBalanceResult.Value as
-			Dtat.Result<Dtos.Users.GetBalanceResponseDto>;
+			Tasks.UsersControllerTasks.CallGetBalanceApiTask
+			.Create(serverIP: hitCompany.ServerIP, databaseContext: DatabaseContext)
+			.SendRequest(request: getBalanceRequest);
 
 		Assert.NotNull(@object: getBalanceValue);
 
@@ -172,27 +137,16 @@ public class TestDeposite : object
 		var depositeRequest =
 			Builders.DepositeRequestBuilder.Create()
 			.WithAmount(amount: depositeAmount)
-			.WithWalletToken(walletToken: wallet.Token)
+			.WithWalletToken(walletToken: hitWallet.Wallet.Token)
 			.WithCompanyToken(companyToken: hitCompany.Company.Token)
-			.WithWithdrawDurationInDays(withdrawDurationInDays: Setups.Constants.Shared.WithdrawDurationInDaysNeutralValue)
+			.WithWithdrawDurationInDays(durationInDays: Setups.Constants.Shared.WithdrawDurationInDays)
+			.WithUser(current => current.WithIP(ip: actor.IP).WithCellPhoneNumber(cellPhoneNumber: actor.User.CellPhoneNumber))
 			.Build();
 
-		depositeRequest.User.CellPhoneNumber = user.CellPhoneNumber;
-
-		var deposite =
-			usersController.Deposite(request: depositeRequest);
-
-		Assert.NotNull(@object: getBalance);
-
-		var depositeResult =
-			deposite.Result as
-			Microsoft.AspNetCore.Mvc.OkObjectResult;
-
-		Assert.NotNull(@object: depositeResult);
-
 		var depositeValue =
-			depositeResult.Value as
-			Dtat.Result<Dtos.Users.DepositeResponseDto>;
+			Tasks.UsersControllerTasks.CallDepositeApiTask
+			.Create(serverIP: hitCompany.ServerIP, databaseContext: DatabaseContext)
+			.SendRequest(request: depositeRequest);
 
 		Assert.NotNull(@object: depositeValue);
 

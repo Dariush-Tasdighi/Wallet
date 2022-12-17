@@ -22,7 +22,7 @@ internal class DepositeRequestBuilder : object
 			Setups.Constants.Shared.IranKishProviderName;
 
 		WithdrawDurationInDays =
-			Setups.Constants.Shared.WithdrawDurationInDaysNeutralValue;
+			Setups.Constants.Shared.WithdrawDurationInDays;
 
 		User =
 			DepositeRequestUserBuilder.Create();
@@ -74,6 +74,14 @@ internal class DepositeRequestBuilder : object
 	#endregion /Properties
 
 	#region Methods()
+	public DepositeRequestBuilder
+		WithUser(System.Action<DepositeRequestUserBuilder> action)
+	{
+		action.Invoke(User);
+
+		return this;
+	}
+
 	public DepositeRequestBuilder WithAmount(decimal amount)
 	{
 		Amount = amount;
@@ -81,9 +89,9 @@ internal class DepositeRequestBuilder : object
 		return this;
 	}
 
-	public DepositeRequestBuilder WithWithdrawDurationInDays(int? withdrawDurationInDays)
+	public DepositeRequestBuilder WithWithdrawDurationInDays(int? durationInDays)
 	{
-		WithdrawDurationInDays = withdrawDurationInDays;
+		WithdrawDurationInDays = durationInDays;
 
 		return this;
 	}
@@ -101,7 +109,7 @@ internal class DepositeRequestBuilder : object
 
 		return this;
 	}
-	
+
 	public DepositeRequestBuilder WithCompanyToken(System.Guid companyToken)
 	{
 		CompanyToken = companyToken;

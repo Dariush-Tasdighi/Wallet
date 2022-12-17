@@ -4,13 +4,13 @@ internal abstract class CompanyBase : object
 {
 	protected CompanyBase() : base()
 	{
-		IP = string.Empty;
+		ServerIP = string.Empty;
 
 		Company =
 			new(name: string.Empty);
 	}
 
-	public string IP { get; protected set; }
+	public string ServerIP { get; protected set; }
 
 	public System.Guid Token { get; protected set; }
 

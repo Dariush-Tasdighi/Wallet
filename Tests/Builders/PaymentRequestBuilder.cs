@@ -60,6 +60,14 @@ internal class PaymentRequestBuilder : object
 	#endregion /Properties
 
 	#region Methods()
+	public PaymentRequestBuilder
+		WithUser(System.Action<PaymentRequestUserBuilder> action)
+		{
+			action.Invoke(User);
+
+			return this;
+		}
+
 	public PaymentRequestBuilder WithAmount(decimal amount)
 	{
 		Amount = amount;

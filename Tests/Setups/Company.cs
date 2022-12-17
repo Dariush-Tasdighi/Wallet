@@ -18,7 +18,7 @@ internal class Company : object
 
 		private Hit() : base()
 		{
-			IP = "192.168.1.110";
+			ServerIP = "192.168.1.110";
 
 			Token = System.Guid.NewGuid();
 
