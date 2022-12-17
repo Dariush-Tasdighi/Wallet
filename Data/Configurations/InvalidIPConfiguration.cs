@@ -8,7 +8,8 @@ internal class InvalidIPConfiguration : object,
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.InvalidRequestLog> builder)
+		(Microsoft.EntityFrameworkCore.Metadata
+		.Builders.EntityTypeBuilder<Domain.InvalidRequestLog> builder)
 	{
 		// **************************************************
 		// **************************************************

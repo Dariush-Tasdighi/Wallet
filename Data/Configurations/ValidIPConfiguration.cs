@@ -8,7 +8,8 @@ internal class ValidIPConfiguration : object,
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.ValidIP> builder)
+		(Microsoft.EntityFrameworkCore.Metadata
+		.Builders.EntityTypeBuilder<Domain.ValidIP> builder)
 	{
 		// **************************************************
 		// **************************************************
@@ -33,11 +34,9 @@ internal class ValidIPConfiguration : object,
 			new Domain.ValidIP
 			(companyId: SeedData.Constant.Id.Company, serverIP: "::1")
 			{
-				//Wallet
-				//WalletId
-
+				//Company
 				//ServerIP
-
+				//CompanyId
 				//InsertDateTime
 				//UpdateDateTime
 
@@ -55,7 +54,7 @@ internal class ValidIPConfiguration : object,
 				PreviousDay5RequestCount = 0,
 				PreviousDay6RequestCount = 0,
 
-				Id = SeedData.Constant.Id.ValidIP_1,
+				Id = SeedData.Constant.Id.ValidIP1,
 			};
 
 		builder.HasData(data: validIP1);
@@ -66,11 +65,9 @@ internal class ValidIPConfiguration : object,
 			new Domain.ValidIP
 			(companyId: SeedData.Constant.Id.Company, serverIP: "127.0.0.1")
 			{
-				//Wallet
-				//WalletId
-
+				//Company
 				//ServerIP
-
+				//CompanyId
 				//InsertDateTime
 				//UpdateDateTime
 
@@ -88,7 +85,7 @@ internal class ValidIPConfiguration : object,
 				PreviousDay5RequestCount = 0,
 				PreviousDay6RequestCount = 0,
 
-				Id = SeedData.Constant.Id.ValidIP_2,
+				Id = SeedData.Constant.Id.ValidIP2,
 			};
 
 		builder.HasData(data: validIP2);

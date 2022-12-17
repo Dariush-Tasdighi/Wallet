@@ -8,7 +8,8 @@ internal class UserWalletConfiguration : object,
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.UserWallet> builder)
+		(Microsoft.EntityFrameworkCore.Metadata
+		.Builders.EntityTypeBuilder<Domain.UserWallet> builder)
 	{
 		// **************************************************
 		// **************************************************
@@ -34,42 +35,6 @@ internal class UserWalletConfiguration : object,
 			.Property(current => current.Balance)
 			.HasPrecision(precision: 18, scale: 2)
 			;
-		// **************************************************
-		// **************************************************
-		// **************************************************
-
-		// **************************************************
-		// **************************************************
-		// **************************************************
-		//var userWallet =
-		//	new Domain.UserWallet
-		//	(userId: SeedData.Constant.Id.User,
-		//	walletId: SeedData.Constant.Id.Wallet)
-		//	{
-		//		//Hash
-
-		//		//User
-		//		//UserId
-
-		//		//Wallet
-		//		//WalletId
-
-		//		//InsertDateTime
-		//		//UpdateDateTime
-
-		//		Balance = 0,
-		//		IsActive = true,
-		//		Description = null,
-		//		AdditionalData = null,
-
-		//		PaymentFeatureIsEnabled = true,
-		//		WithdrawFeatureIsEnabled = true,
-		//		DepositeFeatureIsEnabled = true,
-
-		//		Id = SeedData.Constant.Id.UserWallet,
-		//	};
-
-		//builder.HasData(data: userWallet);
 		// **************************************************
 		// **************************************************
 		// **************************************************

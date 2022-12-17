@@ -8,7 +8,8 @@ internal class UserConfiguration : object,
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.User> builder)
+		(Microsoft.EntityFrameworkCore.Metadata
+		.Builders.EntityTypeBuilder<Domain.User> builder)
 	{
 		// **************************************************
 		// **************************************************
@@ -83,37 +84,6 @@ internal class UserConfiguration : object,
 			.OnDelete(deleteBehavior:
 				Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction)
 			;
-		// **************************************************
-		// **************************************************
-		// **************************************************
-
-		// **************************************************
-		// **************************************************
-		// **************************************************
-		//var user =
-		//	new Domain.User(cellPhoneNumber: "09121087461", displayName: "داریوش تصدیقی")
-		//	{
-		//		//Hash
-		//		//UserWallets
-		//		//DisplayName
-		//		//Transactions
-		//		//InsertDateTime
-		//		//UpdateDateTime
-		//		//CellPhoneNumber
-
-		//		Description = null,
-
-		//		IsActive = true,
-		//		IsVerified = true,
-		//		Id = SeedData.Constant.Id.User,
-
-		//		NationalCode = "1234567891",
-		//		EmailAddress = "dariusht@gmail.com",
-		//	};
-
-		//user.UpdateHash();
-
-		//builder.HasData(data: user);
 		// **************************************************
 		// **************************************************
 		// **************************************************

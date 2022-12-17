@@ -8,15 +8,20 @@ internal class CompanyConfiguration : object,
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.Company> builder)
+		(Microsoft.EntityFrameworkCore.Metadata
+		.Builders.EntityTypeBuilder<Domain.Company> builder)
 	{
 		// **************************************************
 		// **************************************************
 		// **************************************************
-		builder
-			.Property(current => current.Name)
-			.IsUnicode(unicode: true)
-			;
+		//builder
+		//	.HasIndex(current => current.Name)
+		//	;
+
+		//builder
+		//	.HasIndex(current => current.Name)
+		//	.IsUnique(unique: true)
+		//	;
 
 		builder
 			.HasIndex(current => new { current.Name })
@@ -60,7 +65,8 @@ internal class CompanyConfiguration : object,
 			{
 				//Name
 				//Token
-				//Wallets
+				//ValidIPs
+				//CompanyWallets
 				//InsertDateTime
 				//UpdateDateTime
 

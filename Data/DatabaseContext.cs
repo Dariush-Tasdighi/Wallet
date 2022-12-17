@@ -3,13 +3,15 @@
 public class DatabaseContext :
 	Microsoft.EntityFrameworkCore.DbContext
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+#pragma warning disable CS8618
 	public DatabaseContext
 		(Microsoft.EntityFrameworkCore.DbContextOptions<DatabaseContext> options) : base(options: options)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+#pragma warning restore CS8618
 	{
 		// **************************************************
-		// TODO: Should Delete Later!
+		// TODO: Should Be Deleted Later!
+		// این دستور صرفا تا قبل از اولین نسخه‌ای محصول، مجاز
+		// به نوشتن آن هستیم
 		// **************************************************
 		Database.EnsureCreated();
 		// **************************************************
@@ -34,7 +36,8 @@ public class DatabaseContext :
 	protected override void OnConfiguring
 		(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
 	{
-		base.OnConfiguring(optionsBuilder: optionsBuilder);
+		base.OnConfiguring
+			(optionsBuilder: optionsBuilder);
 	}
 
 	protected override void OnModelCreating

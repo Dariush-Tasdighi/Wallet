@@ -8,7 +8,8 @@ internal class TransactionConfiguration : object,
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.Transaction> builder)
+		(Microsoft.EntityFrameworkCore.Metadata
+		.Builders.EntityTypeBuilder<Domain.Transaction> builder)
 	{
 		// **************************************************
 		// **************************************************

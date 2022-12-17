@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Server.Controllers.Admin;
 
-[Microsoft.AspNetCore.Mvc.Route(template: Infrastructure.Constant.DefaultAdminRoute)]
-public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseContext
+[Microsoft.AspNetCore.Mvc.Route
+	(template: Infrastructure.Constant.DefaultAdminRoute)]
+public class CompaniesController :
+	Infrastructure.ControllerBaseWithDatabaseContext
 {
 	#region Constructor
 	public CompaniesController
@@ -30,12 +32,23 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 	[Microsoft.AspNetCore.Mvc.ProducesResponseType
 		(type: typeof(string),
 		statusCode: Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError)]
+
 	public async System.Threading.Tasks.Task
-		<Microsoft.AspNetCore.Mvc.ActionResult
-		<System.Collections.Generic.IEnumerable<Domain.Company>>> GetAllCompaniesAsync()
+		<Microsoft.AspNetCore.Mvc.IActionResult> GetAllCompaniesAsync()
 	{
 		try
 		{
+			//var items =
+			//	DatabaseContext.Companies
+			//	.ToList()
+			//	;
+
+			//var items =
+			//	await
+			//	DatabaseContext.Companies
+			//	.ToListAsync()
+			//	;
+
 			var items =
 				await
 				DatabaseContext.Companies
@@ -47,16 +60,31 @@ public class CompaniesController : Infrastructure.ControllerBaseWithDatabaseCont
 		}
 		catch (System.Exception ex)
 		{
+			//return StatusCode(statusCode: Microsoft.AspNetCore
+			//	.Http.StatusCodes.Status500InternalServerError, value: ex.Message);
+
+			// Log: ex or ex.Message for Developer!
+			// Send Message: Unexpected Error for end user!
+
+			// Log: ex or ex.Message for Developer!
+			// Send Code and Message: Unexpected Error for end user!
+
 			var applicationError =
-				new Infrastructure.ApplicationError
-				(code: Infrastructure.Constant.ErrorCode.Admin_CompaniesController_GetAllCompaniesAsync,
+				new Infrastructure.ApplicationError(code: Infrastructure
+				.Constant.ErrorCode.Admin_CompaniesController_GetAllCompaniesAsync,
 				message: ex.Message, innerException: ex);
 
+			// Note: Compile -> Warning!
+			//Logger.LogError
+			//	(exception: ex, message: applicationError.Message);
+
 			Logger.LogError
-				(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
+				(message: Infrastructure.Constant
+				.Message.LogError, args: applicationError.Message);
 
 			return StatusCode(statusCode: Microsoft.AspNetCore
-				.Http.StatusCodes.Status500InternalServerError, value: applicationError.DisplayMessage);
+				.Http.StatusCodes.Status500InternalServerError,
+				value: applicationError.DisplayMessage);
 		}
 	}
 	#endregion /GetAllCompaniesAsync()

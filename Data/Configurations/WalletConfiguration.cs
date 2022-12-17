@@ -8,7 +8,8 @@ internal class WalletConfiguration : object,
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.Wallet> builder)
+		(Microsoft.EntityFrameworkCore.Metadata
+		.Builders.EntityTypeBuilder<Domain.Wallet> builder)
 	{
 		// **************************************************
 		// **************************************************
@@ -67,11 +68,9 @@ internal class WalletConfiguration : object,
 				//Name
 				//Token
 
-				//ValidIPs
-				//InvalidIPs
-
 				//UserWallets
 				//Transactions
+				//CompanyWallets
 
 				//InsertDateTime
 				//UpdateDateTime
@@ -81,6 +80,7 @@ internal class WalletConfiguration : object,
 
 				IsActive = true,
 
+				RefundFeatureIsEnabled = true,
 				PaymentFeatureIsEnabled = true,
 				DepositeFeatureIsEnabled = true,
 				WithdrawFeatureIsEnabled = true,

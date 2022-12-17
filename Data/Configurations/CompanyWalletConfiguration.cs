@@ -8,7 +8,8 @@ internal class CompanyWalletConfiguration : object,
 	}
 
 	public void Configure
-		(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Domain.CompanyWallet> builder)
+		(Microsoft.EntityFrameworkCore.Metadata
+		.Builders.EntityTypeBuilder<Domain.CompanyWallet> builder)
 	{
 		// **************************************************
 		// **************************************************
