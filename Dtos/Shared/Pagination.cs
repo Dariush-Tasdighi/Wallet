@@ -1,4 +1,4 @@
-﻿namespace Dtos.Users.Base;
+﻿namespace Dtos.Shared;
 
 public abstract class Pagination : object
 {

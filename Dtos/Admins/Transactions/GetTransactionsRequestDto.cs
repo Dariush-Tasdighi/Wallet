@@ -1,4 +1,4 @@
-﻿namespace Dtos.Users;
+﻿namespace Dtos.Admins.Transactions;
 
 public class GetTransactionsRequestDto : Shared.Pagination
 {
@@ -17,7 +17,6 @@ public class GetTransactionsRequestDto : Shared.Pagination
 	/// <summary>
 	/// اطلاعات کاربر
 	/// </summary>
-	[System.ComponentModel.DataAnnotations.Required]
 	public GetTransactionRequestUserDto User { get; set; }
 	#endregion /User
 

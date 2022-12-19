@@ -29,5 +29,4 @@ public abstract class Response : object
 	#endregion /WithdrawBalance
 
 	#endregion /Properties
-
 }
