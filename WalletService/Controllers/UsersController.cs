@@ -284,10 +284,31 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
+				var totalAmountQuery =
+					DatabaseContext.Transactions.AsQueryable()
+					.Where(current => current.Wallet != null && current.Wallet.Token == request.WalletToken)
+					.Where(current => current.User != null && current.User.CellPhoneNumber == request.User.CellPhoneNumber);
+
+				var depositeTotalAmount =
+					totalAmountQuery
+					.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
+					.Sum(current => current.Amount);
+
+				var withdrawTotalAmount =
+					totalAmountQuery
+					.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
+					.Sum(current => current.Amount);
+				// **************************************************
+
+				// **************************************************
 				var data =
 					new Dtos.Users.GetBalanceResponseDto
 					(balance: userBalanceResult.Data,
-					withdrawBalance: userWithdrawBalanceResult.Data);
+					withdrawBalance: userWithdrawBalanceResult.Data)
+					{
+						WithdrawTotalAmount = withdrawTotalAmount,
+						DepositeTotalAmount = depositeTotalAmount,
+					};
 
 				result.Data = data;
 

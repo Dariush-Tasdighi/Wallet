@@ -9,4 +9,16 @@ public class GetBalanceResponseDto : Base.Response
 	{
 	}
 	#endregion /Constructor
+
+	#region Properties
+
+	#region DepositeTotal
+	public decimal DepositeTotalAmount { get; set; }
+	#endregion /DepositeTotalAmount
+
+	#region WithdrawTotal
+	public decimal WithdrawTotalAmount { get; set; }
+	#endregion /WithdrawTotal
+
+	#endregion /Properties
 }
