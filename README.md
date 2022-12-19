@@ -41,12 +41,10 @@ Make sure you have installed **.NET 7** in your environment. After that, you can
                 "cellPhoneNumber": "09123456789",
                 "emailAddress": "AliReza@GMail.com",
                 "nationalCode": "1234512345",
-                "additionalData": null,
-                "paymentFeatureIsEnabled": false,
-                "depositeFeatureIsEnabled": true,
-                "withdrawFeatureIsEnabled": false
+                "additionalData": null
         },
         "amount": 1,
+        "withdrawDurationInDays": 0,
         "walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
         "companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
         "providerName": "Iran Kish",
