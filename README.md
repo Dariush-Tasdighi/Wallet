@@ -44,6 +44,7 @@ Make sure you have installed **.NET 7** in your environment. After that, you can
                 "additionalData": null
         },
         "amount": 1,
+        "WithdrawDurationInDays": 0,
         "walletToken": "D630496E-3F91-4127-9DBC-F03B14ECD6D2",
         "companyToken": "D24295E9-DAC0-4FE3-957F-6674F9FD0728",
         "providerName": "Iran Kish",
