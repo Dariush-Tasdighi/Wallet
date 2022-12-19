@@ -40,7 +40,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
-	options.CustomSchemaIds(type => type.ToString());
+	options.CustomSchemaIds(current => current.ToString());
 });
 // **************************************************
 
