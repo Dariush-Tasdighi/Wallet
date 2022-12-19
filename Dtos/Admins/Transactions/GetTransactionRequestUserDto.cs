@@ -26,7 +26,7 @@ public class GetTransactionRequestUserDto : object
 	/// </summary>
 	[System.ComponentModel.DataAnnotations.MaxLength
 		(length: Dtat.Wallet.Abstractions.SeedWork.Constant.MaxLength.CellPhoneNumber)]
-	public string CellPhoneNumber { get; set; }
+	public string? CellPhoneNumber { get; set; }
 	#endregion /CellPhoneNumber
 
 	#endregion /Properties
