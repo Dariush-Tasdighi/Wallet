@@ -2434,7 +2434,7 @@ public class UsersController :
 			var foundedItems =
 				await
 				query
-				.OrderBy(current => current.InsertDateTime)
+				.OrderByDescending(current => current.InsertDateTime)
 				.Skip(count: request.Skip)
 				.Take(count: request.PageSize)
 				.Include(current => current.User)
