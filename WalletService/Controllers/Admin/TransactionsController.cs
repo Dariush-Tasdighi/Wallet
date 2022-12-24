@@ -320,11 +320,14 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 				new Dtos.Admins.Transactions.GetTransactionsResponseDto
 				{
 					Items = foundedItems,
+
 					TotalCount = totalCount,
+
 					DepositeTotalAmount = depositeTotalAmount,
-					WithdrawTotalAmount = withdrawTotalAmount,
 					DepositeCurrentItemsTotalAmount = depositeCurrentItemsTotalAmount,
-					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount,
+
+					WithdrawTotalAmount = withdrawTotalAmount * -1,
+					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount * -1,
 				};
 
 			return Ok(value: result);

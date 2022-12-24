@@ -306,8 +306,8 @@ public class UsersController :
 					(balance: userBalanceResult.Data,
 					withdrawBalance: userWithdrawBalanceResult.Data)
 					{
-						WithdrawTotalAmount = withdrawTotalAmount,
 						DepositeTotalAmount = depositeTotalAmount,
+						WithdrawTotalAmount = withdrawTotalAmount * -1,
 					};
 
 				result.Data = data;
@@ -2500,10 +2500,12 @@ public class UsersController :
 				{
 					Items = foundedItems,
 					TotalCount = totalCount,
+
 					DepositeTotalAmount = depositeTotalAmount,
-					WithdrawTotalAmount = withdrawTotalAmount,
 					DepositeCurrentItemsTotalAmount = depositeCurrentItemsTotalAmount,
-					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount,
+
+					WithdrawTotalAmount = withdrawTotalAmount * -1,
+					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount * -1,
 				};
 
 			return Ok(value: result);
