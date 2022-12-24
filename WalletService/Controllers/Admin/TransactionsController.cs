@@ -311,7 +311,9 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 
 			var withdrawCurrentItemsTotalAmount =
 				foundedItems
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
+				.Where(current =>
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw ||
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Payment)
 				.Sum(current => current.Amount);
 			// **************************************************
 			// **************************************************

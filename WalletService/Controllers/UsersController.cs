@@ -297,7 +297,9 @@ public class UsersController :
 
 				var withdrawTotalAmount =
 					totalAmountQuery
-					.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
+					.Where(current =>
+						current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw ||
+						current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Payment)
 					.Sum(current => current.Amount);
 				// **************************************************
 
@@ -2478,7 +2480,9 @@ public class UsersController :
 			var withdrawTotalAmount =
 				await
 				query
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
+				.Where(current =>
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw ||
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Payment)
 				.SumAsync(current => current.Amount);
 			// **************************************************
 
@@ -2490,7 +2494,9 @@ public class UsersController :
 
 			var withdrawCurrentItemsTotalAmount =
 				foundedItems
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
+				.Where(current =>
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw ||
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Payment)
 				.Sum(current => current.Amount);
 			// **************************************************
 			// **************************************************
