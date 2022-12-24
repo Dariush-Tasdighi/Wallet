@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Dtat;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
@@ -307,7 +308,7 @@ public class UsersController :
 					withdrawBalance: userWithdrawBalanceResult.Data)
 					{
 						DepositeTotalAmount = depositeTotalAmount,
-						WithdrawTotalAmount = withdrawTotalAmount * -1,
+						WithdrawTotalAmount = withdrawTotalAmount.ConvertToPositiveDecimal(),
 					};
 
 				result.Data = data;
@@ -2504,8 +2505,8 @@ public class UsersController :
 					DepositeTotalAmount = depositeTotalAmount,
 					DepositeCurrentItemsTotalAmount = depositeCurrentItemsTotalAmount,
 
-					WithdrawTotalAmount = withdrawTotalAmount * -1,
-					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount * -1,
+					WithdrawTotalAmount = withdrawTotalAmount.ConvertToPositiveDecimal(),
+					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount.ConvertToPositiveDecimal(),
 				};
 
 			return Ok(value: result);

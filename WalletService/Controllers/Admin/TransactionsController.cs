@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Dtat;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
@@ -326,8 +327,8 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 					DepositeTotalAmount = depositeTotalAmount,
 					DepositeCurrentItemsTotalAmount = depositeCurrentItemsTotalAmount,
 
-					WithdrawTotalAmount = withdrawTotalAmount * -1,
-					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount * -1,
+					WithdrawTotalAmount = withdrawTotalAmount.ConvertToPositiveDecimal(),
+					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount.ConvertToPositiveDecimal(),
 				};
 
 			return Ok(value: result);
