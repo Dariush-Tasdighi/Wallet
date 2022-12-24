@@ -299,7 +299,9 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 			var withdrawTotalAmount =
 				await
 				query
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
+				.Where(current =>
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw ||
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Payment)
 				.SumAsync(current => current.Amount);
 			// **************************************************
 
