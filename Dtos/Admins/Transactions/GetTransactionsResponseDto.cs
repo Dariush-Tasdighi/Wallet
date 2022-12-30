@@ -16,22 +16,6 @@ public class GetTransactionsResponseDto : object
 	public long TotalCount { get; set; }
 	#endregion /TotalCount
 
-	#region DepositeTotal
-	public decimal DepositeTotalAmount { get; set; }
-	#endregion /DepositeTotalAmount
-
-	#region WithdrawTotal
-	public decimal WithdrawTotalAmount { get; set; }
-	#endregion /WithdrawTotal
-
-	#region DepositeTotal
-	public decimal DepositeCurrentItemsTotalAmount { get; set; }
-	#endregion /DepositeTotal
-
-	#region WithdrawTotal
-	public decimal WithdrawCurrentItemsTotalAmount { get; set; }
-	#endregion /WithdrawTotal
-
 	#region Transactions
 	public System.Collections.Generic.IList<GetTransactionResponseDto> Items { get; set; }
 	#endregion /Transactions

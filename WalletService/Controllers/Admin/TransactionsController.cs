@@ -1,5 +1,4 @@
-﻿using Dtat;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
@@ -288,32 +287,6 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 				await
 				query.CountAsync();
 			// **************************************************
-
-			// **************************************************
-			var depositeTotalAmount =
-				await
-				query
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
-				.SumAsync(current => current.Amount);
-
-			var withdrawTotalAmount =
-				await
-				query
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
-				.SumAsync(current => current.Amount);
-			// **************************************************
-
-			// **************************************************
-			var depositeCurrentItemsTotalAmount =
-				foundedItems
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
-				.Sum(current => current.Amount);
-
-			var withdrawCurrentItemsTotalAmount =
-				foundedItems
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
-				.Sum(current => current.Amount);
-			// **************************************************
 			// **************************************************
 			// **************************************************
 
@@ -321,14 +294,7 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 				new Dtos.Admins.Transactions.GetTransactionsResponseDto
 				{
 					Items = foundedItems,
-
 					TotalCount = totalCount,
-
-					DepositeTotalAmount = depositeTotalAmount,
-					DepositeCurrentItemsTotalAmount = depositeCurrentItemsTotalAmount,
-
-					WithdrawTotalAmount = withdrawTotalAmount.ConvertToPositiveDecimal(),
-					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount.ConvertToPositiveDecimal(),
 				};
 
 			return Ok(value: result);
