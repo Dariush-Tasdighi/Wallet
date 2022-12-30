@@ -103,7 +103,7 @@ public class TestWithdraw : object
 			.WithCellPhoneNumber(cellPhoneNumber: Helpers.Utility.FakeCellPhoneNumber)
 			.ThatIsActive()
 			.ThatIsVerified()
-		.Build();
+			.Build();
 
 		actor.UpdateHash();
 
