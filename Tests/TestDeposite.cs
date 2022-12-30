@@ -2,29 +2,25 @@
 
 namespace Tests;
 
-[Xunit.Collection
-	(name: Setups.Constants.Shared.DatabaseCollection)]
-public class TestDeposite : object
+public class TestDeposite : Helpers.TestsBase
 {
 	#region Constructor(s)
-	public TestDeposite(Helpers.DatabaseFixture databaseFixture) : base()
+	public TestDeposite
+		(Helpers.DatabaseFixture databaseFixture) : base(databaseFixture: databaseFixture)
 	{
-		DatabaseContext =
-			databaseFixture.DatabaseContext;
 	}
 	#endregion /Constructor(s)
-
-	#region Property(ies)
-	protected Data.DatabaseContext DatabaseContext { get; }
-	#endregion /Property(ies)
 
 	#region DoDeposite()
 	[Xunit.Theory]
 	[Xunit.InlineData(100_000_000, 100_000_000)]
 	[Xunit.InlineData(500_000_000, 500_000_000)]
 	[Xunit.InlineData(250_000_000, 250_000_000)]
-	public void DoDeposite(decimal depositeAmount, decimal expectedBalance)
+	public void
+		Valid_user_can_successfully_do_deposite_with_valid_information
+		(decimal depositeAmount, decimal expectedBalance)
 	{
+		#region Arrange
 		// **************************************************
 		// **************************************************
 		// **************************************************
@@ -38,94 +34,53 @@ public class TestDeposite : object
 		var walletToken =
 			System.Guid.NewGuid();
 
-		wallet.UpdateToken
-			(token: walletToken);
+		SetupWallet
+			(wallet: wallet, walletToken: walletToken);
+		// **************************************************
 
-		DatabaseContext.Add(entity: wallet);
+		// **************************************************
+		var companyToken =
+			System.Guid.NewGuid();
 
-		DatabaseContext.SaveChanges();
+		var company =
+			SetupCompany
+			(name: Setups.Constants.Shared.Company.Hit,
+			companyToken: companyToken, isActive: true);
+		// **************************************************
+
+		// **************************************************
+		var companyWallet =
+			SetupCompanyWallet
+			(companyId: company.Id, walletId: wallet.Id, isActive: true);
 		// **************************************************
 
 		// **************************************************
 		var serverIP =
 			Setups.Constants.Shared.Company.ServerIP;
 
-		var company =
-			Builders.Models.CompanyBuilder.Create()
-			.Named(name: Setups.Constants.Shared.Company.Hit)
-			.ThatIsActive()
-			.Build();
-
-		var companyToken =
-			System.Guid.NewGuid();
-
-		company.UpdateToken
-			(token: companyToken);
-
-		DatabaseContext.Add(entity: company);
-
-		DatabaseContext.SaveChanges();
-		// **************************************************
-
-		// **************************************************
-		var companyWallet = new Domain.CompanyWallet
-			(companyId: company.Id, walletId: wallet.Id)
-		{
-			IsActive = true,
-		};
-
-		DatabaseContext.Add(entity: companyWallet);
-
-		DatabaseContext.SaveChanges();
-		// **************************************************
-
-		// **************************************************
 		var validIP =
-			new Domain.ValidIP
-			(companyId: company.Id, serverIP: serverIP)
-			{
-				IsActive = true,
-			};
-
-		DatabaseContext.Add(entity: validIP);
-
-		DatabaseContext.SaveChanges();
+			SetupCompanyValidIP
+			(companyId: company.Id, serverIP: serverIP, isActive: true);
 		// **************************************************
 
 		// **************************************************
 		var actor =
-			Builders.Models.UserBuilder.Create()
-			.Named(displayName: Setups.Constants.Shared.Actor.Reza)
-			.WithNationalCode(nationalCode: Helpers.Utility.FakeNationalCode)
-			.WithEmailAddress(emailAddress: Helpers.Utility.FakeEmailAddress)
-			.WithCellPhoneNumber(cellPhoneNumber: Helpers.Utility.FakeCellPhoneNumber)
-			.ThatIsActive()
-			.ThatIsVerified()
-		.Build();
-
-		actor.UpdateHash();
-
-		DatabaseContext.Add(entity: actor);
-
-		DatabaseContext.SaveChanges();
+			SetupActor
+			(isActive: true, isVerified: true,
+			displayName: Setups.Constants.Shared.Actor.Reza,
+			nationalCode: Helpers.Utility.FakeNationalCode,
+			emailAddress: Helpers.Utility.FakeEmailAddress,
+			cellPhoneNumber: Helpers.Utility.FakeCellPhoneNumber);
 		// **************************************************
 
 		// **************************************************
-		var userWallet = new Domain.UserWallet
-			(userId: actor.Id, walletId: wallet.Id)
-		{
-			Balance = 0,
-			IsActive = true,
-		};
-
-		userWallet.UpdateHash();
-
-		DatabaseContext.Add(entity: userWallet);
-
-		DatabaseContext.SaveChanges();
+		var userWallet =
+			SetupUserWallet
+			(userId: actor.Id, walletId: wallet.Id);
 		// **************************************************
 		// **************************************************
 		// **************************************************
+		#endregion /Arrange
 
 		// **************************************************
 		// **************************************************
