@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Dtat;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
@@ -255,7 +256,7 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 			var foundedItems =
 				await
 				query
-				.OrderBy(current => current.InsertDateTime)
+				.OrderByDescending(current => current.InsertDateTime)
 				.Skip(count: request.Skip)
 				.Take(count: request.PageSize)
 				.Include(current => current.User)
@@ -320,11 +321,14 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 				new Dtos.Admins.Transactions.GetTransactionsResponseDto
 				{
 					Items = foundedItems,
+
 					TotalCount = totalCount,
+
 					DepositeTotalAmount = depositeTotalAmount,
-					WithdrawTotalAmount = withdrawTotalAmount,
 					DepositeCurrentItemsTotalAmount = depositeCurrentItemsTotalAmount,
-					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount,
+
+					WithdrawTotalAmount = withdrawTotalAmount.ConvertToPositiveDecimal(),
+					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount.ConvertToPositiveDecimal(),
 				};
 
 			return Ok(value: result);
