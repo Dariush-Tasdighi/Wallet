@@ -13,7 +13,7 @@ internal class WithdrawRequestBuilder : object
 	private WithdrawRequestBuilder() : base()
 	{
 		Amount =
-			Setups.Constants.Shared.Amount;
+			Helpers.Constants.Shared.Amount;
 
 		User =
 			WithdrawRequestUserBuilder.Create();
@@ -23,38 +23,38 @@ internal class WithdrawRequestBuilder : object
 	#region Properties
 
 	#region User
-	public WithdrawRequestUserBuilder User { get; set; }
+	internal WithdrawRequestUserBuilder User { get; set; }
 	#endregion /User
 
 	#region Amount
-	public decimal Amount { get; set; }
+	internal decimal Amount { get; set; }
 	#endregion /Amount
 
 	#region WalletToken
-	public System.Guid WalletToken { get; set; }
+	internal System.Guid WalletToken { get; set; }
 	#endregion /WalletToken
 
 	#region CompanyToken
-	public System.Guid CompanyToken { get; set; }
+	internal System.Guid CompanyToken { get; set; }
 	#endregion /CompanyToken
 
 	#region UserDescription
-	public string? UserDescription { get; set; }
+	internal string? UserDescription { get; set; }
 	#endregion /UserDescription
 
 	#region SystemicDescription
-	public string? SystemicDescription { get; set; }
+	internal string? SystemicDescription { get; set; }
 	#endregion /SystemicDescription
 
 	#region AdditionalData
-	public string? AdditionalData { get; set; }
+	internal string? AdditionalData { get; set; }
 	#endregion /AdditionalData
 
 	#endregion /Properties
 
 	#region Methods()
 	
-	public WithdrawRequestBuilder
+	internal WithdrawRequestBuilder
 		WithUser(System.Action<WithdrawRequestUserBuilder> action)
 		{
 			action.Invoke(User);
@@ -62,21 +62,21 @@ internal class WithdrawRequestBuilder : object
 			return this;
 		}
 
-	public WithdrawRequestBuilder WithAmount(decimal amount)
+	internal WithdrawRequestBuilder WithAmount(decimal amount)
 	{
 		Amount = amount;
 
 		return this;
 	}
 
-	public WithdrawRequestBuilder WithWalletToken(System.Guid walletToken)
+	internal WithdrawRequestBuilder WithWalletToken(System.Guid walletToken)
 	{
 		WalletToken = walletToken;
 
 		return this;
 	}
 
-	public WithdrawRequestBuilder WithCompanyToken(System.Guid companyToken)
+	internal WithdrawRequestBuilder WithCompanyToken(System.Guid companyToken)
 	{
 		CompanyToken = companyToken;
 

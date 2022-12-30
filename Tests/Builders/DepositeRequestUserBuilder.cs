@@ -12,34 +12,43 @@ internal class DepositeRequestUserBuilder : object
 	#region Constructor
 	private DepositeRequestUserBuilder() : base()
 	{
-		IP = Setups.Constants.Shared.Actor.IP;
-		DisplayName = Setups.Constants.Shared.Actor.Reza;
-		EmailAddress = Setups.Constants.Shared.Actor.EmailAddress;
-		NationalCode = Setups.Constants.Shared.Actor.NationalCode;
-		CellPhoneNumber = Setups.Constants.Shared.Actor.CellPhoneNumber;
+		IP =
+			Helpers.Constants.Shared.Actor.IP;
+
+		DisplayName =
+			Helpers.Constants.Shared.Actor.Reza;
+
+		EmailAddress =
+			Helpers.Constants.Shared.Actor.EmailAddress;
+
+		NationalCode =
+			Helpers.Constants.Shared.Actor.NationalCode;
+
+		CellPhoneNumber =
+			Helpers.Constants.Shared.Actor.CellPhoneNumber;
 	}
 	#endregion /Constructor
 
 	#region Properties
 
 	#region IP (User IP)
-	public string IP { get; set; }
+	internal string IP { get; set; }
 	#endregion /IP (User IP)
 
 	#region DisplayName (Full Name)
-	public string DisplayName { get; set; }
+	internal string DisplayName { get; set; }
 	#endregion /DisplayName (Full Name)
 
 	#region CellPhoneNumber
-	public string CellPhoneNumber { get; set; }
+	internal string CellPhoneNumber { get; set; }
 	#endregion /CellPhoneNumber
 
 	#region EmailAddress
-	public string? EmailAddress { get; set; }
+	internal string? EmailAddress { get; set; }
 	#endregion /EmailAddress
 
 	#region NationalCode
-	public string? NationalCode { get; set; }
+	internal string? NationalCode { get; set; }
 	#endregion /NationalCode
 
 	#endregion /Properties

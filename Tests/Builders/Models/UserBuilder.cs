@@ -1,8 +1,8 @@
 ﻿namespace Tests.Builders.Models;
 
-public class UserBuilder : object
+internal class UserBuilder : object
 {
-	public static UserBuilder Create()
+	internal static UserBuilder Create()
 	{
 		var newUser =
 			new UserBuilder();
@@ -13,77 +13,86 @@ public class UserBuilder : object
 	private UserBuilder() : base()
 	{
 		IsActive = true;
+
 		IsVerified = true;
-		DisplayName = Setups.Constants.Shared.Actor.Reza;
-		EmailAddress = Setups.Constants.Shared.Actor.EmailAddress;
-		NationalCode = Setups.Constants.Shared.Actor.NationalCode;
-		CellPhoneNumber = Setups.Constants.Shared.Actor.CellPhoneNumber;
+
+		DisplayName =
+			Helpers.Constants.Shared.Actor.Reza;
+
+		EmailAddress =
+			Helpers.Constants.Shared.Actor.EmailAddress;
+
+		NationalCode =
+			Helpers.Constants.Shared.Actor.NationalCode;
+
+		CellPhoneNumber =
+			Helpers.Constants.Shared.Actor.CellPhoneNumber;
 	}
 
-	public bool IsActive { get; private set; }
+	internal bool IsActive { get; private set; }
 
-	public bool IsVerified { get; private set; }
+	internal bool IsVerified { get; private set; }
 
-	public string? NationalCode { get; private set; }
+	internal string? NationalCode { get; private set; }
 
-	public string? Description { get; private set; }
+	internal string? Description { get; private set; }
 
-	public string? EmailAddress { get; private set; }
+	internal string? EmailAddress { get; private set; }
 
-	public string DisplayName { get; private set; }
+	internal string DisplayName { get; private set; }
 
-	public string CellPhoneNumber { get; private set; }
+	internal string CellPhoneNumber { get; private set; }
 
-	public UserBuilder Named(string displayName)
+	internal UserBuilder Named(string displayName)
 	{
 		DisplayName = displayName;
 
 		return this;
 	}
 
-	public UserBuilder WithCellPhoneNumber(string cellPhoneNumber)
+	internal UserBuilder WithCellPhoneNumber(string cellPhoneNumber)
 	{
 		CellPhoneNumber = cellPhoneNumber;
 
 		return this;
 	}
 
-	public UserBuilder WithEmailAddress(string emailAddress)
+	internal UserBuilder WithEmailAddress(string emailAddress)
 	{
 		EmailAddress = emailAddress;
 
 		return this;
 	}
 
-	public UserBuilder WithNationalCode(string? nationalCode)
+	internal UserBuilder WithNationalCode(string? nationalCode)
 	{
 		NationalCode = nationalCode;
 
 		return this;
 	}
 
-	public UserBuilder WithDescription(string? description)
+	internal UserBuilder WithDescription(string? description)
 	{
 		Description = description;
 
 		return this;
 	}
 
-	public UserBuilder ThatIsActive(bool isActive = true)
+	internal UserBuilder ThatIsActive(bool isActive = true)
 	{
 		IsActive = isActive;
 
 		return this;
 	}
 
-	public UserBuilder ThatIsVerified(bool isVerified = true)
+	internal UserBuilder ThatIsVerified(bool isVerified = true)
 	{
 		IsVerified = isVerified;
 
 		return this;
 	}
 
-	public Domain.User Build()
+	internal Domain.User Build()
 	{
 		var newUser =
 			new Domain.User

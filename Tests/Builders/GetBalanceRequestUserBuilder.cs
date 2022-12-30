@@ -1,16 +1,16 @@
 ﻿namespace Tests.Builders;
 
-internal class WithdrawRequestUserBuilder : object
+internal class GetBalanceRequestUserBuilder : object
 {
 	#region Create()
-	internal static WithdrawRequestUserBuilder Create()
+	internal static GetBalanceRequestUserBuilder Create()
 	{
-		return new WithdrawRequestUserBuilder();
+		return new GetBalanceRequestUserBuilder();
 	}
 	#endregion /Create()
 
 	#region Constructor
-	private WithdrawRequestUserBuilder() : base()
+	private GetBalanceRequestUserBuilder() : base()
 	{
 		IP =
 			Helpers.Constants.Shared.Actor.IP;
@@ -33,14 +33,14 @@ internal class WithdrawRequestUserBuilder : object
 	#endregion /Properties
 
 	#region Methods()
-	internal WithdrawRequestUserBuilder WithIP(string ip)
+	internal GetBalanceRequestUserBuilder WithIP(string ip)
 	{
 		IP = ip;
 
 		return this;
 	}
 
-	internal WithdrawRequestUserBuilder WithCellPhoneNumber(string cellPhoneNumber)
+	internal GetBalanceRequestUserBuilder WithCellPhoneNumber(string cellPhoneNumber)
 	{
 		CellPhoneNumber = cellPhoneNumber;
 
@@ -49,10 +49,10 @@ internal class WithdrawRequestUserBuilder : object
 	#endregion /Methods()
 
 	#region Build()
-	internal Dtos.Users.WithdrawRequestUserDto Build()
+	internal Dtos.Users.GetBalanceRequestUserDto Build()
 	{
 		var user =
-			new Dtos.Users.WithdrawRequestUserDto()
+			new Dtos.Users.GetBalanceRequestUserDto()
 			{
 				IP = IP,
 				CellPhoneNumber = CellPhoneNumber,

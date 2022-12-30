@@ -13,16 +13,16 @@ internal class DepositeRequestBuilder : object
 	private DepositeRequestBuilder() : base()
 	{
 		Amount =
-			Setups.Constants.Shared.Amount;
+			Helpers.Constants.Shared.Amount;
 
 		ReferenceCode =
 			Helpers.Utility.ReferenceCode;
 
 		ProviderName =
-			Setups.Constants.Shared.IranKishProviderName;
+			Helpers.Constants.Shared.IranKishProviderName;
 
 		WithdrawDurationInDays =
-			Setups.Constants.Shared.WithdrawDurationInDays;
+			Helpers.Constants.Shared.WithdrawDurationInDays;
 
 		User =
 			DepositeRequestUserBuilder.Create();
@@ -32,49 +32,49 @@ internal class DepositeRequestBuilder : object
 	#region Properties
 
 	#region User
-	public DepositeRequestUserBuilder User { get; set; }
+	internal DepositeRequestUserBuilder User { get; set; }
 	#endregion /User
 
 	#region Amount
-	public decimal Amount { get; set; }
+	internal decimal Amount { get; set; }
 	#endregion /Amount
 
 	#region WalletToken
-	public System.Guid WalletToken { get; set; }
+	internal System.Guid WalletToken { get; set; }
 	#endregion /WalletToken
 
 	#region CompanyToken
-	public System.Guid CompanyToken { get; set; }
+	internal System.Guid CompanyToken { get; set; }
 	#endregion /CompanyToken
 
 	#region WithdrawDurationInDays
-	public int? WithdrawDurationInDays { get; set; }
+	internal int? WithdrawDurationInDays { get; set; }
 	#endregion /WithdrawDurationInDays
 
 	#region ProviderName (PSP)
-	public string ProviderName { get; set; }
+	internal string ProviderName { get; set; }
 	#endregion /ProviderName
 
 	#region ReferenceCode
-	public string ReferenceCode { get; set; }
+	internal string ReferenceCode { get; set; }
 	#endregion /ReferenceCode
 
 	#region UserDescription
-	public string? UserDescription { get; set; }
+	internal string? UserDescription { get; set; }
 	#endregion /UserDescription
 
 	#region SystemicDescription
-	public string? SystemicDescription { get; set; }
+	internal string? SystemicDescription { get; set; }
 	#endregion /SystemicDescription
 
 	#region AdditionalData
-	public string? AdditionalData { get; set; }
+	internal string? AdditionalData { get; set; }
 	#endregion /AdditionalData
 
 	#endregion /Properties
 
 	#region Methods()
-	public DepositeRequestBuilder
+	internal DepositeRequestBuilder
 		WithUser(System.Action<DepositeRequestUserBuilder> action)
 	{
 		action.Invoke(User);
@@ -82,42 +82,42 @@ internal class DepositeRequestBuilder : object
 		return this;
 	}
 
-	public DepositeRequestBuilder WithAmount(decimal amount)
+	internal DepositeRequestBuilder WithAmount(decimal amount)
 	{
 		Amount = amount;
 
 		return this;
 	}
 
-	public DepositeRequestBuilder WithWithdrawDurationInDays(int? durationInDays)
+	internal DepositeRequestBuilder WithWithdrawDurationInDays(int? durationInDays)
 	{
 		WithdrawDurationInDays = durationInDays;
 
 		return this;
 	}
 
-	public DepositeRequestBuilder WithProviderName(string providerName)
+	internal DepositeRequestBuilder WithProviderName(string providerName)
 	{
 		ProviderName = providerName;
 
 		return this;
 	}
 
-	public DepositeRequestBuilder WithWalletToken(System.Guid walletToken)
+	internal DepositeRequestBuilder WithWalletToken(System.Guid walletToken)
 	{
 		WalletToken = walletToken;
 
 		return this;
 	}
 
-	public DepositeRequestBuilder WithCompanyToken(System.Guid companyToken)
+	internal DepositeRequestBuilder WithCompanyToken(System.Guid companyToken)
 	{
 		CompanyToken = companyToken;
 
 		return this;
 	}
 
-	public DepositeRequestBuilder WithReferenceCode(string referenceCode)
+	internal DepositeRequestBuilder WithReferenceCode(string referenceCode)
 	{
 		ReferenceCode = referenceCode;
 

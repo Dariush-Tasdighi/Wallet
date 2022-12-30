@@ -26,7 +26,7 @@ public class TestPayment : Helpers.TestsBase
 		// **************************************************
 		var wallet =
 			Builders.Models.WalletBuilder.Create()
-			.Named(name: Setups.Constants.Shared.Wallet.Hit)
+			.Named(name: Helpers.Constants.Shared.Wallet.Hit)
 			.ThatIsActive()
 			.ThatRefundFeatureIsEnabled()
 			.ThatPaymentFeatureIsEnabled()
@@ -45,40 +45,64 @@ public class TestPayment : Helpers.TestsBase
 			System.Guid.NewGuid();
 
 		var company =
-			SetupCompany
-			(name: Setups.Constants.Shared.Company.Hit,
-			companyToken: companyToken, isActive: true);
+			Builders.Models.CompanyBuilder.Create()
+			.Named(name: Helpers.Constants.Shared.Company.Hit)
+			.ThatIsActive(isActive: true)
+			.Build();
+
+		company =
+			SetupCompany(company: company, companyToken: companyToken);
 		// **************************************************
 
 		// **************************************************
-		var companyWallet =
-			SetupCompanyWallet
-			(companyId: company.Id, walletId: wallet.Id, isActive: true);
+		var companyWallet = new Domain.CompanyWallet
+			(companyId: company.Id, walletId: wallet.Id)
+		{
+			IsActive = true,
+		};
+
+		companyWallet =
+			SetupCompanyWallet(companyWallet: companyWallet);
 		// **************************************************
 
 		// **************************************************
 		var serverIP =
-			Setups.Constants.Shared.Company.ServerIP;
+			Helpers.Constants.Shared.Company.ServerIP;
 
-		var validIP =
-			SetupCompanyValidIP
-			(companyId: company.Id, serverIP: serverIP, isActive: true);
+		var validIP = new Domain.ValidIP
+			(companyId: company.Id, serverIP: serverIP)
+		{
+			IsActive = true,
+		};
+
+		validIP =
+			SetupCompanyValidIP(validIP: validIP);
 		// **************************************************
 
 		// **************************************************
 		var actor =
-			SetupActor
-			(isActive: true, isVerified: true,
-			displayName: Setups.Constants.Shared.Actor.Reza,
-			nationalCode: Helpers.Utility.FakeNationalCode,
-			emailAddress: Helpers.Utility.FakeEmailAddress,
-			cellPhoneNumber: Helpers.Utility.FakeCellPhoneNumber);
+			Builders.Models.UserBuilder.Create()
+			.Named(displayName: Helpers.Constants.Shared.Actor.Reza)
+			.WithNationalCode(nationalCode: Helpers.Utility.FakeNationalCode)
+			.WithCellPhoneNumber(cellPhoneNumber: Helpers.Utility.FakeCellPhoneNumber)
+			.ThatIsActive()
+			.ThatIsVerified()
+			.Build();
+
+		actor =
+			SetupActor(actor: actor);
 		// **************************************************
 
 		// **************************************************
-		var userWallet =
-			SetupUserWallet
-			(userId: actor.Id, walletId: wallet.Id);
+		var userWallet = new Domain.UserWallet
+			(userId: actor.Id, walletId: wallet.Id)
+		{
+			Balance = 0,
+			IsActive = true,
+		};
+
+		userWallet =
+			SetupUserWallet(userWallet: userWallet);
 		// **************************************************
 		// **************************************************
 		// **************************************************
@@ -88,13 +112,11 @@ public class TestPayment : Helpers.TestsBase
 		// **************************************************
 		// **************************************************
 		var getBalanceRequest =
-			new Dtos.Users.GetBalanceRequestDto()
-			{
-				WalletToken = wallet.Token,
-				CompanyToken = company.Token,
-			};
-
-		getBalanceRequest.User.CellPhoneNumber = actor.CellPhoneNumber;
+			Builders.GetBalanceRequestBuilder.Create()
+			.WithWalletToken(walletToken: wallet.Token)
+			.WithCompanyToken(companyToken: company.Token)
+			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
+			.Build();
 
 		var getBalanceValue =
 			Tasks.UsersControllerTasks.CallGetBalanceApiTask
@@ -112,10 +134,8 @@ public class TestPayment : Helpers.TestsBase
 			.WithAmount(amount: depositeAmount)
 			.WithWalletToken(walletToken: wallet.Token)
 			.WithCompanyToken(companyToken: company.Token)
-			.WithWithdrawDurationInDays(durationInDays: Setups.Constants.Shared.WithdrawDurationInDays)
-			.WithUser(current => current
-				.WithIP(ip: Setups.Constants.Shared.Actor.IP)
-				.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
+			.WithWithdrawDurationInDays(durationInDays: Helpers.Constants.Shared.WithdrawDurationInDays)
+			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
 			.Build();
 
 		var depositeValue =
@@ -134,9 +154,7 @@ public class TestPayment : Helpers.TestsBase
 			.WithAmount(amount: paymentAmount)
 			.WithWalletToken(walletToken: wallet.Token)
 			.WithCompanyToken(companyToken: company.Token)
-			.WithUser(current => current
-				.WithIP(ip: Setups.Constants.Shared.Actor.IP)
-				.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
+			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
 			.Build();
 
 		var paymentValue =

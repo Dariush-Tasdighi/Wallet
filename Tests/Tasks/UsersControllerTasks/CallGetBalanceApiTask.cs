@@ -1,4 +1,6 @@
-﻿namespace Tests.Tasks.UsersControllerTasks;
+﻿using Xunit;
+
+namespace Tests.Tasks.UsersControllerTasks;
 
 public class CallGetBalanceApiTask : Base.CallUsersControllerApi
 {
@@ -21,17 +23,23 @@ public class CallGetBalanceApiTask : Base.CallUsersControllerApi
 	public Dtat.Result<Dtos.Users.GetBalanceResponseDto>?
 		SendRequest(Dtos.Users.GetBalanceRequestDto request)
 	{
-		var getBalance =
+		var actionResult =
 			Controller.GetBalance(request: request);
 
-		var getBalanceResult =
-			getBalance?.Result as
+		Assert.NotNull(@object: actionResult);
+
+		var result =
+			actionResult.Result as
 			Microsoft.AspNetCore.Mvc.OkObjectResult;
 
-		var getBalanceValue =
-			getBalanceResult?.Value as
+		Assert.NotNull(@object: result);
+
+		var value =
+			result.Value as
 			Dtat.Result<Dtos.Users.GetBalanceResponseDto>;
 
-		return getBalanceValue;
+		Assert.NotNull(@object: result);
+
+		return value;
 	}
 }

@@ -2,29 +2,29 @@
 
 namespace Tests.Tasks.UsersControllerTasks;
 
-public class CallPaymentApiTask : Base.CallUsersControllerApi
+public class CallRefundApiTask : Base.CallUsersControllerApi
 {
-	public static CallPaymentApiTask Create
+	public static CallRefundApiTask Create
 		(string serverIP, Data.DatabaseContext databaseContext)
 	{
 		var instance =
-			new CallPaymentApiTask
+			new CallRefundApiTask
 			(serverIP: serverIP, databaseContext: databaseContext);
 
 		return instance;
 	}
 
-	private CallPaymentApiTask
+	private CallRefundApiTask
 		(string serverIP, Data.DatabaseContext databaseContext) :
 		base(serverIP: serverIP, databaseContext: databaseContext)
 	{
 	}
 
-	public Dtat.Result<Dtos.Users.PaymentResponseDto>?
-		SendRequest(Dtos.Users.PaymentRequestDto request)
+	public Dtat.Result<Dtos.Users.RefundResponseDto>?
+		SendRequest(Dtos.Users.RefundRequestDto request)
 	{
 		var actionResult =
-			Controller.Payment(request: request);
+			Controller.Refund(request: request);
 
 		Assert.NotNull(@object: actionResult);
 
@@ -36,7 +36,7 @@ public class CallPaymentApiTask : Base.CallUsersControllerApi
 
 		var value =
 			result.Value as
-			Dtat.Result<Dtos.Users.PaymentResponseDto>;
+			Dtat.Result<Dtos.Users.RefundResponseDto>;
 
 		Assert.NotNull(@object: value);
 

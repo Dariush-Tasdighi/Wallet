@@ -12,19 +12,22 @@ internal class PaymentRequestUserBuilder : object
 	#region Constructor
 	private PaymentRequestUserBuilder() : base()
 	{
-		IP = Setups.Constants.Shared.Actor.IP;
-		CellPhoneNumber = Setups.Constants.Shared.Actor.CellPhoneNumber;
+		IP =
+			Helpers.Constants.Shared.Actor.IP;
+
+		CellPhoneNumber =
+			Helpers.Constants.Shared.Actor.CellPhoneNumber;
 	}
 	#endregion /Constructor
 
 	#region Properties
 
 	#region IP (User IP)
-	public string IP { get; set; }
+	internal string IP { get; set; }
 	#endregion /IP (User IP)
 
 	#region CellPhoneNumber
-	public string CellPhoneNumber { get; set; }
+	internal string CellPhoneNumber { get; set; }
 	#endregion /CellPhoneNumber
 
 	#endregion /Properties

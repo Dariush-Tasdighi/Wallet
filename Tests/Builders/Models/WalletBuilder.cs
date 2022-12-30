@@ -1,8 +1,8 @@
 ﻿namespace Tests.Builders.Models;
 
-public class WalletBuilder : object
+internal class WalletBuilder : object
 {
-	public static WalletBuilder Create()
+	internal static WalletBuilder Create()
 	{
 		var newWallet =
 			new WalletBuilder();
@@ -24,92 +24,91 @@ public class WalletBuilder : object
 
 		WithdrawFeatureIsEnabled = false;
 
-		Name =
-			Setups.Constants.Shared.Wallet.Hit;
+		Name = Helpers.Constants.Shared.Wallet.Hit;
 	}
 
-	public string Name { get; private set; }
+	internal string Name { get; private set; }
 
-	public bool IsActive { get; private set; }
+	internal bool IsActive { get; private set; }
 
-	public string? Description { get; private set; }
+	internal string? Description { get; private set; }
 
-	public string? AdditionalData { get; private set; }
+	internal string? AdditionalData { get; private set; }
 
-	public bool DepositeFeatureIsEnabled { get; private set; }
+	internal bool DepositeFeatureIsEnabled { get; private set; }
 
-	public bool PaymentFeatureIsEnabled { get; private set; }
+	internal bool PaymentFeatureIsEnabled { get; private set; }
 
-	public bool RefundFeatureIsEnabled { get; private set; }
+	internal bool RefundFeatureIsEnabled { get; private set; }
 
-	public bool TransferFeatureIsEnabled { get; private set; }
+	internal bool TransferFeatureIsEnabled { get; private set; }
 
-	public bool WithdrawFeatureIsEnabled { get; private set; }
+	internal bool WithdrawFeatureIsEnabled { get; private set; }
 
-	public WalletBuilder Named(string name)
+	internal WalletBuilder Named(string name)
 	{
 		Name = name;
 
 		return this;
 	}
 
-	public WalletBuilder WithDescription(string? description)
+	internal WalletBuilder WithDescription(string? description)
 	{
 		Description = description;
 
 		return this;
 	}
 
-	public WalletBuilder WithAdditionalData(string? additionalData)
+	internal WalletBuilder WithAdditionalData(string? additionalData)
 	{
 		AdditionalData = additionalData;
 
 		return this;
 	}
 
-	public WalletBuilder ThatDepositeFeatureIsEnabled(bool isEnabled = true)
+	internal WalletBuilder ThatDepositeFeatureIsEnabled(bool isEnabled = true)
 	{
 		DepositeFeatureIsEnabled = isEnabled;
 
 		return this;
 	}
 
-	public WalletBuilder ThatPaymentFeatureIsEnabled(bool isEnabled = true)
+	internal WalletBuilder ThatPaymentFeatureIsEnabled(bool isEnabled = true)
 	{
 		PaymentFeatureIsEnabled = isEnabled;
 
 		return this;
 	}
 
-	public WalletBuilder ThatRefundFeatureIsEnabled(bool isEnabled = true)
+	internal WalletBuilder ThatRefundFeatureIsEnabled(bool isEnabled = true)
 	{
 		RefundFeatureIsEnabled = isEnabled;
 
 		return this;
 	}
 
-	public WalletBuilder ThatWithdrawFeatureIsEnabled(bool isEnabled = true)
+	internal WalletBuilder ThatWithdrawFeatureIsEnabled(bool isEnabled = true)
 	{
 		WithdrawFeatureIsEnabled = isEnabled;
 
 		return this;
 	}
 
-	public WalletBuilder ThatTransferFeatureIsEnabled(bool isEnabled = true)
+	internal WalletBuilder ThatTransferFeatureIsEnabled(bool isEnabled = true)
 	{
 		TransferFeatureIsEnabled = isEnabled;
 
 		return this;
 	}
 
-	public WalletBuilder ThatIsActive(bool isActive = true)
+	internal WalletBuilder ThatIsActive(bool isActive = true)
 	{
 		IsActive = isActive;
 
 		return this;
 	}
 
-	public Domain.Wallet Build()
+	internal Domain.Wallet Build()
 	{
 		var newWallet =
 			new Domain.Wallet(name: Name)

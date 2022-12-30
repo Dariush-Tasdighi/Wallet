@@ -1,8 +1,8 @@
 ﻿namespace Tests.Builders.Models;
 
-public class CompanyBuilder : object
+internal class CompanyBuilder : object
 {
-	public static CompanyBuilder Create()
+	internal static CompanyBuilder Create()
 	{
 		var newWallet =
 			new CompanyBuilder();
@@ -13,46 +13,48 @@ public class CompanyBuilder : object
 	private CompanyBuilder() : base()
 	{
 		IsActive = true;
-		Name = Setups.Constants.Shared.Company.Hit;
+
+		Name =
+			Helpers.Constants.Shared.Company.Hit;
 	}
 
-	public string Name { get; private set; }
+	internal string Name { get; private set; }
 
-	public bool IsActive { get; private set; }
+	internal bool IsActive { get; private set; }
 
-	public string? Description { get; private set; }
+	internal string? Description { get; private set; }
 
-	public string? AdditionalData { get; private set; }
+	internal string? AdditionalData { get; private set; }
 
-	public CompanyBuilder Named(string name)
+	internal CompanyBuilder Named(string name)
 	{
 		Name = name;
 
 		return this;
 	}
 
-	public CompanyBuilder WithDescription(string? description)
+	internal CompanyBuilder WithDescription(string? description)
 	{
 		Description = description;
 
 		return this;
 	}
 
-	public CompanyBuilder WithAdditionalData(string? additionalData)
+	internal CompanyBuilder WithAdditionalData(string? additionalData)
 	{
 		AdditionalData = additionalData;
 
 		return this;
 	}
 
-	public CompanyBuilder ThatIsActive(bool isActive = true)
+	internal CompanyBuilder ThatIsActive(bool isActive = true)
 	{
 		IsActive = isActive;
 
 		return this;
 	}
 
-	public Domain.Company Build()
+	internal Domain.Company Build()
 	{
 		var newWallet =
 			new Domain.Company(name: Name)

@@ -1,4 +1,6 @@
-﻿namespace Tests.Tasks.UsersControllerTasks;
+﻿using Xunit;
+
+namespace Tests.Tasks.UsersControllerTasks;
 
 public class CallDepositeApiTask : Base.CallUsersControllerApi
 {
@@ -21,17 +23,23 @@ public class CallDepositeApiTask : Base.CallUsersControllerApi
 	public Dtat.Result<Dtos.Users.DepositeResponseDto>?
 		SendRequest(Dtos.Users.DepositeRequestDto request)
 	{
-		var deposite =
+		var actionResult =
 			Controller.Deposite(request: request);
 
-		var depositeResult =
-			deposite.Result as
+		Assert.NotNull(@object: actionResult);
+
+		var result =
+			actionResult.Result as
 			Microsoft.AspNetCore.Mvc.OkObjectResult;
 
-		var depositeValue =
-			depositeResult?.Value as
+		Assert.NotNull(@object: result);
+
+		var value =
+			result.Value as
 			Dtat.Result<Dtos.Users.DepositeResponseDto>;
 
-		return depositeValue;
+		Assert.NotNull(@object: value);
+
+		return value;
 	}
 }

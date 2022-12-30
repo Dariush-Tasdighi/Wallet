@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Dtat;
+using Xunit;
 
 namespace Tests.Tasks.UsersControllerTasks;
 
@@ -23,17 +24,23 @@ public class CallWithdrawApiTask : Base.CallUsersControllerApi
 	public Dtat.Result<Dtos.Users.WithdrawResponseDto>?
 		SendRequest(Dtos.Users.WithdrawRequestDto request)
 	{
-		var withdraw =
+		var actionResult =
 			Controller.Withdraw(request: request);
 
-		var withdrawResult =
-			withdraw?.Result as
+		Assert.NotNull(@object: actionResult);
+
+		var result =
+			actionResult.Result as
 			Microsoft.AspNetCore.Mvc.OkObjectResult;
 
-		var withdrawValue =
-			withdrawResult?.Value as
+		Assert.NotNull(@object: result);
+
+		var value =
+			result.Value as
 			Dtat.Result<Dtos.Users.WithdrawResponseDto>;
 
-		return withdrawValue;
+		Assert.NotNull(@object: value);
+
+		return value;
 	}
 }
