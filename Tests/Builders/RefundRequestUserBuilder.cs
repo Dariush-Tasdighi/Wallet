@@ -12,11 +12,8 @@ internal class RefundRequestUserBuilder : object
 	#region Constructor
 	private RefundRequestUserBuilder() : base()
 	{
-		var actor =
-			Setups.Users.Reza.Instance;
-
-		IP = actor.IP;
-		CellPhoneNumber = actor.User.CellPhoneNumber;
+		IP = Setups.Constants.Shared.Actor.IP;
+		CellPhoneNumber = Setups.Constants.Shared.Actor.CellPhoneNumber;
 	}
 	#endregion /Constructor
 

@@ -28,7 +28,6 @@ public class CallDepositeApiTask : Base.CallUsersControllerApi
 			deposite.Result as
 			Microsoft.AspNetCore.Mvc.OkObjectResult;
 
-
 		var depositeValue =
 			depositeResult?.Value as
 			Dtat.Result<Dtos.Users.DepositeResponseDto>;
