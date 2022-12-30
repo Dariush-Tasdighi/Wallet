@@ -109,31 +109,6 @@ public class TestRefund : Helpers.TestsBase
 		// **************************************************
 		// **************************************************
 		// **************************************************
-		var getBalanceRequest =
-			Builders.GetBalanceRequestBuilder.Create()
-			.WithWalletToken(walletToken: wallet.Token)
-			.WithCompanyToken(companyToken: company.Token)
-			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
-			.Build();
-
-		var getBalanceValue =
-			Tasks.UsersControllerTasks.CallGetBalanceApiTask
-			.Create(serverIP: serverIP, databaseContext: DatabaseContext)
-			.SendRequest(request: getBalanceRequest);
-
-		Assert.NotNull(@object: getBalanceValue);
-
-		Assert.True(condition: getBalanceValue.IsSuccess);
-
-		Assert.Equal(expected: 0, actual: getBalanceValue.ErrorMessages.Count);
-
-		Assert.NotNull(@object: getBalanceValue.Data);
-
-		Assert.Equal
-			(expected: 0, actual: getBalanceValue.Data.Balance);
-		// **************************************************
-
-		// **************************************************
 		var depositeRequest =
 			Builders.DepositeRequestBuilder.Create()
 			.WithAmount(amount: depositeAmount)
