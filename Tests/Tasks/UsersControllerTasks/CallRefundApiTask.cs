@@ -2,9 +2,10 @@
 
 namespace Tests.Tasks.UsersControllerTasks;
 
-public class CallRefundApiTask : Base.CallUsersControllerApi
+internal class CallRefundApiTask : Base.CallUsersControllerApi
 {
-	public static CallRefundApiTask Create
+	#region Static Member(s)
+	internal static CallRefundApiTask Create
 		(string serverIP, Data.DatabaseContext databaseContext)
 	{
 		var instance =
@@ -13,14 +14,18 @@ public class CallRefundApiTask : Base.CallUsersControllerApi
 
 		return instance;
 	}
+	#endregion /Static Member(s)
 
+	#region Constructor(s)
 	private CallRefundApiTask
 		(string serverIP, Data.DatabaseContext databaseContext) :
 		base(serverIP: serverIP, databaseContext: databaseContext)
 	{
 	}
+	#endregion /Constructor(s)
 
-	public Dtat.Result<Dtos.Users.RefundResponseDto>?
+	#region SendRequest()
+	internal Dtat.Result<Dtos.Users.RefundResponseDto>?
 		SendRequest(Dtos.Users.RefundRequestDto request)
 	{
 		var actionResult =
@@ -42,4 +47,5 @@ public class CallRefundApiTask : Base.CallUsersControllerApi
 
 		return value;
 	}
+	#endregion /SendRequest()
 }
