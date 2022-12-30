@@ -284,31 +284,10 @@ public class UsersController :
 				// **************************************************
 
 				// **************************************************
-				var totalAmountQuery =
-					DatabaseContext.Transactions.AsQueryable()
-					.Where(current => current.Wallet != null && current.Wallet.Token == request.WalletToken)
-					.Where(current => current.User != null && current.User.CellPhoneNumber == request.User.CellPhoneNumber);
-
-				var depositeTotalAmount =
-					totalAmountQuery
-					.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
-					.Sum(current => current.Amount);
-
-				var withdrawTotalAmount =
-					totalAmountQuery
-					.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
-					.Sum(current => current.Amount);
-				// **************************************************
-
-				// **************************************************
 				var data =
 					new Dtos.Users.GetBalanceResponseDto
 					(balance: userBalanceResult.Data,
-					withdrawBalance: userWithdrawBalanceResult.Data)
-					{
-						WithdrawTotalAmount = withdrawTotalAmount,
-						DepositeTotalAmount = depositeTotalAmount,
-					};
+					withdrawBalance: userWithdrawBalanceResult.Data);
 
 				result.Data = data;
 
@@ -2434,7 +2413,7 @@ public class UsersController :
 			var foundedItems =
 				await
 				query
-				.OrderBy(current => current.InsertDateTime)
+				.OrderByDescending(current => current.InsertDateTime)
 				.Skip(count: request.Skip)
 				.Take(count: request.PageSize)
 				.Include(current => current.User)
@@ -2466,32 +2445,6 @@ public class UsersController :
 				await
 				query.CountAsync();
 			// **************************************************
-
-			// **************************************************
-			var depositeTotalAmount =
-				await
-				query
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
-				.SumAsync(current => current.Amount);
-
-			var withdrawTotalAmount =
-				await
-				query
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
-				.SumAsync(current => current.Amount);
-			// **************************************************
-
-			// **************************************************
-			var depositeCurrentItemsTotalAmount =
-				foundedItems
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
-				.Sum(current => current.Amount);
-
-			var withdrawCurrentItemsTotalAmount =
-				foundedItems
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
-				.Sum(current => current.Amount);
-			// **************************************************
 			// **************************************************
 			// **************************************************
 
@@ -2500,10 +2453,6 @@ public class UsersController :
 				{
 					Items = foundedItems,
 					TotalCount = totalCount,
-					DepositeTotalAmount = depositeTotalAmount,
-					WithdrawTotalAmount = withdrawTotalAmount,
-					DepositeCurrentItemsTotalAmount = depositeCurrentItemsTotalAmount,
-					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount,
 				};
 
 			return Ok(value: result);

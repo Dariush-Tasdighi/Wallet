@@ -255,7 +255,7 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 			var foundedItems =
 				await
 				query
-				.OrderBy(current => current.InsertDateTime)
+				.OrderByDescending(current => current.InsertDateTime)
 				.Skip(count: request.Skip)
 				.Take(count: request.PageSize)
 				.Include(current => current.User)
@@ -287,32 +287,6 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 				await
 				query.CountAsync();
 			// **************************************************
-
-			// **************************************************
-			var depositeTotalAmount =
-				await
-				query
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
-				.SumAsync(current => current.Amount);
-
-			var withdrawTotalAmount =
-				await
-				query
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
-				.SumAsync(current => current.Amount);
-			// **************************************************
-
-			// **************************************************
-			var depositeCurrentItemsTotalAmount =
-				foundedItems
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
-				.Sum(current => current.Amount);
-
-			var withdrawCurrentItemsTotalAmount =
-				foundedItems
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Withdraw)
-				.Sum(current => current.Amount);
-			// **************************************************
 			// **************************************************
 			// **************************************************
 
@@ -321,10 +295,6 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 				{
 					Items = foundedItems,
 					TotalCount = totalCount,
-					DepositeTotalAmount = depositeTotalAmount,
-					WithdrawTotalAmount = withdrawTotalAmount,
-					DepositeCurrentItemsTotalAmount = depositeCurrentItemsTotalAmount,
-					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount,
 				};
 
 			return Ok(value: result);
