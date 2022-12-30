@@ -20,10 +20,10 @@ public class TestDeposite : object
 
 	#region DoDeposite()
 	[Xunit.Theory]
-	[Xunit.InlineData(100_000_000)]
-	[Xunit.InlineData(500_000_000)]
-	[Xunit.InlineData(250_000_000)]
-	public void DoDeposite(decimal depositeAmount)
+	[Xunit.InlineData(100_000_000, 100_000_000)]
+	[Xunit.InlineData(500_000_000, 500_000_000)]
+	[Xunit.InlineData(250_000_000, 250_000_000)]
+	public void DoDeposite(decimal depositeAmount, decimal expectedBalance)
 	{
 		// **************************************************
 		// **************************************************
@@ -173,9 +173,6 @@ public class TestDeposite : object
 		Assert.Equal(expected: 0, actual: depositeValue.ErrorMessages.Count);
 
 		Assert.NotNull(@object: depositeValue.Data);
-
-		var expectedBalance =
-			getBalanceValue.Data!.Balance + depositeAmount;
 
 		Assert.Equal
 			(expected: expectedBalance, actual: depositeValue.Data.Balance);
