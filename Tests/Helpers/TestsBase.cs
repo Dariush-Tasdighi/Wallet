@@ -2,7 +2,7 @@
 
 [Xunit.Collection
 	(name: Constants.Shared.DatabaseCollection)]
-public class TestsBase : object
+public abstract class TestsBase : object
 {
 	#region Constructor(s)
 	public TestsBase(Helpers.DatabaseFixture databaseFixture) : base()
@@ -13,11 +13,15 @@ public class TestsBase : object
 	#endregion /Constructor(s)
 
 	#region Property(ies)
+	protected string ServerIP;
+	protected Domain.User Actor;
+	protected Domain.Wallet Wallet;
+	protected Domain.Company Company;
+
 	protected Data.DatabaseContext DatabaseContext { get; }
 	#endregion /Property(ies)
 
-	protected Domain.User
-		SetupActor(Domain.User actor)
+	protected Domain.User SetupActor(Domain.User actor)
 	{
 		// **************************************************
 		actor.UpdateHash();
@@ -109,4 +113,6 @@ public class TestsBase : object
 
 		return company;
 	}
+
+	protected abstract void Arrange();
 }
