@@ -320,17 +320,17 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 			// **************************************************
 			// **************************************************
 			// **************************************************
-			   
+
 			result.Data =
 				new Dtos.Admins.Transactions.GetTransactionsResponseDto
 				{
 					Items = foundedItems,
-					   
+
 					TotalCount = totalCount,
 
 					DepositeTotalAmount = depositeTotalAmount,
 					DepositeCurrentItemsTotalAmount = depositeCurrentItemsTotalAmount,
-					   
+
 					WithdrawTotalAmount = withdrawTotalAmount.ConvertToPositiveDecimal(),
 					WithdrawCurrentItemsTotalAmount = withdrawCurrentItemsTotalAmount.ConvertToPositiveDecimal(),
 				};
@@ -344,7 +344,7 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 				(code: Infrastructure.Constant.ErrorCode.Admin_TransactionsController_GetAllTransactionsAsync,
 				message: ex.Message, innerException: ex);
 
-			Logger.LogError  
+			Logger.LogError
 				(message: Infrastructure.Constant.Message.LogError, applicationError.Message);
 
 			return StatusCode(statusCode: Microsoft.AspNetCore

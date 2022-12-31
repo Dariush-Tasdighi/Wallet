@@ -18,7 +18,7 @@ public class GetTransactionsResponseDto : object
 
 	#region DepositeTotal
 	public decimal DepositeTotalAmount { get; set; }
-	#endregion /DepositeTotalAmount   
+	#endregion /DepositeTotalAmount
 
 	#region WithdrawTotal
 	public decimal WithdrawTotalAmount { get; set; }
@@ -27,7 +27,7 @@ public class GetTransactionsResponseDto : object
 	#region DepositeTotal
 	public decimal DepositeCurrentItemsTotalAmount { get; set; }
 	#endregion /DepositeTotal
-	    
+
 	#region WithdrawTotal
 	public decimal WithdrawCurrentItemsTotalAmount { get; set; }
 	#endregion /WithdrawTotal

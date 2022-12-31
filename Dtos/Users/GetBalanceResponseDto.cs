@@ -13,11 +13,11 @@ public class GetBalanceResponseDto : Base.Response
 	#region Properties
 
 	#region DepositeTotal
-	public decimal DepositeTotalAmount { get; set; }    
+	public decimal DepositeTotalAmount { get; set; }
 	#endregion /DepositeTotalAmount
 
 	#region WithdrawTotal
-	public decimal WithdrawTotalAmount { get; set; }   
+	public decimal WithdrawTotalAmount { get; set; }
 	#endregion /WithdrawTotal
 
 	#endregion /Properties
