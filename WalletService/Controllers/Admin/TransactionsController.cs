@@ -293,7 +293,9 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 			var depositeTotalAmount =
 				await
 				query
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
+				.Where(current =>
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite ||
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Refund)
 				.SumAsync(current => current.Amount);
 
 			var withdrawTotalAmount =
@@ -308,7 +310,9 @@ public class TransactionsController : Infrastructure.ControllerBaseWithDatabaseC
 			// **************************************************
 			var depositeCurrentItemsTotalAmount =
 				foundedItems
-				.Where(current => current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite)
+				.Where(current =>
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Deposite ||
+					current.Type == Dtat.Wallet.Abstractions.SeedWork.TransactionType.Refund)
 				.Sum(current => current.Amount);
 
 			var withdrawCurrentItemsTotalAmount =
