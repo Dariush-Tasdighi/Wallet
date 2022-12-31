@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Tests;
 
-public class TestGetBalance
+public class TestGetBalance : object
 {
 	#region Constructor(s)
 	public TestGetBalance() : base()

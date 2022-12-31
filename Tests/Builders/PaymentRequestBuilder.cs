@@ -13,7 +13,7 @@ internal class PaymentRequestBuilder : object
 	private PaymentRequestBuilder() : base()
 	{
 		Amount =
-			Setups.Constants.Shared.Amount;
+			Helpers.Constants.Shared.Amount;
 
 		ReferenceCode =
 			Helpers.Utility.ReferenceCode;
@@ -26,41 +26,41 @@ internal class PaymentRequestBuilder : object
 	#region Properties
 
 	#region User
-	public PaymentRequestUserBuilder User { get; set; }
+	internal PaymentRequestUserBuilder User { get; set; }
 	#endregion /User
 
 	#region Amount
-	public decimal Amount { get; set; }
+	internal decimal Amount { get; set; }
 	#endregion /Amount
 
 	#region WalletToken
-	public System.Guid WalletToken { get; set; }
+	internal System.Guid WalletToken { get; set; }
 	#endregion /WalletToken
 
 	#region CompanyToken
-	public System.Guid CompanyToken { get; set; }
+	internal System.Guid CompanyToken { get; set; }
 	#endregion /CompanyToken
 
 	#region ReferenceCode
-	public string ReferenceCode { get; set; }
+	internal string ReferenceCode { get; set; }
 	#endregion /ReferenceCode
 
 	#region UserDescription
-	public string? UserDescription { get; set; }
+	internal string? UserDescription { get; set; }
 	#endregion /UserDescription
 
 	#region SystemicDescription
-	public string? SystemicDescription { get; set; }
+	internal string? SystemicDescription { get; set; }
 	#endregion /SystemicDescription
 
 	#region AdditionalData
-	public string? AdditionalData { get; set; }
+	internal string? AdditionalData { get; set; }
 	#endregion /AdditionalData
 
 	#endregion /Properties
 
 	#region Methods()
-	public PaymentRequestBuilder
+	internal PaymentRequestBuilder
 		WithUser(System.Action<PaymentRequestUserBuilder> action)
 		{
 			action.Invoke(User);
@@ -68,28 +68,28 @@ internal class PaymentRequestBuilder : object
 			return this;
 		}
 
-	public PaymentRequestBuilder WithAmount(decimal amount)
+	internal PaymentRequestBuilder WithAmount(decimal amount)
 	{
 		Amount = amount;
 
 		return this;
 	}
 
-	public PaymentRequestBuilder WithWalletToken(System.Guid walletToken)
+	internal PaymentRequestBuilder WithWalletToken(System.Guid walletToken)
 	{
 		WalletToken = walletToken;
 
 		return this;
 	}
 
-	public PaymentRequestBuilder WithCompanyToken(System.Guid companyToken)
+	internal PaymentRequestBuilder WithCompanyToken(System.Guid companyToken)
 	{
 		CompanyToken = companyToken;
 
 		return this;
 	}
 
-	public PaymentRequestBuilder WithReferenceCode(string referenceCode)
+	internal PaymentRequestBuilder WithReferenceCode(string referenceCode)
 	{
 		ReferenceCode = referenceCode;
 

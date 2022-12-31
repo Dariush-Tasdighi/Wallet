@@ -1,37 +1,59 @@
-﻿namespace Tests.Tasks.UsersControllerTasks;
+﻿using Xunit;
 
-public class CallGetBalanceApiTask : Base.CallUsersControllerApi
+namespace Tests.Tasks.UsersControllerTasks;
+
+internal class CallGetBalanceApiTask : Base.CallUsersControllerApi
 {
-	public static CallGetBalanceApiTask Create
+	#region Static Member(s)
+	internal static CallGetBalanceApiTask Create
 		(string serverIP, Data.DatabaseContext databaseContext)
 	{
+		// **************************************************
 		var instance =
 			new CallGetBalanceApiTask
 			(serverIP: serverIP, databaseContext: databaseContext);
+		// **************************************************
 
 		return instance;
 	}
+	#endregion /Static Member(s)
 
+	#region Constructor(s)
 	private CallGetBalanceApiTask
 		(string serverIP, Data.DatabaseContext databaseContext) :
 		base(serverIP: serverIP, databaseContext: databaseContext)
 	{
 	}
+	#endregion /Constructor(s)
 
-	public Dtat.Result<Dtos.Users.GetBalanceResponseDto>?
+	#region SendRequest()
+	internal Dtat.Result<Dtos.Users.GetBalanceResponseDto>?
 		SendRequest(Dtos.Users.GetBalanceRequestDto request)
 	{
-		var getBalance =
+		// **************************************************
+		var actionResult =
 			Controller.GetBalance(request: request);
 
-		var getBalanceResult =
-			getBalance?.Result as
+		Assert.NotNull(@object: actionResult);
+		// **************************************************
+
+		// **************************************************
+		var result =
+			actionResult.Result as
 			Microsoft.AspNetCore.Mvc.OkObjectResult;
 
-		var getBalanceValue =
-			getBalanceResult?.Value as
+		Assert.NotNull(@object: result);
+		// **************************************************
+
+		// **************************************************
+		var value =
+			result.Value as
 			Dtat.Result<Dtos.Users.GetBalanceResponseDto>;
 
-		return getBalanceValue;
+		Assert.NotNull(@object: result);
+		// **************************************************
+
+		return value;
 	}
+	#endregion /SendRequest()
 }

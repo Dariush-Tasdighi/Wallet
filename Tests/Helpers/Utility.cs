@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Tests.Helpers;
 
@@ -38,29 +37,38 @@ internal static class Utility : object
 		}
 	}
 
-	internal static string FakeNationalCode()
+	internal static string FakeNationalCode
 	{
-		var value =
-			Faker.RandomNumber.Next(min: 1000000000, max: 9999999999)
-			.ToString();
+		get
+		{
+			var value =
+				Faker.RandomNumber.Next(min: 1000000000, max: 9999999999)
+				.ToString();
 
-		return value;
+			return value;
+		}
 	}
 
-	internal static string FakeCellPhoneNumber()
+	internal static string FakeCellPhoneNumber
 	{
-		var value =
-			Faker.RandomNumber.Next(min: 10000000000, max: 99999999999)
-			.ToString(); ;
+		get
+		{
+			var value =
+				Faker.RandomNumber.Next(min: 10000000000, max: 99999999999)
+				.ToString(); ;
 
-		return value;
+			return value;
+		}
 	}
 
-	internal static string FakeEmailAddress()
+	internal static string FakeEmailAddress
 	{
-		var value =
-			Faker.Internet.Email();
+		get
+		{
+			var value =
+				Faker.Internet.Email();
 
-		return value;
+			return value;
+		}
 	}
 }

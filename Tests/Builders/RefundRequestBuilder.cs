@@ -12,13 +12,13 @@ internal class RefundRequestBuilder : object
 	#region Constructor()
 	private RefundRequestBuilder(long transactionId) : base()
 	{
-		Amount =
-			Setups.Constants.Shared.Amount;
-
 		TransactionId = transactionId;
 
+		Amount =
+			Helpers.Constants.Shared.Amount;
+
 		WithdrawDurationInDays =
-			Setups.Constants.Shared.WithdrawDurationInDays;
+			Helpers.Constants.Shared.WithdrawDurationInDays;
 
 		User =
 			RefundRequestUserBuilder.Create();
@@ -28,45 +28,45 @@ internal class RefundRequestBuilder : object
 	#region Properties
 
 	#region User
-	public RefundRequestUserBuilder User { get; set; }
+	internal RefundRequestUserBuilder User { get; set; }
 	#endregion /User
 
 	#region Amount
-	public decimal Amount { get; set; }
+	internal decimal Amount { get; set; }
 	#endregion /Amount
 
 	#region WalletToken
-	public System.Guid WalletToken { get; set; }
+	internal System.Guid WalletToken { get; set; }
 	#endregion /WalletToken
 
 	#region CompanyToken
-	public System.Guid CompanyToken { get; set; }
+	internal System.Guid CompanyToken { get; set; }
 	#endregion /CompanyToken
 
 	#region WithdrawDurationInDays
-	public int? WithdrawDurationInDays { get; set; }
+	internal int? WithdrawDurationInDays { get; set; }
 	#endregion /WithdrawDurationInDays
 
 	#region TransactionId
-	public long TransactionId { get; set; }
+	internal long TransactionId { get; set; }
 	#endregion /TransactionId
 
 	#region UserDescription
-	public string? UserDescription { get; set; }
+	internal string? UserDescription { get; set; }
 	#endregion /UserDescription
 
 	#region SystemicDescription
-	public string? SystemicDescription { get; set; }
+	internal string? SystemicDescription { get; set; }
 	#endregion /SystemicDescription
 
 	#region AdditionalData
-	public string? AdditionalData { get; set; }
+	internal string? AdditionalData { get; set; }
 	#endregion /AdditionalData
 
 	#endregion /Properties
 
 	#region Methods()
-	public RefundRequestBuilder
+	internal RefundRequestBuilder
 		WithUser(System.Action<RefundRequestUserBuilder> action)
 		{
 			action.Invoke(User);
@@ -74,28 +74,28 @@ internal class RefundRequestBuilder : object
 			return this;
 		}
 
-	public RefundRequestBuilder WithAmount(decimal amount)
+	internal RefundRequestBuilder WithAmount(decimal amount)
 	{
 		Amount = amount;
 
 		return this;
 	}
 
-	public RefundRequestBuilder WithWithdrawDurationInDays(int? withdrawDurationInDays)
+	internal RefundRequestBuilder WithWithdrawDurationInDays(int? withdrawDurationInDays)
 	{
 		WithdrawDurationInDays = withdrawDurationInDays;
 
 		return this;
 	}
 
-	public RefundRequestBuilder WithWalletToken(System.Guid walletToken)
+	internal RefundRequestBuilder WithWalletToken(System.Guid walletToken)
 	{
 		WalletToken = walletToken;
 
 		return this;
 	}
 
-	public RefundRequestBuilder WithCompanyToken(System.Guid companyToken)
+	internal RefundRequestBuilder WithCompanyToken(System.Guid companyToken)
 	{
 		CompanyToken = companyToken;
 
