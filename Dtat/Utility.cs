@@ -85,14 +85,14 @@ public static class Utility : object
 
 		return result;
 	}
-
-	public static decimal ConvertToPositiveDecimal(this decimal value)
+	  
+	public static decimal ConvertToPositiveDecimal(this decimal value)  
 	{
 		if (value < 0)
-		{
+		{   
 			value *= -1;
 		}
 
-		return value;
+		return value;   
 	}
 }
