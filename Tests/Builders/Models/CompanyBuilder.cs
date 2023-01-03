@@ -18,7 +18,7 @@ internal class CompanyBuilder : object
 			Helpers.Constants.Shared.Company.Hit;
 	}
 
-	internal string Name { get; private set; }
+	internal string? Name { get; private set; }
 
 	internal bool IsActive { get; private set; }
 
@@ -26,7 +26,7 @@ internal class CompanyBuilder : object
 
 	internal string? AdditionalData { get; private set; }
 
-	internal CompanyBuilder Named(string name)
+	internal CompanyBuilder Named(string? name)
 	{
 		Name = name;
 

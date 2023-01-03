@@ -25,6 +25,17 @@ internal static class Utility : object
 		}
 	}
 
+	internal static long? FakeId
+	{
+		get
+		{
+			var referenceCode =
+				Faker.RandomNumber.Next(min: 1000000000, max: 9999999999);
+
+			return referenceCode;
+		}
+	}
+
 	internal static string ReferenceCode
 	{
 		get

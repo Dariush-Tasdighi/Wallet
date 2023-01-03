@@ -39,25 +39,25 @@ internal class UserBuilder : object
 
 	internal string? EmailAddress { get; private set; }
 
-	internal string DisplayName { get; private set; }
+	internal string? DisplayName { get; private set; }
 
-	internal string CellPhoneNumber { get; private set; }
+	internal string? CellPhoneNumber { get; private set; }
 
-	internal UserBuilder Named(string displayName)
+	internal UserBuilder Named(string? displayName)
 	{
 		DisplayName = displayName;
 
 		return this;
 	}
 
-	internal UserBuilder WithCellPhoneNumber(string cellPhoneNumber)
+	internal UserBuilder WithCellPhoneNumber(string? cellPhoneNumber)
 	{
 		CellPhoneNumber = cellPhoneNumber;
 
 		return this;
 	}
 
-	internal UserBuilder WithEmailAddress(string emailAddress)
+	internal UserBuilder WithEmailAddress(string? emailAddress)
 	{
 		EmailAddress = emailAddress;
 

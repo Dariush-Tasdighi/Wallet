@@ -8,7 +8,6 @@ public class TestRefund : Helpers.TestsBase
 	public TestRefund
 		(Helpers.DatabaseFixture databaseFixture) : base(databaseFixture: databaseFixture)
 	{
-		Arrange();
 	}
 	#endregion /Constructor(s)
 
@@ -22,18 +21,42 @@ public class TestRefund : Helpers.TestsBase
 		// **************************************************
 		// **************************************************
 		// **************************************************
+		var wallet =
+			ArrangeWallet(isActive: true);
+
+		var company =
+			ArrangeCompany(isActive: true);
+
+		var actor =
+			ArrangeActor
+			(isActive: true, isVerified: true);
+
+		var companyValidIP =
+			ArrangeCompanyValidIP
+			(companyId: company.Id, isActive: true);
+
+		var userWallet =
+			ArrangeUserWallet
+			(walletId: wallet.Id, actorId: actor.Id, isActive: true);
+
+		var companyWallet =
+			ArrangeCompanyWallet
+			(companyId: company.Id, walletId: wallet.Id, isActive: true);
+		// **************************************************
+
+		// **************************************************
 		var depositeRequest =
 			Builders.DepositeRequestBuilder.Create()
 			.WithAmount(amount: depositeAmount)
-			.WithWalletToken(walletToken: Wallet.Token)
-			.WithCompanyToken(companyToken: Company.Token)
+			.WithWalletToken(walletToken: wallet.Token)
+			.WithCompanyToken(companyToken: company.Token)
 			.WithWithdrawDurationInDays(durationInDays: Helpers.Constants.Shared.WithdrawDurationInDays)
-			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: Actor.CellPhoneNumber))
+			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
 			.Build();
 
 		var depositeValue =
 			Tasks.UsersControllerTasks.CallDepositeApiTask
-			.Create(serverIP: ServerIP, databaseContext: DatabaseContext)
+			.Create(serverIP: companyValidIP.ServerIP, databaseContext: DatabaseContext)
 			.SendRequest(request: depositeRequest);
 
 		Assert.NotNull(@object: depositeValue);
@@ -47,14 +70,14 @@ public class TestRefund : Helpers.TestsBase
 		var paymentRequest =
 			Builders.PaymentRequestBuilder.Create()
 			.WithAmount(amount: paymentAmount)
-			.WithWalletToken(walletToken: Wallet.Token)
-			.WithCompanyToken(companyToken: Company.Token)
-			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: Actor.CellPhoneNumber))
+			.WithWalletToken(walletToken: wallet.Token)
+			.WithCompanyToken(companyToken: company.Token)
+			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
 			.Build();
 
 		var paymentValue =
 			Tasks.UsersControllerTasks.CallPaymentApiTask
-			.Create(serverIP: ServerIP, databaseContext: DatabaseContext)
+			.Create(serverIP: companyValidIP.ServerIP, databaseContext: DatabaseContext)
 			.SendRequest(request: paymentRequest);
 
 		Assert.NotNull(@object: paymentValue);
@@ -69,14 +92,14 @@ public class TestRefund : Helpers.TestsBase
 			Builders.RefundRequestBuilder
 			.Create(transactionId: paymentValue.Data.TransactionId)
 			.WithAmount(amount: refundAmount)
-			.WithWalletToken(walletToken: Wallet.Token)
-			.WithCompanyToken(companyToken: Company.Token)
-			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: Actor.CellPhoneNumber))
+			.WithWalletToken(walletToken: wallet.Token)
+			.WithCompanyToken(companyToken: company.Token)
+			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
 			.Build();
 
 		var refundValue =
 			Tasks.UsersControllerTasks.CallRefundApiTask
-			.Create(serverIP: ServerIP, databaseContext: DatabaseContext)
+			.Create(serverIP: companyValidIP.ServerIP, databaseContext: DatabaseContext)
 			.SendRequest(request: refundRequest);
 
 		Assert.NotNull(@object: refundValue);
@@ -94,92 +117,4 @@ public class TestRefund : Helpers.TestsBase
 		// **************************************************
 	}
 	#endregion /DoRefund()
-
-	#region Arrange()
-	protected override void Arrange()
-	{
-		// **************************************************
-		// **************************************************
-		// **************************************************
-		Wallet =
-			Builders.Models.WalletBuilder.Create()
-			.Named(name: Helpers.Constants.Shared.Wallet.Hit)
-			.ThatIsActive()
-			.ThatRefundFeatureIsEnabled()
-			.ThatPaymentFeatureIsEnabled()
-			.ThatDepositeFeatureIsEnabled()
-			.Build();
-
-		var walletToken =
-			System.Guid.NewGuid();
-
-		SetupWallet
-			(wallet: Wallet, walletToken: walletToken);
-		// **************************************************
-
-		// **************************************************
-		var companyToken =
-			System.Guid.NewGuid();
-
-		Company =
-			Builders.Models.CompanyBuilder.Create()
-			.Named(name: Helpers.Constants.Shared.Company.Hit)
-			.ThatIsActive(isActive: true)
-			.Build();
-
-		Company =
-			SetupCompany(company: Company, companyToken: companyToken);
-		// **************************************************
-
-		// **************************************************
-		var companyWallet = new Domain.CompanyWallet
-			(companyId: Company.Id, walletId: Wallet.Id)
-		{
-			IsActive = true,
-		};
-
-		SetupCompanyWallet(companyWallet: companyWallet);
-		// **************************************************
-
-		// **************************************************
-		ServerIP =
-			Helpers.Constants.Shared.Company.ServerIP;
-
-		var validIP = new Domain.ValidIP
-			(companyId: Company.Id, serverIP: ServerIP)
-		{
-			IsActive = true,
-		};
-
-		SetupCompanyValidIP(validIP: validIP);
-		// **************************************************
-
-		// **************************************************
-		Actor =
-			Builders.Models.UserBuilder.Create()
-			.Named(displayName: Helpers.Constants.Shared.Actor.Reza)
-			.WithNationalCode(nationalCode: Helpers.Utility.FakeNationalCode)
-			.WithCellPhoneNumber(cellPhoneNumber: Helpers.Utility.FakeCellPhoneNumber)
-			.ThatIsActive()
-			.ThatIsVerified()
-			.Build();
-
-		Actor =
-			SetupActor(actor: Actor);
-		// **************************************************
-
-		// **************************************************
-		var userWallet = new Domain.UserWallet
-			(userId: Actor.Id, walletId: Wallet.Id)
-		{
-			Balance = 0,
-			IsActive = true,
-		};
-
-		SetupUserWallet(userWallet: userWallet);
-		// **************************************************
-		// **************************************************
-		// **************************************************
-	}
-	#endregion /Arrange()
 }
