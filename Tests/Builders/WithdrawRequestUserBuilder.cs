@@ -23,11 +23,11 @@ internal class WithdrawRequestUserBuilder : object
 	#region Properties
 
 	#region IP (User IP)
-	internal string IP { get; set; }
+	protected string IP { get; private set; }
 	#endregion /IP (User IP)
 
 	#region CellPhoneNumber
-	internal string CellPhoneNumber { get; set; }
+	protected string CellPhoneNumber { get; private set; }
 	#endregion /CellPhoneNumber
 
 	#endregion /Properties

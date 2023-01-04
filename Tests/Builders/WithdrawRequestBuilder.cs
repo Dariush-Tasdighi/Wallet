@@ -23,31 +23,31 @@ internal class WithdrawRequestBuilder : object
 	#region Properties
 
 	#region User
-	internal WithdrawRequestUserBuilder User { get; set; }
+	protected WithdrawRequestUserBuilder User { get; private set; }
 	#endregion /User
 
 	#region Amount
-	internal decimal Amount { get; set; }
+	protected decimal Amount { get; private set; }
 	#endregion /Amount
 
 	#region WalletToken
-	internal System.Guid WalletToken { get; set; }
+	protected System.Guid WalletToken { get; private set; }
 	#endregion /WalletToken
 
 	#region CompanyToken
-	internal System.Guid CompanyToken { get; set; }
+	protected System.Guid CompanyToken { get; private set; }
 	#endregion /CompanyToken
 
 	#region UserDescription
-	internal string? UserDescription { get; set; }
+	protected string? UserDescription { get; private set; }
 	#endregion /UserDescription
 
 	#region SystemicDescription
-	internal string? SystemicDescription { get; set; }
+	protected string? SystemicDescription { get; private set; }
 	#endregion /SystemicDescription
 
 	#region AdditionalData
-	internal string? AdditionalData { get; set; }
+	protected string? AdditionalData { get; private set; }
 	#endregion /AdditionalData
 
 	#endregion /Properties

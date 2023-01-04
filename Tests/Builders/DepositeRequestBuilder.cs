@@ -32,43 +32,43 @@ internal class DepositeRequestBuilder : object
 	#region Properties
 
 	#region User
-	internal DepositeRequestUserBuilder User { get; set; }
+	protected DepositeRequestUserBuilder User { get; private set; }
 	#endregion /User
 
 	#region Amount
-	internal decimal Amount { get; set; }
+	protected decimal Amount { get; private set; }
 	#endregion /Amount
 
 	#region WalletToken
-	internal System.Guid WalletToken { get; set; }
+	protected System.Guid WalletToken { get; private set; }
 	#endregion /WalletToken
 
 	#region CompanyToken
-	internal System.Guid CompanyToken { get; set; }
+	protected System.Guid CompanyToken { get; private set; }
 	#endregion /CompanyToken
 
 	#region WithdrawDurationInDays
-	internal int? WithdrawDurationInDays { get; set; }
+	protected int? WithdrawDurationInDays { get; private set; }
 	#endregion /WithdrawDurationInDays
 
 	#region ProviderName (PSP)
-	internal string ProviderName { get; set; }
+	protected string ProviderName { get; private set; }
 	#endregion /ProviderName
 
 	#region ReferenceCode
-	internal string ReferenceCode { get; set; }
+	protected string ReferenceCode { get; private set; }
 	#endregion /ReferenceCode
 
 	#region UserDescription
-	internal string? UserDescription { get; set; }
+	protected string? UserDescription { get; private set; }
 	#endregion /UserDescription
 
 	#region SystemicDescription
-	internal string? SystemicDescription { get; set; }
+	protected string? SystemicDescription { get; private set; }
 	#endregion /SystemicDescription
 
 	#region AdditionalData
-	internal string? AdditionalData { get; set; }
+	protected string? AdditionalData { get; private set; }
 	#endregion /AdditionalData
 
 	#endregion /Properties

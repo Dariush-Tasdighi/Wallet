@@ -29,19 +29,19 @@ internal class UserBuilder : object
 			Helpers.Constants.Shared.Actor.CellPhoneNumber;
 	}
 
-	internal bool IsActive { get; private set; }
+	protected bool IsActive { get; private set; }
 
-	internal bool IsVerified { get; private set; }
+	protected bool IsVerified { get; private set; }
 
-	internal string? NationalCode { get; private set; }
+	protected string? NationalCode { get; private set; }
 
-	internal string? Description { get; private set; }
+	protected string? Description { get; private set; }
 
-	internal string? EmailAddress { get; private set; }
+	protected string? EmailAddress { get; private set; }
 
-	internal string? DisplayName { get; private set; }
+	protected string? DisplayName { get; private set; }
 
-	internal string? CellPhoneNumber { get; private set; }
+	protected string? CellPhoneNumber { get; private set; }
 
 	internal UserBuilder Named(string? displayName)
 	{

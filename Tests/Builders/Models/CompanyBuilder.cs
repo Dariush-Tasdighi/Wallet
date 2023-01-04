@@ -18,13 +18,13 @@ internal class CompanyBuilder : object
 			Helpers.Constants.Shared.Company.Hit;
 	}
 
-	internal string? Name { get; private set; }
+	protected string? Name { get; private set; }
 
-	internal bool IsActive { get; private set; }
+	protected bool IsActive { get; private set; }
 
-	internal string? Description { get; private set; }
+	protected string? Description { get; private set; }
 
-	internal string? AdditionalData { get; private set; }
+	protected string? AdditionalData { get; private set; }
 
 	internal CompanyBuilder Named(string? name)
 	{

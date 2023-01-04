@@ -27,23 +27,23 @@ internal class WalletBuilder : object
 		Name = Helpers.Constants.Shared.Wallet.Hit;
 	}
 
-	internal string Name { get; private set; }
+	protected string Name { get; private set; }
 
-	internal bool IsActive { get; private set; }
+	protected bool IsActive { get; private set; }
 
-	internal string? Description { get; private set; }
+	protected string? Description { get; private set; }
 
-	internal string? AdditionalData { get; private set; }
+	protected string? AdditionalData { get; private set; }
 
-	internal bool DepositeFeatureIsEnabled { get; private set; }
+	protected bool DepositeFeatureIsEnabled { get; private set; }
 
-	internal bool PaymentFeatureIsEnabled { get; private set; }
+	protected bool PaymentFeatureIsEnabled { get; private set; }
 
-	internal bool RefundFeatureIsEnabled { get; private set; }
+	protected bool RefundFeatureIsEnabled { get; private set; }
 
-	internal bool TransferFeatureIsEnabled { get; private set; }
+	protected bool TransferFeatureIsEnabled { get; private set; }
 
-	internal bool WithdrawFeatureIsEnabled { get; private set; }
+	protected bool WithdrawFeatureIsEnabled { get; private set; }
 
 	internal WalletBuilder Named(string name)
 	{

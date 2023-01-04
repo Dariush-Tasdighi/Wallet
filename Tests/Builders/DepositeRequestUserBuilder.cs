@@ -32,23 +32,23 @@ internal class DepositeRequestUserBuilder : object
 	#region Properties
 
 	#region IP (User IP)
-	internal string IP { get; set; }
+	protected string IP { get; private set; }
 	#endregion /IP (User IP)
 
 	#region DisplayName (Full Name)
-	internal string DisplayName { get; set; }
+	protected string DisplayName { get; private set; }
 	#endregion /DisplayName (Full Name)
 
 	#region CellPhoneNumber
-	internal string CellPhoneNumber { get; set; }
+	protected string CellPhoneNumber { get; private set; }
 	#endregion /CellPhoneNumber
 
 	#region EmailAddress
-	internal string? EmailAddress { get; set; }
+	protected string? EmailAddress { get; private set; }
 	#endregion /EmailAddress
 
 	#region NationalCode
-	internal string? NationalCode { get; set; }
+	protected string? NationalCode { get; private set; }
 	#endregion /NationalCode
 
 	#endregion /Properties

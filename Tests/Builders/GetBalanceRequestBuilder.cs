@@ -26,15 +26,15 @@ internal class GetBalanceRequestBuilder : object
 	#region Properties
 
 	#region User
-	internal GetBalanceRequestUserBuilder User { get; set; }
+	protected GetBalanceRequestUserBuilder User { get; private set; }
 	#endregion /User
 
 	#region WalletToken
-	internal System.Guid WalletToken { get; set; }
+	protected System.Guid WalletToken { get; private set; }
 	#endregion /WalletToken
 
 	#region CompanyToken
-	internal System.Guid CompanyToken { get; set; }
+	protected System.Guid CompanyToken { get; private set; }
 	#endregion /CompanyToken
 
 	#endregion /Properties

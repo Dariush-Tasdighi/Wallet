@@ -116,5 +116,115 @@ public class TestRefund : Helpers.TestsBase
 		// **************************************************
 		// **************************************************
 	}
+
 	#endregion /DoRefund()
+
+	[Xunit.Theory]
+	[Xunit.InlineData(100_000_000, 50_000_000, 65_000_000)]
+	[Xunit.InlineData(500_000_000, 400_000_000, 400_000_001)]
+	public void Valid_user_could_not_do_refund_with_more_amount_of_his_successfuly_payment
+		(decimal depositeAmount, decimal paymentAmount, decimal refundAmount)
+	{
+		// **************************************************
+		// **************************************************
+		// **************************************************
+		var wallet =
+			ArrangeWallet(isActive: true);
+
+		var company =
+			ArrangeCompany(isActive: true);
+
+		var actor =
+			ArrangeActor
+			(isActive: true, isVerified: true);
+
+		var companyValidIP =
+			ArrangeCompanyValidIP
+			(companyId: company.Id, isActive: true);
+
+		var userWallet =
+			ArrangeUserWallet
+			(walletId: wallet.Id, actorId: actor.Id, isActive: true);
+
+		var companyWallet =
+			ArrangeCompanyWallet
+			(companyId: company.Id, walletId: wallet.Id, isActive: true);
+		// **************************************************
+
+		// **************************************************
+		var depositeRequest =
+			Builders.DepositeRequestBuilder.Create()
+			.WithAmount(amount: depositeAmount)
+			.WithWalletToken(walletToken: wallet.Token)
+			.WithCompanyToken(companyToken: company.Token)
+			.WithWithdrawDurationInDays(durationInDays: Helpers.Constants.Shared.WithdrawDurationInDays)
+			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
+			.Build();
+
+		var depositeValue =
+			Tasks.UsersControllerTasks.CallDepositeApiTask
+			.Create(serverIP: companyValidIP.ServerIP, databaseContext: DatabaseContext)
+			.SendRequest(request: depositeRequest);
+
+		Assert.NotNull(@object: depositeValue);
+
+		Assert.NotNull(@object: depositeValue.Data);
+
+		Assert.True(condition: depositeValue.IsSuccess);
+		// **************************************************
+
+		// **************************************************
+		var paymentRequest =
+			Builders.PaymentRequestBuilder.Create()
+			.WithAmount(amount: paymentAmount)
+			.WithWalletToken(walletToken: wallet.Token)
+			.WithCompanyToken(companyToken: company.Token)
+			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
+			.Build();
+
+		var paymentValue =
+			Tasks.UsersControllerTasks.CallPaymentApiTask
+			.Create(serverIP: companyValidIP.ServerIP, databaseContext: DatabaseContext)
+			.SendRequest(request: paymentRequest);
+
+		Assert.NotNull(@object: paymentValue);
+
+		Assert.NotNull(@object: paymentValue.Data);
+
+		Assert.True(condition: paymentValue.IsSuccess);
+		// **************************************************
+
+		// **************************************************
+		var refundRequest =
+			Builders.RefundRequestBuilder
+			.Create(transactionId: paymentValue.Data.TransactionId)
+			.WithAmount(amount: refundAmount)
+			.WithWalletToken(walletToken: wallet.Token)
+			.WithCompanyToken(companyToken: company.Token)
+			.WithUser(current => current.WithCellPhoneNumber(cellPhoneNumber: actor.CellPhoneNumber))
+			.Build();
+
+		var refundValue =
+			Tasks.UsersControllerTasks.CallRefundApiTask
+			.Create(serverIP: companyValidIP.ServerIP, databaseContext: DatabaseContext)
+			.SendRequest(request: refundRequest);
+
+		Assert.NotNull(@object: refundValue);
+
+		Assert.Null(@object: refundValue.Data);
+
+		Assert.False(condition: refundValue.IsSuccess);
+
+		Assert.Equal(expected: 1, actual: refundValue.ErrorMessages.Count);
+
+		var errorMessage = string.Format
+			(format: Resources.Messages.Errors.TheAmountValueIsMore,
+			arg0: $"{nameof(Dtat.Wallet.Abstractions.SeedWork.TransactionType.Refund)} {nameof(Domain.UserWallet.Balance)}");
+
+		Assert.Equal
+			(expected: errorMessage, actual: refundValue.ErrorMessages[0]);
+		// **************************************************
+		// **************************************************
+		// **************************************************
+	}
 }
